@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Stash",
+        "description": "This adds a **Stash** item to your sidebar and creates a private store for your tools, hardware and supplies. Nothing to configure — just press Submit."
+      }
+    },
+    "abort": {
+      "already_configured": "Stash is already set up."
+    }
+  }
+}

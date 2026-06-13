@@ -1,0 +1,12 @@
+{
+  "domain": "stash",
+  "name": "Stash",
+  "codeowners": ["@trstan84"],
+  "config_flow": true,
+  "dependencies": ["webhook", "http", "frontend"],
+  "documentation": "https://github.com/trstan84/ha-stash",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/trstan84/ha-stash/issues",
+  "version": "1.0.0"
+}
