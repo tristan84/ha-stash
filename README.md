@@ -27,6 +27,7 @@ every device that opens it.
 - 🔄 Real-time sync — open it on any phone/tablet and see the same list
 - 🗄️ Data stored privately in Home Assistant (`.storage`), nothing leaves your network
 - 💾 **Backup & restore** — automatic on-device snapshots with one-tap restore, plus downloadable full backup files and CSV import/export
+- 📲 **Install to your phone** — the 📲 button saves the app to your home screen as a standalone, full-screen web app
 
 ## Installation
 

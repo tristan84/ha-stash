@@ -177,6 +177,7 @@ select.fi option{background:var(--s2)}
     <button class="hbtn" id="sortBtn" style="display:none" onclick="nextSort()">↕</button>
     <button class="hbtn" onclick="openCatMgr()">⚙︎</button>
     <button class="hbtn" onclick="openBackup()">💾</button>
+    <button class="hbtn" onclick="installApp()" title="Install as app">📲</button>
   </div>
 </div>
 
@@ -918,6 +919,36 @@ function renderBackup(){
     <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">${new Date(s.ts).toLocaleString()}${i===0?' · latest':''}</div>
     <div style="font-size:12px;color:var(--muted)">${s.n} items</div></div>
     <button class="btn btn-p" style="flex:0 0 auto;padding:9px 14px" onclick="restoreSnapshot(${i})">Restore</button></div>`).join('');
+}
+
+/* ── INSTALL AS WEB APP (PWA / Add to Home Screen) ─────────────────────
+   Lets people save the app to their phone home screen as a standalone web
+   app. Inside the HA sidebar it first pops the page out of the iframe so the
+   browser's install option is available. A lightweight manifest (built at
+   runtime, no server route needed) gives it a name + icon + full-screen mode. */
+let deferredInstall=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredInstall=e; });
+(function injectManifest(){
+  try{
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="104" fill="#10b981"/><text x="256" y="352" font-size="300" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#fff">S</text></svg>';
+    const icon='data:image/svg+xml;base64,'+btoa(svg);
+    const man={name:'Stash',short_name:'Stash',display:'standalone',background_color:'#0b0c0e',theme_color:'#0b0c0e',start_url:'index.html',scope:'./',icons:[{src:icon,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
+    const url=URL.createObjectURL(new Blob([JSON.stringify(man)],{type:'application/manifest+json'}));
+    const l=document.createElement('link'); l.rel='manifest'; l.href=url; document.head.appendChild(l);
+    const a=document.createElement('link'); a.rel='apple-touch-icon'; a.href=icon; document.head.appendChild(a);
+  }catch(e){}
+})();
+function installApp(){
+  if(window.self!==window.top){ // inside the HA sidebar iframe — pop out first
+    window.open(window.location.href,'_blank');
+    toast('Opened in a new tab — use the browser menu → “Add to Home screen”');
+    return;
+  }
+  if(deferredInstall){ deferredInstall.prompt(); deferredInstall.userChoice.finally(()=>{deferredInstall=null;}); return; }
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  alert(ios
+    ? 'Install “Stash” on your phone:\n\n1. Tap the Share button\n2. Choose “Add to Home Screen”'
+    : 'Install “Stash” on your phone:\n\n1. Open the browser menu (⋮)\n2. Choose “Add to Home screen” / “Install app”');
 }
 
 // ── SCANNER ───────────────────────────────────────────────────────────
