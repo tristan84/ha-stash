@@ -285,6 +285,23 @@ select.fi option{background:var(--s2)}
   </div>
 </div>
 
+<!-- Cloud sign-in (standalone cloud mode) -->
+<div class="ov" id="authOv" style="z-index:810">
+  <div class="sheet" onclick="event.stopPropagation()" style="max-width:420px">
+    <div class="drag"></div>
+    <div class="stitle" id="authTitle">Sign in</div>
+    <div style="color:var(--muted);font-size:13px;margin:-4px 0 14px">Your inventory syncs privately to your free cloud account.</div>
+    <button class="btn btn-s" style="width:100%" onclick="authGoogle()">Continue with Google</button>
+    <div style="text-align:center;color:var(--muted);font-size:12px;margin:12px 0">— or —</div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" id="authEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="fg"><label class="fl">Password</label><input class="fi" id="authPw" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+    <div id="authErr" style="color:var(--danger);font-size:12.5px;min-height:16px;margin-bottom:6px"></div>
+    <button class="btn btn-p" id="authSubmit" style="width:100%" onclick="authSubmit()">Sign in</button>
+    <div style="text-align:center;margin-top:12px"><span id="authToggle" onclick="toggleAuthMode()" style="color:var(--accent);font-size:13px;cursor:pointer">New here? Create an account</span></div>
+    <div style="text-align:center;margin-top:10px"><span onclick="authBackToPicker()" style="color:var(--muted);font-size:12px;cursor:pointer">← Use a different option</span></div>
+  </div>
+</div>
+
 <!-- Backup & Restore -->
 <div class="ov" id="bakOv" onclick="closeBackup()">
   <div class="sheet" onclick="event.stopPropagation()">
@@ -296,7 +313,8 @@ select.fi option{background:var(--s2)}
       <button class="btn btn-s" style="width:100%" onclick="document.getElementById('file_bak').click()">📂 Choose backup or CSV…</button>
       <input type="file" accept=".json,.csv,application/json,text/csv" id="file_bak" style="display:none" onchange="onBackupFile(event)"></div>
     <div class="fg"><label class="fl">Automatic backups (this device)</label><div id="bakList"></div></div>
-    <div class="fg" id="modeRow" style="display:none"><label class="fl">Data location</label><button class="btn btn-s" style="width:100%" onclick="closeBackup();showModePicker()">Change where data is stored…</button></div>
+    <div class="fg" id="modeRow" style="display:none"><label class="fl">Data location</label><button class="btn btn-s" style="width:100%" onclick="closeBackup();showModePicker()">Change where data is stored…</button>
+      <button class="btn btn-s" id="signOutBtn" style="width:100%;margin-top:8px;display:none" onclick="closeBackup();signOutCloud()">Sign out of cloud account</button></div>
     <div class="brow"><button class="btn btn-p" onclick="closeBackup()">Done</button></div>
   </div>
 </div>
@@ -386,9 +404,69 @@ async function remotePush(payload){
   if(mode === 'cloud'){ return await cloudPush(payload); }
   return true; // local-only: nothing to push, already saved to localStorage
 }
-// Cloud (Supabase) adapter — implemented in Step 2. Stubbed to local for now.
-async function cloudLoad(){ return null; }
-async function cloudPush(payload){ return true; }
+// Cloud (Supabase) adapter — hosted multi-user store for people without HA.
+// supabase-js is loaded lazily (only when cloud mode is actually used) so the
+// HA integration stays lean and offline. Keys below are PUBLIC client keys.
+const SUPA_URL='https://zceuylsoorvxlmzoibjb.supabase.co';
+const SUPA_KEY='sb_publishable_K4UDZOqdLeB4VwbI2IOrCQ_COZYQy3i';
+const CLOUD_APP='stash';
+let supa=null, cloudUser=null, authMode='in';
+function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+async function ensureSupa(){
+  if(supa) return supa;
+  if(!window.supabase) await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+  supa=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  return supa;
+}
+async function ensureCloudAuth(){
+  try{ const c=await ensureSupa(); const {data:{session}}=await c.auth.getSession(); cloudUser=session?session.user:null; return !!session; }
+  catch(e){ console.warn('cloud auth check failed',e); return false; }
+}
+async function cloudLoad(){
+  const c=await ensureSupa(); const {data:{user}}=await c.auth.getUser(); if(!user) return null; cloudUser=user;
+  const {data,error}=await c.from('inventories').select('data').eq('user_id',user.id).eq('app',CLOUD_APP).maybeSingle();
+  if(error){ console.warn('cloudLoad',error); return null; }
+  return data?data.data:null;
+}
+async function cloudPush(payload){
+  const c=await ensureSupa(); const {data:{user}}=await c.auth.getUser(); if(!user) return false;
+  const {error}=await c.from('inventories').upsert({user_id:user.id,app:CLOUD_APP,data:JSON.parse(payload)});
+  if(error) console.warn('cloudPush',error);
+  return !error;
+}
+// ── Cloud auth UI ──
+function showAuth(){ document.getElementById('authErr').textContent=''; setAuthMode('in'); document.getElementById('authOv').classList.add('on'); setTimeout(()=>document.getElementById('authEmail').focus(),200); }
+function setAuthMode(m){
+  authMode=m;
+  document.getElementById('authTitle').textContent = m==='in'?'Sign in':'Create account';
+  document.getElementById('authSubmit').textContent = m==='in'?'Sign in':'Create account';
+  document.getElementById('authToggle').textContent = m==='in'?'New here? Create an account':'Have an account? Sign in';
+}
+function toggleAuthMode(){ setAuthMode(authMode==='in'?'up':'in'); document.getElementById('authErr').textContent=''; }
+function authBackToPicker(){ document.getElementById('authOv').classList.remove('on'); showModePicker(); }
+async function authSubmit(){
+  const email=document.getElementById('authEmail').value.trim();
+  const pw=document.getElementById('authPw').value;
+  const err=document.getElementById('authErr');
+  if(!email||!pw){ err.textContent='Enter your email and password.'; return; }
+  try{
+    const c=await ensureSupa();
+    const {data,error}= authMode==='in'
+      ? await c.auth.signInWithPassword({email,password:pw})
+      : await c.auth.signUp({email,password:pw});
+    if(error){ err.textContent=error.message; return; }
+    if(authMode==='up' && !data.session){ err.textContent='Account created — check your email to confirm, then sign in.'; setAuthMode('in'); return; }
+    document.getElementById('authOv').classList.remove('on'); load();
+  }catch(e){ err.textContent='Could not reach the server. Check your connection.'; }
+}
+async function authGoogle(){
+  try{ const c=await ensureSupa(); await c.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.href.split('#')[0]}}); }
+  catch(e){ document.getElementById('authErr').textContent='Google sign-in unavailable.'; }
+}
+async function signOutCloud(){
+  try{ if(!supa) await ensureSupa(); await supa.auth.signOut(); }catch(e){}
+  cloudUser=null; toast('Signed out'); showAuth();
+}
 
 // ── STRUCTURE ─────────────────────────────────────────────────────────
 // DEFAULT_STRUCTURE is just the seed for a brand-new install. The live
@@ -460,6 +538,8 @@ function hasSubs(catId){ return (getCat(catId)?.subs.length||0)>0; }
 async function load(){
   // Standalone first run: let the user choose where their data lives.
   if(!HA_INJECTED && !getMode()){ showModePicker(); return; }
+  // Cloud mode needs a signed-in user before we can load.
+  if(getMode()==='cloud'){ const signed=await ensureCloudAuth(); if(!signed){ showAuth(); return; } }
   // Load from the active backend first - single source of truth
   try{
     const d=await remoteLoad();
@@ -517,8 +597,9 @@ function chooseMode(m){
     setTimeout(()=>document.getElementById('haUrl').focus(),200); return;
   }
   if(m==='cloud'){
-    document.getElementById('modeCards').style.display='none';
-    document.getElementById('cloudNote').style.display=''; return;
+    setMode('cloud');
+    document.getElementById('modeOv').classList.remove('on');
+    showAuth(); return;
   }
   setMode('local'); finishModePick();   // 'local'
 }
@@ -1001,7 +1082,7 @@ function restoreSnapshot(i){
   try{ const d=JSON.parse(s.data); if(applyRestore(d)){ toast('✅ Restored '+d.items.length+' items'); renderBackup(); } }
   catch(e){ toast('Backup unreadable'); }
 }
-function openBackup(){ renderBackup(); document.getElementById('modeRow').style.display=HA_INJECTED?'none':''; document.getElementById('bakOv').classList.add('on'); }
+function openBackup(){ renderBackup(); document.getElementById('modeRow').style.display=HA_INJECTED?'none':''; document.getElementById('signOutBtn').style.display=(getMode()==='cloud')?'':'none'; document.getElementById('bakOv').classList.add('on'); }
 function closeBackup(){ document.getElementById('bakOv').classList.remove('on'); }
 function renderBackup(){
   const el=document.getElementById('bakList'); if(!el) return;
