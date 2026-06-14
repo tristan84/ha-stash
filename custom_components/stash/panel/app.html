@@ -110,6 +110,11 @@ select.fi option{background:var(--s2)}
 .eo{min-height:42px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;border-radius:9px;border:2px solid transparent;background:var(--s3);padding:7px 6px;line-height:1.15}
 .eo.sel{border-color:var(--accent);background:rgba(48,209,88,0.14);color:var(--accent)}
 .iconbadge{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;font-weight:700;line-height:1.05;overflow:hidden;word-break:break-word;padding:2px}
+.modecard{display:flex;gap:13px;align-items:center;width:100%;text-align:left;background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;color:var(--text)}
+.modecard:active{opacity:.7}
+.mc-ico{font-size:25px;flex:0 0 auto;width:30px;text-align:center}
+.mc-t{font-weight:700;font-size:15px}
+.mc-s{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.3}
 .lpill{display:inline-flex;align-items:center;gap:3px;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;background:rgba(255,207,58,0.16);color:var(--warn);margin-left:6px}
 .loanbar{display:flex;align-items:center;gap:9px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:10px 11px}
 .loanbar .lb-info{flex:1;min-width:0}
@@ -256,6 +261,30 @@ select.fi option{background:var(--s2)}
 </div>
 <div id="loanView" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:760;display:none;align-items:center;justify-content:center;padding:20px" onclick="document.getElementById('loanView').style.display='none'"><img id="loanViewImg" style="max-width:96%;max-height:92%;border-radius:14px"></div>
 
+<!-- First-run mode picker (standalone only) -->
+<div class="ov" id="modeOv" style="z-index:800">
+  <div class="sheet" onclick="event.stopPropagation()" style="max-width:460px">
+    <div class="drag"></div>
+    <div class="stitle" style="font-size:20px">Welcome to Stash</div>
+    <div style="color:var(--muted);font-size:13px;margin:-4px 0 14px">Where would you like your inventory to live? You can change this later in Backup &amp; Restore.</div>
+    <div id="modeCards">
+      <button class="modecard" onclick="chooseMode('cloud')"><div class="mc-ico">☁️</div><div><div class="mc-t">Free cloud account</div><div class="mc-s">Best if you don’t use Home Assistant. Syncs across all your devices.</div></div></button>
+      <button class="modecard" onclick="chooseMode('ha')"><div class="mc-ico">🏠</div><div><div class="mc-t">Connect Home Assistant</div><div class="mc-s">Keep data in your own HA via the Stash integration.</div></div></button>
+      <button class="modecard" onclick="chooseMode('local')"><div class="mc-ico">📱</div><div><div class="mc-t">Just this device</div><div class="mc-s">No account. Data stays in this browser — use Backup to move it.</div></div></button>
+    </div>
+    <div id="haForm" style="display:none">
+      <label class="fl">Your Home Assistant webhook URL</label>
+      <input class="fi" id="haUrl" type="url" placeholder="https://xxxx.ui.nabu.casa/api/webhook/xxxxxxxx" autocomplete="off">
+      <div style="color:var(--muted);font-size:12px;margin-top:6px">Install the <b>Stash</b> HACS integration in Home Assistant, then paste the webhook URL it gives you here.</div>
+      <div class="brow"><button class="btn btn-s" onclick="backToModes()">Back</button><button class="btn btn-p" onclick="saveHaMode()">Connect</button></div>
+    </div>
+    <div id="cloudNote" style="display:none">
+      <div style="color:var(--muted);font-size:13px">Cloud accounts (email &amp; Google sign-in) are being set up. For now your data is saved on <b>this device</b>; choose <b>Free cloud account</b> again after the next update to sign in and sync.</div>
+      <div class="brow"><button class="btn btn-s" onclick="backToModes()">Back</button><button class="btn btn-p" onclick="chooseMode('local')">Continue on this device</button></div>
+    </div>
+  </div>
+</div>
+
 <!-- Backup & Restore -->
 <div class="ov" id="bakOv" onclick="closeBackup()">
   <div class="sheet" onclick="event.stopPropagation()">
@@ -267,6 +296,7 @@ select.fi option{background:var(--s2)}
       <button class="btn btn-s" style="width:100%" onclick="document.getElementById('file_bak').click()">📂 Choose backup or CSV…</button>
       <input type="file" accept=".json,.csv,application/json,text/csv" id="file_bak" style="display:none" onchange="onBackupFile(event)"></div>
     <div class="fg"><label class="fl">Automatic backups (this device)</label><div id="bakList"></div></div>
+    <div class="fg" id="modeRow" style="display:none"><label class="fl">Data location</label><button class="btn btn-s" style="width:100%" onclick="closeBackup();showModePicker()">Change where data is stored…</button></div>
     <div class="brow"><button class="btn btn-p" onclick="closeBackup()">Done</button></div>
   </div>
 </div>
@@ -320,6 +350,45 @@ let syncPending=null;
 // own Home Assistant — no URL, no token, nothing instance-specific.
 const WEBHOOK_ID = '__APP_WEBHOOK_ID__';
 const SYNC_URL = '/api/webhook/' + WEBHOOK_ID;
+
+// ── DATA MODE / BACKEND ADAPTER ───────────────────────────────────────
+// The same app runs in three contexts:
+//   • Served by the HA integration  → WEBHOOK_ID is injected → mode 'ha', no picker.
+//   • Standalone (hosted / Play Store), user chooses once on first run:
+//       'local'  — this device only
+//       'ha'     — their own Home Assistant (they paste the integration webhook URL)
+//       'cloud'  — free hosted account (Supabase)   [Step 2 — wiring in progress]
+const HA_INJECTED = WEBHOOK_ID.indexOf('__APP_') !== 0;   // true only when integration-served
+const MODE_KEY = KEY + '_mode';
+const HAURL_KEY = KEY + '_ha_url';
+function getMode(){ return HA_INJECTED ? 'ha' : (localStorage.getItem(MODE_KEY) || ''); }
+function setMode(m){ localStorage.setItem(MODE_KEY, m); }
+function haEndpoint(){ return HA_INJECTED ? SYNC_URL : (localStorage.getItem(HAURL_KEY) || ''); }
+// Returns parsed {items,barcodes,structure} from the active backend, or null.
+async function remoteLoad(){
+  const mode = getMode();
+  if(mode === 'ha'){
+    const url = haEndpoint(); if(!url) return null;
+    const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now());
+    if(!r.ok) throw new Error('ha load failed'); return await r.json();
+  }
+  if(mode === 'cloud'){ return await cloudLoad(); }
+  return null; // local-only
+}
+// Pushes a payload to the active backend. Returns true on success.
+async function remotePush(payload){
+  const mode = getMode();
+  if(mode === 'ha'){
+    const url = haEndpoint(); if(!url) return false;
+    const r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:payload});
+    return r.ok;
+  }
+  if(mode === 'cloud'){ return await cloudPush(payload); }
+  return true; // local-only: nothing to push, already saved to localStorage
+}
+// Cloud (Supabase) adapter — implemented in Step 2. Stubbed to local for now.
+async function cloudLoad(){ return null; }
+async function cloudPush(payload){ return true; }
 
 // ── STRUCTURE ─────────────────────────────────────────────────────────
 // DEFAULT_STRUCTURE is just the seed for a brand-new install. The live
@@ -389,13 +458,14 @@ function getSub(catId,subId){ return getCat(catId)?.subs.find(s=>s.id===subId); 
 function hasSubs(catId){ return (getCat(catId)?.subs.length||0)>0; }
 
 async function load(){
-  // Always load from the integration first - single source of truth
+  // Standalone first run: let the user choose where their data lives.
+  if(!HA_INJECTED && !getMode()){ showModePicker(); return; }
+  // Load from the active backend first - single source of truth
   try{
-    const r=await fetch(SYNC_URL+'?t='+Date.now());
-    if(r.ok){
-      const d=await r.json();
-      if(d&&d.structure&&d.structure.length){ STRUCTURE=d.structure; localStorage.setItem(KEY+'_struct',JSON.stringify(STRUCTURE)); }
-      if(d&&d.items&&d.items.length){
+    const d=await remoteLoad();
+    if(d){
+      if(d.structure&&d.structure.length){ STRUCTURE=d.structure; localStorage.setItem(KEY+'_struct',JSON.stringify(STRUCTURE)); }
+      if(d.items&&d.items.length){
         inv=d.items; barcodes=d.barcodes||{};
         localStorage.setItem(KEY,JSON.stringify(inv));
         localStorage.setItem(BKEY,JSON.stringify(barcodes));
@@ -424,18 +494,40 @@ function saveData(){
 async function syncToHA(){
   try{
     const payload=JSON.stringify({items:inv,barcodes,structure:STRUCTURE,saved_at:Date.now()});
-    // Push to the integration webhook (works local AND via Nabu Casa remote)
-    const r=await fetch(SYNC_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:payload
-    });
-    if(!r.ok) throw new Error('webhook failed');
+    // Push to the active backend (HA webhook / cloud). Local-only is a no-op.
+    const ok=await remotePush(payload);
+    if(!ok) throw new Error('push failed');
   }catch(e){
     console.warn('Sync failed (local data is safe):',e);
   }
 }
 function status(i){ return i.q===0?'out':i.q<=i.t?'low':'ok'; }
+
+// ── FIRST-RUN MODE PICKER (standalone only) ───────────────────────────
+function showModePicker(){ backToModes(); document.getElementById('modeOv').classList.add('on'); }
+function backToModes(){
+  document.getElementById('haForm').style.display='none';
+  document.getElementById('cloudNote').style.display='none';
+  document.getElementById('modeCards').style.display='';
+}
+function chooseMode(m){
+  if(m==='ha'){
+    document.getElementById('modeCards').style.display='none';
+    document.getElementById('haForm').style.display='';
+    setTimeout(()=>document.getElementById('haUrl').focus(),200); return;
+  }
+  if(m==='cloud'){
+    document.getElementById('modeCards').style.display='none';
+    document.getElementById('cloudNote').style.display=''; return;
+  }
+  setMode('local'); finishModePick();   // 'local'
+}
+function saveHaMode(){
+  const u=document.getElementById('haUrl').value.trim();
+  if(!/^https?:\/\/.+\/api\/webhook\/.+/.test(u)){ alert('Please paste your full Home Assistant webhook URL — it contains “/api/webhook/”.'); return; }
+  localStorage.setItem(HAURL_KEY,u); setMode('ha'); finishModePick();
+}
+function finishModePick(){ document.getElementById('modeOv').classList.remove('on'); load(); }
 
 // ── NAV ───────────────────────────────────────────────────────────────
 function goBack(){
@@ -909,7 +1001,7 @@ function restoreSnapshot(i){
   try{ const d=JSON.parse(s.data); if(applyRestore(d)){ toast('✅ Restored '+d.items.length+' items'); renderBackup(); } }
   catch(e){ toast('Backup unreadable'); }
 }
-function openBackup(){ renderBackup(); document.getElementById('bakOv').classList.add('on'); }
+function openBackup(){ renderBackup(); document.getElementById('modeRow').style.display=HA_INJECTED?'none':''; document.getElementById('bakOv').classList.add('on'); }
 function closeBackup(){ document.getElementById('bakOv').classList.remove('on'); }
 function renderBackup(){
   const el=document.getElementById('bakList'); if(!el) return;
