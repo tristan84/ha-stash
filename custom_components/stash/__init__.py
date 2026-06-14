@@ -20,7 +20,7 @@ from homeassistant.components.frontend import (
     async_register_built_in_panel,
     async_remove_panel,
 )
-from homeassistant.components.http import HomeAssistantView
+from homeassistant.components.http import HomeAssistantView, StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
@@ -28,7 +28,9 @@ from homeassistant.helpers.storage import Store
 from .const import APP_NAME, DOMAIN, PANEL_URL_PATH, SIDEBAR_ICON, STORAGE_VERSION
 
 PANEL_HTML = os.path.join(os.path.dirname(__file__), "panel", "app.html")
+PANEL_IMG_DIR = os.path.join(os.path.dirname(__file__), "panel", "img")
 PANEL_VIEW_URL = f"/{DOMAIN}-app/index.html"
+ASSETS_URL = f"/{DOMAIN}-assets"
 
 EMPTY_DATA = {"items": [], "barcodes": {}, "saved_at": 0}
 
@@ -92,6 +94,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     html = await hass.async_add_executor_job(_read_html)
     hass.http.register_view(PanelView(html))
+
+    # Serve the bundled imagery (header + washed category backgrounds).
+    # Register once per HA run; static paths cannot be re-registered.
+    if not hass.data[DOMAIN].get("_assets_registered"):
+        await hass.http.async_register_static_paths(
+            [StaticPathConfig(ASSETS_URL, PANEL_IMG_DIR, False)]
+        )
+        hass.data[DOMAIN]["_assets_registered"] = True
 
     async_register_built_in_panel(
         hass,

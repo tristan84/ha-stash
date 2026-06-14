@@ -106,9 +106,15 @@ select.fi option{background:var(--s2)}
 .ecats::-webkit-scrollbar{display:none}
 .ecat{flex-shrink:0;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:12px;background:var(--s3)}
 .ecat.on{color:var(--accent);background:rgba(48,209,88,0.15)}
-.egrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
-.eo{height:38px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border-radius:8px;border:2px solid transparent}
-.eo.sel{border-color:var(--accent);background:rgba(48,209,88,0.12)}
+.egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.eo{min-height:42px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;border-radius:9px;border:2px solid transparent;background:var(--s3);padding:7px 6px;line-height:1.15}
+.eo.sel{border-color:var(--accent);background:rgba(48,209,88,0.14);color:var(--accent)}
+.iconbadge{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;height:100%;font-weight:700;line-height:1.05;overflow:hidden;word-break:break-word;padding:2px}
+.lpill{display:inline-flex;align-items:center;gap:3px;padding:1px 7px;border-radius:10px;font-size:11px;font-weight:700;background:rgba(255,207,58,0.16);color:var(--warn);margin-left:6px}
+.loanbar{display:flex;align-items:center;gap:9px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:10px 11px}
+.loanbar .lb-info{flex:1;min-width:0}
+.loanbar .lb-who{font-weight:700;font-size:14px;color:var(--text)}
+.loanbar .lb-sub{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brow{display:flex;gap:8px;margin-top:18px}
 .btn{flex:1;padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none}
 .btn:active{opacity:0.8;transform:scale(0.97)}
@@ -130,9 +136,39 @@ select.fi option{background:var(--s2)}
 .scl{position:absolute;top:48px;right:18px;width:40px;height:40px;background:rgba(0,0,0,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;cursor:pointer;z-index:2}
 .slbl{color:rgba(255,255,255,0.7);font-size:14px;margin-top:22px;position:relative;z-index:1}
 .sbot{position:absolute;bottom:40px;z-index:2}
+/* Premium hero + category theming */
+.hero{position:relative;margin:12px 16px 10px;border-radius:24px;padding:20px;overflow:hidden;background:linear-gradient(135deg,rgba(6,28,22,0.72),rgba(7,18,26,0.86)),url("/stash-assets/header.jpg");background-size:cover;background-position:center;border:1px solid var(--border2);box-shadow:var(--shadow)}
+#bgLayer{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity .5s ease;pointer-events:none;filter:saturate(0.85) blur(1px)}
+#bgScrim{position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,rgba(11,12,14,0.46) 0%,rgba(11,12,14,0.66) 52%,rgba(11,12,14,0.86) 100%);opacity:0;transition:opacity .5s ease;pointer-events:none}
+.page{position:relative;z-index:1}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(42px);pointer-events:none}
+.hb1{width:190px;height:190px;background:#10b981;opacity:.5;top:-70px;right:-40px}
+.hb2{width:150px;height:150px;background:#0a84ff;opacity:.32;bottom:-60px;left:-30px}
+.hero-inner{position:relative;z-index:1}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.hero-title{font-size:30px;font-weight:700;letter-spacing:-1px;margin:3px 0 16px;color:#fff}
+.hero-stats{display:flex;gap:8px}
+.hstat{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:10px 12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hstat .n{font-size:21px;font-weight:700;line-height:1}
+.hstat .l{font-size:10.5px;color:rgba(255,255,255,0.6);margin-top:4px;text-transform:uppercase;letter-spacing:.6px}
+.hstat.ok .n{color:#41e0a3}.hstat.low .n{color:var(--warn)}.hstat.out .n{color:var(--danger)}
+.cat-card{position:relative}
+.cat-ico{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px}
+.cat-glow{position:absolute;inset:0;pointer-events:none}
+.pbanner{position:relative;margin:12px 16px 6px;border-radius:20px;padding:16px 18px;overflow:hidden;display:flex;align-items:center;gap:14px;border:1px solid var(--border2);box-shadow:var(--shadow)}
+.pb-ico{font-size:30px;width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pb-title{font-size:20px;font-weight:700;letter-spacing:-.4px}
+.pb-sub{font-size:13px;color:var(--muted);margin-top:2px}
+/* Photos */
+.photorow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pthumb{width:60px;height:60px;border-radius:12px;object-fit:cover;border:1px solid var(--border2);cursor:pointer}
+.paddbtn{width:60px;height:60px;border-radius:12px;border:1px dashed var(--border2);background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--muted);cursor:pointer;flex:0 0 auto}
+.psub{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
+<div id="bgLayer"></div><div id="bgScrim"></div>
+<div id="photoView" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:700;display:none;align-items:center;justify-content:center;padding:20px" onclick="closePhotoView(event)"><img id="photoViewImg" style="max-width:96%;max-height:92%;border-radius:14px;display:none"><iframe id="photoViewFrame" style="width:96%;height:90%;border:none;border-radius:14px;background:#fff;display:none"></iframe><div onclick="document.getElementById('photoView').style.display='none'" style="position:absolute;top:16px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;color:#fff;font-size:19px;cursor:pointer">✕</div></div>
 
 <div class="hdr">
   <div class="back" id="backBtn" onclick="goBack()">‹</div>
@@ -140,12 +176,20 @@ select.fi option{background:var(--s2)}
   <div class="hbtns">
     <button class="hbtn" id="sortBtn" style="display:none" onclick="nextSort()">↕</button>
     <button class="hbtn" onclick="openCatMgr()">⚙︎</button>
-    <button class="hbtn" onclick="doExport()">⬆</button>
+    <button class="hbtn" onclick="openBackup()">💾</button>
   </div>
 </div>
 
 <!-- HOME PAGE -->
 <div class="page on" id="pgHome">
+  <div class="hero" id="hero">
+    <div class="hero-blob hb1"></div><div class="hero-blob hb2"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Workshop inventory</div>
+      <div class="hero-title">Stash</div>
+      <div class="hero-stats" id="heroStats"></div>
+    </div>
+  </div>
   <div class="srch-wrap"><span class="srch-ico">🔍</span><input class="srch" id="homeSearch" type="search" placeholder="Search all items…" oninput="onSearch()" autocomplete="off"></div>
   <div class="chips" id="homeChips"></div>
   <div class="grid" id="homeGrid"></div>
@@ -154,12 +198,14 @@ select.fi option{background:var(--s2)}
 
 <!-- SUB-CATEGORY PAGE (for cats with subs) -->
 <div class="page" id="pgSub">
+  <div id="subBanner" class="pbanner" style="display:none"></div>
   <div class="chips" id="subChips"></div>
   <div class="grid" id="subGrid"></div>
 </div>
 
 <!-- ITEMS PAGE -->
 <div class="page" id="pgItems">
+  <div id="itemsBanner" class="pbanner" style="display:none"></div>
   <div class="filters" id="itemFilters"></div>
   <div class="items" id="itemsList"></div>
 </div>
@@ -173,7 +219,7 @@ select.fi option{background:var(--s2)}
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="drag"></div>
     <div class="stitle" id="stitle">Add Item</div>
-    <div class="fg"><label class="fl">Name</label><input class="fi" id="fn" type="text" placeholder="e.g. Chicken Breast" autocomplete="off"></div>
+    <div class="fg"><label class="fl">Name</label><input class="fi" id="fn" type="text" placeholder="e.g. Cordless Drill" autocomplete="off"></div>
     <div class="fg"><label class="fl">Category</label><select class="fi" id="fcat" onchange="onCatChange()"></select></div>
     <div class="fg" id="fsubRow"><label class="fl">Sub-category</label><select class="fi" id="fsub"></select></div>
     <div class="fg"><label class="fl">Icon</label>
@@ -185,8 +231,42 @@ select.fi option{background:var(--s2)}
     </div>
     <div class="fg"><label class="fl">Low stock below</label><input class="fi" id="ft" type="number" min="0" inputmode="numeric" placeholder="2"></div>
     <div class="fg" id="bcRow" style="display:none"><label class="fl">Barcode</label><input class="fi" id="fbc" type="text" readonly></div>
+    <div class="fg"><label class="fl">Item photo</label><div class="photorow" id="prow_photo"></div></div>
+    <div class="fg"><label class="fl">Receipt photo</label><div class="photorow" id="prow_receipt"></div></div>
+    <input type="file" accept="image/*" capture="environment" id="file_photo" style="display:none" onchange="onPhoto(event,'photo')">
+    <input type="file" accept="image/*,application/pdf" id="file_receipt" style="display:none" onchange="onPhoto(event,'receipt')">
+    <div class="fg" id="loanRow" style="display:none"><label class="fl">Loan</label><div id="loanBox"></div></div>
     <div class="brow"><button class="btn btn-s" onclick="closeSheet()">Cancel</button><button class="btn btn-p" onclick="saveItem()">Save</button></div>
     <div id="delRow" style="display:none"><button class="btn btn-d" onclick="delItem()">🗑 Delete</button></div>
+  </div>
+</div>
+
+<!-- Check-out / loan sheet -->
+<div class="ov" id="loanOv" onclick="closeLoan()">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="drag"></div>
+    <div class="stitle">Check Out Item</div>
+    <div class="fg"><label class="fl">Lent to</label><input class="fi" id="loanWho" type="text" placeholder="e.g. Dave next door" autocomplete="off"></div>
+    <div class="fg"><label class="fl">Note (optional)</label><textarea class="fi" id="loanNote" rows="2" placeholder="e.g. returning Sunday" style="resize:vertical"></textarea></div>
+    <div class="fg"><label class="fl">Handover photo (optional)</label><div class="photorow" id="prow_loan"></div></div>
+    <input type="file" accept="image/*" capture="environment" id="file_loan" style="display:none" onchange="onLoanPhoto(event)">
+    <div class="brow"><button class="btn btn-s" onclick="closeLoan()">Cancel</button><button class="btn btn-p" onclick="confirmCheckout()">📤 Check out</button></div>
+  </div>
+</div>
+<div id="loanView" style="position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:760;display:none;align-items:center;justify-content:center;padding:20px" onclick="document.getElementById('loanView').style.display='none'"><img id="loanViewImg" style="max-width:96%;max-height:92%;border-radius:14px"></div>
+
+<!-- Backup & Restore -->
+<div class="ov" id="bakOv" onclick="closeBackup()">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="drag"></div>
+    <div class="stitle">Backup &amp; Restore</div>
+    <div class="fg"><label class="fl">Save a backup</label>
+      <div class="brow" style="margin-top:0"><button class="btn btn-s" onclick="downloadBackup()">💾 Full backup file</button><button class="btn btn-s" onclick="doExport()">⬇ Export CSV</button></div></div>
+    <div class="fg"><label class="fl">Restore from a file</label>
+      <button class="btn btn-s" style="width:100%" onclick="document.getElementById('file_bak').click()">📂 Choose backup or CSV…</button>
+      <input type="file" accept=".json,.csv,application/json,text/csv" id="file_bak" style="display:none" onchange="onBackupFile(event)"></div>
+    <div class="fg"><label class="fl">Automatic backups (this device)</label><div id="bakList"></div></div>
+    <div class="brow"><button class="btn btn-p" onclick="closeBackup()">Done</button></div>
   </div>
 </div>
 
@@ -207,7 +287,7 @@ select.fi option{background:var(--s2)}
     <div class="stitle" id="catEditTitle">Add Category</div>
     <div class="row2">
       <div class="fg" style="flex:0 0 78px"><label class="fl">Icon</label><input class="fi" id="catEmoji" type="text" maxlength="4" placeholder="📦" style="text-align:center"></div>
-      <div class="fg"><label class="fl">Name</label><input class="fi" id="catName" type="text" placeholder="e.g. Welding" autocomplete="off"></div>
+      <div class="fg"><label class="fl">Name</label><input class="fi" id="catName" type="text" placeholder="e.g. Garage" autocomplete="off"></div>
     </div>
     <div class="fg"><label class="fl">Colour</label><input class="fi" id="catColor" type="color" value="#30d158" style="height:46px;padding:4px"></div>
     <div class="fg">
@@ -245,13 +325,13 @@ const SYNC_URL = '/api/webhook/' + WEBHOOK_ID;
 // STRUCTURE can be edited by the user (⚙︎) and is persisted + synced
 // alongside the items, so categories travel across devices.
 const DEFAULT_STRUCTURE = [
-  { id:'power_tools', label:'Power Tools', emoji:'🔌', color:'#0a84ff', subs:[] },
+  { id:'power_tools', label:'Power Tools', emoji:'🛠️', color:'#0a84ff', subs:[] },
   { id:'hand_tools',  label:'Hand Tools',  emoji:'🔨', color:'#ff9f0a', subs:[] },
   { id:'fixings', label:'Fixings & Hardware', emoji:'🔩', color:'#8e8e93',
     subs:[
-      {id:'fix_screws',  label:'Screws',          emoji:'🔩'},
+      {id:'fix_screws',  label:'Screws',          emoji:'🪛'},
       {id:'fix_nails',   label:'Nails',           emoji:'📌'},
-      {id:'fix_bolts',   label:'Bolts & Nuts',    emoji:'🪛'},
+      {id:'fix_bolts',   label:'Bolts & Nuts',    emoji:'🔩'},
       {id:'fix_anchors', label:'Anchors & Plugs', emoji:'🧱'},
       {id:'fix_other',   label:'Other',           emoji:'📦'},
     ]
@@ -274,15 +354,20 @@ const DEFAULT_STRUCTURE = [
   { id:'other',      label:'Other',        emoji:'📦', color:'#8e8e93', subs:[] },
 ];
 
-const EMOJI_CATS = {
-  'Tools':['🔧','🔨','🪛','🔩','⚙️','🪚','🪓','⛏️','🗜️','🪝','🧲','📏','📐','✂️','🔪'],
-  'Power':['🔌','🔋','💡','⚡','🪫','🔦','🧰'],
-  'Fixings':['🔩','📌','🧱','🪝','⛓️','🔗'],
-  'Paint':['🪣','🎨','🖌️','🧴','🧪','🛢️','🧯'],
-  'Garden':['🌱','🪴','🌳','🍃','🪵','🌾','🚿','🪨'],
-  'Auto':['🚗','🛞','🛢️','⛽','🔧','🔋'],
-  'Safety':['🦺','🧤','🥽','⛑️','😷','🩹'],
-  'Other':['📦','🛒','🔑','🪜','🧰','🗑️','📋','🏷️','💧','🧻'],
+// Word/label icons — reliable on every device (no emoji-font tofu for tools). Stored verbatim in item.e
+const ICON_WORDS = {
+  'Power':['Drill','Driver','Saw','Sander','Grinder','Router','Multitool','Nailer','Planer'],
+  'Hand':['Hammer','Screwdriver','Spanner','Wrench','Pliers','Chisel','Knife','Clamp','File'],
+  'Measure':['Tape','Level','Square','Ruler','Caliper','Gauge'],
+  'Garden':['Ladder','Shovel','Spade','Rake','Hoe','Shears','Mower','Trimmer','Hose','Axe'],
+  'Fixings':['Screws','Nails','Bolts','Nuts','Washers','Anchors','Rivets'],
+  'Electrical':['Cable','Wire','Tester','Battery','Charger','Bulb','Fuse','Extension'],
+  'Paint':['Paint','Brush','Roller','Tape','Filler','Sealant','Glue'],
+  'Plumbing':['Pipe','Fitting','Valve','Tap','Sealtape','Plunger'],
+  'Auto':['Oil','Jack','Pump','Funnel','Jumper','Wax'],
+  'Safety':['Gloves','Goggles','Mask','Earmuffs','Helmet','Boots'],
+  'Storage':['Box','Bag','Bin','Case','Rack','Toolbox'],
+  'Other':['Other','Spare','Misc','Hardware'],
 };
 
 function cloneStruct(s){ return JSON.parse(JSON.stringify(s)); }
@@ -292,6 +377,12 @@ let inv=[], barcodes={}, editId=null, sortMode='name', eCatSel=null;
 let navStack=[{type:'home'}];
 
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function hexRgb(h){ h=(h||'#888888').replace('#',''); if(h.length===3)h=h.split('').map(x=>x+x).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function tint(h,a){ const c=hexRgb(h); return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
+const ASSET='/stash-assets/';
+const BG={power_tools:'power_tools.jpg',hand_tools:'hand_tools.jpg',fixings:'fixings.jpg',paint:'paint.jpg',electrical:'electrical.jpg',plumbing:'plumbing.jpg',garden:'garden.jpg',automotive:'automotive.jpg',safety:'safety.jpg',consumables:'consumables.jpg',other:'other.jpg'};
+function setBg(catId){ const bl=document.getElementById('bgLayer'),sc=document.getElementById('bgScrim'); const f=catId&&BG[catId]; if(f){ bl.style.backgroundImage='url("'+ASSET+f+'")'; bl.style.opacity='1'; sc.style.opacity='1'; } else { bl.style.opacity='0'; sc.style.opacity='0'; } }
+function paintBanner(elId,emoji,title,sub,color){ const el=document.getElementById(elId); if(!el)return; el.style.display='flex'; el.style.background='linear-gradient(135deg,'+tint(color,0.30)+','+tint(color,0.07)+' 70%, rgba(255,255,255,0.02))'; el.style.borderColor=tint(color,0.35); el.style.boxShadow='0 16px 34px -20px '+tint(color,0.9); el.innerHTML='<div class="pb-ico" style="background:'+tint(color,0.22)+';border:1px solid '+tint(color,0.4)+'">'+emoji+'</div><div><div class="pb-title">'+title+'</div><div class="pb-sub">'+sub+'</div></div>'; }
 function getCat(id){ return STRUCTURE.find(c=>c.id===id); }
 function getSub(catId,subId){ return getCat(catId)?.subs.find(s=>s.id===subId); }
 function hasSubs(catId){ return (getCat(catId)?.subs.length||0)>0; }
@@ -324,6 +415,7 @@ function saveData(){
   localStorage.setItem(BKEY,JSON.stringify(barcodes));
   localStorage.setItem(KEY+'_struct',JSON.stringify(STRUCTURE));
   localStorage.setItem(KEY+'_ts', Date.now());
+  autoBackup();
   // Try HA sync in background - failure is ok, local data is safe
   clearTimeout(syncPending);
   syncPending=setTimeout(syncToHA,2000);
@@ -372,6 +464,8 @@ function showHome(){
   document.getElementById('homeSearch').value='';
   document.getElementById('searchResults').style.display='none';
   document.getElementById('homeGrid').style.display='';
+  const h=document.getElementById('hero'); if(h)h.style.display='';
+  setBg(null);
   renderHomeChips();
   renderHomeGrid();
 }
@@ -380,10 +474,12 @@ function renderHomeChips(){
   const low=inv.filter(i=>status(i)==='low').length;
   const out=inv.filter(i=>status(i)==='out').length;
   const ok=inv.filter(i=>status(i)==='ok').length;
-  document.getElementById('homeChips').innerHTML=
-    `<div class="chip ok">✅ ${ok} in stock</div>`+
-    (low?`<div class="chip warn">⚠️ ${low} low</div>`:'')+
-    (out?`<div class="chip danger">❌ ${out} out</div>`:'');
+  const el=document.getElementById('heroStats');
+  if(el) el.innerHTML=
+    `<div class="hstat ok"><div class="n">${ok}</div><div class="l">In stock</div></div>`+
+    `<div class="hstat low"><div class="n">${low}</div><div class="l">Low</div></div>`+
+    `<div class="hstat out"><div class="n">${out}</div><div class="l">Out</div></div>`;
+  const hc=document.getElementById('homeChips'); if(hc) hc.innerHTML='';
 }
 
 function renderHomeGrid(){
@@ -396,9 +492,9 @@ function renderHomeGrid(){
     const inStock=allItems.filter(i=>i.q>0).length;
     const bc=catOut?'badge-danger':catLow?'badge-warn':'badge-ok';
     const bv=catOut||catLow||inStock;
-    return`<div class="card" onclick="navCat('${cat.id}')">
-      <div class="card-stripe" style="background:${cat.color}"></div>
-      <span class="card-ico">${cat.emoji}</span>
+    return`<div class="card cat-card" style="background:linear-gradient(155deg,${tint(cat.color,0.22)},${tint(cat.color,0.05)} 62%,rgba(255,255,255,0.02));border-color:${tint(cat.color,0.30)};box-shadow:0 16px 32px -20px ${tint(cat.color,0.95)}" onclick="navCat('${cat.id}')">
+      <div class="cat-glow" style="background:radial-gradient(120px 90px at 75% 12%, ${tint(cat.color,0.45)}, transparent 70%)"></div>
+      <div class="cat-ico" style="background:${tint(cat.color,0.20)};border:1px solid ${tint(cat.color,0.38)}">${cat.emoji}</div>
       <div class="card-name">${cat.label}</div>
       <div class="card-sub">${allItems.length} item${allItems.length!==1?'s':''}</div>
       ${allItems.length?`<div class="card-badge ${bc}">${bv}</div>`:''}
@@ -422,8 +518,9 @@ function onSearch(){
   const grid=document.getElementById('homeGrid');
   const results=document.getElementById('searchResults');
   const chips=document.getElementById('homeChips');
-  if(!q){ grid.style.display=''; results.style.display='none'; chips.style.display=''; return; }
-  grid.style.display='none'; chips.style.display='none'; results.style.display='';
+  const hero=document.getElementById('hero');
+  if(!q){ grid.style.display=''; results.style.display='none'; chips.style.display=''; if(hero)hero.style.display=''; return; }
+  grid.style.display='none'; chips.style.display='none'; results.style.display=''; if(hero)hero.style.display='none';
   const found=inv.filter(i=>i.n.toLowerCase().includes(q));
   results.innerHTML=found.length?found.map(i=>itemHTML(i)).join(''):`<div class="empty">Nothing found</div>`;
 }
@@ -433,27 +530,24 @@ function showSubPage(catId, push){
   const cat=getCat(catId);
   setHeader(cat.emoji+' '+cat.label, true, false);
   showPage('pgSub');
-  // chips
   const allItems=inv.filter(i=>cat.subs.some(s=>s.id===i.subcat));
   const low=allItems.filter(i=>status(i)==='low').length;
   const out=allItems.filter(i=>status(i)==='out').length;
-  document.getElementById('subChips').innerHTML=
-    `<div class="chip ok">${allItems.filter(i=>i.q>0).length}/${allItems.length} in stock</div>`+
-    (low?`<div class="chip warn">⚠️ ${low} low</div>`:'')+
-    (out?`<div class="chip danger">❌ ${out} out</div>`:'');
-  // grid
+  const inStock=allItems.filter(i=>i.q>0).length;
+  paintBanner('subBanner',cat.emoji,cat.label, inStock+' in stock · '+allItems.length+' items'+(low?' · '+low+' low':'')+(out?' · '+out+' out':''), cat.color);
+  setBg(catId);
+  document.getElementById('subChips').innerHTML='';
   document.getElementById('subGrid').innerHTML=cat.subs.map(sub=>{
     const items=inv.filter(i=>i.subcat===sub.id);
     const subLow=items.filter(i=>status(i)==='low').length;
     const subOut=items.filter(i=>status(i)==='out').length;
-    const inStock=items.filter(i=>i.q>0).length;
+    const inS=items.filter(i=>i.q>0).length;
     const bc=subOut?'badge-danger':subLow?'badge-warn':'badge-ok';
-    const bv=subOut||subLow||inStock;
-    return`<div class="card" onclick="navSub('${catId}','${sub.id}')">
-      <div class="card-stripe" style="background:${cat.color}88"></div>
-      <span class="card-ico">${sub.emoji}</span>
+    const bv=subOut||subLow||inS;
+    return`<div class="card cat-card" style="background:linear-gradient(155deg,${tint(cat.color,0.16)},${tint(cat.color,0.04)} 62%,rgba(255,255,255,0.02));border-color:${tint(cat.color,0.24)};box-shadow:0 14px 28px -20px ${tint(cat.color,0.85)}" onclick="navSub('${catId}','${sub.id}')">
+      <div class="cat-ico" style="background:${tint(cat.color,0.16)};border:1px solid ${tint(cat.color,0.32)}">${sub.emoji}</div>
       <div class="card-name">${sub.label}</div>
-      <div class="card-sub">${items.length} item${items.length!==1?'s':''}${inStock?' · '+inStock+' in stock':''}</div>
+      <div class="card-sub">${items.length} item${items.length!==1?'s':''}${inS?' · '+inS+' in stock':''}</div>
       ${items.length?`<div class="card-badge ${bc}">${bv}</div>`:''}
     </div>`;
   }).join('');
@@ -474,6 +568,10 @@ function showItemsPage(catId, subId, push){
   const title=sub?(cat.emoji+' '+cat.label+' › '+sub.emoji+' '+sub.label):(cat.emoji+' '+cat.label);
   setHeader(title, true, true);
   showPage('pgItems');
+  const list=getItems(catId,subId);
+  const inS=list.filter(i=>i.q>0).length, lw=list.filter(i=>status(i)==='low').length, ot=list.filter(i=>status(i)==='out').length;
+  paintBanner('itemsBanner', sub?sub.emoji:cat.emoji, sub?sub.label:cat.label, inS+' in stock · '+list.length+' items'+(lw?' · '+lw+' low':'')+(ot?' · '+ot+' out':''), cat.color);
+  setBg(catId);
   renderFilters(catId,subId);
   renderItemsList(catId,subId);
 }
@@ -515,10 +613,10 @@ function renderItemsList(catId,subId){
 function itemHTML(i){
   const s=status(i);
   return`<div class="item ${s==='ok'?'':s}" id="item-${i.id}" onclick="openEdit('${i.id}')">
-    <div class="item-ico">${i.e}</div>
+    <div class="item-ico">${i.photo?'<img src="'+i.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:10px">':iconBadge(i.e,i.n)}</div>
     <div class="item-body">
       <div class="item-name">${i.n}</div>
-      <div class="item-sub"><span class="dot ${s==='ok'?'':s}"></span>${s==='out'?'Out of stock':s==='low'?'Low stock':'In stock'}${i.u?' · '+i.u:''}</div>
+      <div class="item-sub"><span class="dot ${s==='ok'?'':s}"></span>${s==='out'?'Out of stock':s==='low'?'Low stock':'In stock'}${i.u?' · '+i.u:''}${i.loan?`<span class="lpill">OUT · ${i.loan.who}</span>`:''}</div>
     </div>
     <div class="qrow" onclick="event.stopPropagation()">
       <button class="qb m" onclick="adj('${i.id}',-1)">−</button>
@@ -565,9 +663,11 @@ function openAdd(prefill,bc){
   document.getElementById('fcat').value=defCat;
   populateSubSelect(defCat);
   if(defSub) document.getElementById('fsub').value=defSub;
-  selEmoji=getCat(defCat)?.emoji||'📦';
+  selEmoji=''; eCatSel=null;
+  document.getElementById('loanRow').style.display='none';
   if(bc){document.getElementById('fbc').value=bc;document.getElementById('bcRow').style.display='';}
   else document.getElementById('bcRow').style.display='none';
+  curPhoto={photo:null,receipt:null}; renderPhotoRow('photo'); renderPhotoRow('receipt');
   renderEmojiPicker();
   document.getElementById('addOv').classList.add('on');
   setTimeout(()=>document.getElementById('fn').focus(),320);
@@ -587,8 +687,11 @@ function openEdit(id){
   document.getElementById('delRow').style.display='block';
   if(i.barcode){document.getElementById('fbc').value=i.barcode;document.getElementById('bcRow').style.display='';}
   else document.getElementById('bcRow').style.display='none';
-  selEmoji=i.e;
+  selEmoji=i.e||''; eCatSel=iconGroup(i.e);
+  curPhoto={photo:i.photo||null,receipt:i.receipt||null}; renderPhotoRow('photo'); renderPhotoRow('receipt');
   renderEmojiPicker();
+  document.getElementById('loanRow').style.display='';
+  renderLoanBox(i);
   document.getElementById('addOv').classList.add('on');
 }
 
@@ -608,15 +711,22 @@ function populateSubSelect(catId){
 function onCatChange(){
   const catId=document.getElementById('fcat').value;
   populateSubSelect(catId);
-  selEmoji=getCat(catId)?.emoji||'📦';
   renderEmojiPicker();
 }
 
+function iconGroup(w){ for(const g in ICON_WORDS){ if(ICON_WORDS[g].includes(w)) return g; } return null; }
+function iconBadge(val,name){
+  let v=(val||'').toString();
+  if(!v){ v=((name||'?').trim().charAt(0)||'?').toUpperCase(); }
+  const len=[...v].length;
+  const fs = len<=2?'20px':len<=4?'13px':len<=6?'11px':len<=9?'9.5px':'8.5px';
+  return `<span class="iconbadge" style="font-size:${fs}">${v}</span>`;
+}
 function renderEmojiPicker(){
-  const cats=Object.keys(EMOJI_CATS);
-  if(!eCatSel) eCatSel=cats[0];
+  const cats=Object.keys(ICON_WORDS);
+  if(!eCatSel||!ICON_WORDS[eCatSel]) eCatSel=cats[0];
   document.getElementById('ecats').innerHTML=cats.map(c=>`<div class="ecat ${c===eCatSel?'on':''}" onclick="setECat('${c}')">${c}</div>`).join('');
-  document.getElementById('egrid').innerHTML=EMOJI_CATS[eCatSel].map(e=>`<div class="eo ${e===selEmoji?'sel':''}" onclick="pickE('${e}')">${e}</div>`).join('');
+  document.getElementById('egrid').innerHTML=ICON_WORDS[eCatSel].map(w=>`<div class="eo ${w===selEmoji?'sel':''}" onclick="pickE('${w.replace(/'/g,"\\'")}')">${w}</div>`).join('');
 }
 function setECat(c){eCatSel=c;renderEmojiPicker();}
 function pickE(e){selEmoji=e;renderEmojiPicker();}
@@ -632,12 +742,12 @@ function saveItem(){
   const bc=document.getElementById('fbc').value.trim()||null;
   if(editId){
     const i=inv.find(x=>x.id===editId);
-    Object.assign(i,{n,q,u,t,cat:catId,subcat:subId,e:selEmoji,barcode:bc||undefined});
+    Object.assign(i,{n,q,u,t,cat:catId,subcat:subId,e:selEmoji,barcode:bc||undefined,photo:curPhoto.photo||undefined,receipt:curPhoto.receipt||undefined});
     if(bc) barcodes[bc]=editId;
     toast('✅ '+n+' updated');
   } else {
     const id=uid();
-    inv.push({id,n,q,u,t,cat:catId,subcat:subId,e:selEmoji,barcode:bc||undefined});
+    inv.push({id,n,q,u,t,cat:catId,subcat:subId,e:selEmoji,barcode:bc||undefined,photo:curPhoto.photo||undefined,receipt:curPhoto.receipt||undefined});
     if(bc) barcodes[bc]=id;
     toast('✅ '+n+' added');
   }
@@ -661,7 +771,62 @@ function delItem(){
   closeSheet(); toast('🗑 '+i.n+' removed');
 }
 
+// ── PHOTOS ────────────────────────────────────────────────────────────
+let curPhoto={photo:null,receipt:null};
+function compressImg(file,max,q){return new Promise(res=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>h&&w>max){h=Math.round(h*max/w);w=max}else if(h>max){w=Math.round(w*max/h);h=max}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q));};img.onerror=()=>res(null);img.src=URL.createObjectURL(file);});}
+async function onPhoto(e,kind){const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;if(f.type==='application/pdf'){if(f.size>4*1024*1024){toast('PDF too big (max 4MB)');return;}const r=new FileReader();r.onload=()=>{curPhoto[kind]=r.result;renderPhotoRow(kind);toast('✅ Receipt added');};r.readAsDataURL(f);return;}toast('Processing…');const d=await compressImg(f,1100,0.62);if(d){curPhoto[kind]=d;renderPhotoRow(kind);toast('✅ Added');}else{toast('Could not read file');}}
+function renderPhotoRow(kind){const el=document.getElementById('prow_'+kind);if(!el)return;const d=curPhoto[kind];if(d){const pdf=d.indexOf('data:application/pdf')===0;const tile=pdf?`<div class="pthumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--s2)" onclick="viewPhoto('${kind}')">📄</div>`:`<img class="pthumb" src="${d}" onclick="viewPhoto('${kind}')">`;el.innerHTML=tile+`<button class="btn btn-s" style="flex:0 0 auto;padding:9px 12px" onclick="viewPhoto('${kind}')">${pdf?'Open':'View'}</button>`+`<button class="btn btn-s" style="flex:0 0 auto;padding:9px 12px" onclick="downloadPhoto('${kind}')">Save</button>`+`<button class="btn btn-s" style="flex:0 0 auto;padding:9px 12px" onclick="curPhoto['${kind}']=null;renderPhotoRow('${kind}')">Remove</button>`;}else{const hint=kind==='receipt'?'Take a photo or upload (image / PDF)':'Tap to take a photo';el.innerHTML=`<div class="paddbtn" onclick="document.getElementById('file_${kind}').click()">＋</div><div class="psub">${hint}</div>`;}}
+function dataUrlToBlob(d){const p=d.split(',');const mime=(p[0].match(/data:(.*?);/)||[])[1]||'application/octet-stream';const bin=atob(p[1]);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return new Blob([arr],{type:mime});}
+function viewPhoto(kind){const d=curPhoto[kind];if(!d)return;if(d.indexOf('data:application/pdf')===0){const u=URL.createObjectURL(dataUrlToBlob(d));window.open(u,'_blank');setTimeout(()=>URL.revokeObjectURL(u),60000);return;}const im=document.getElementById('photoViewImg');im.src=d;im.style.display='block';document.getElementById('photoView').style.display='flex';}
+function downloadPhoto(kind){const d=curPhoto[kind];if(!d)return;const pdf=d.indexOf('data:application/pdf')===0;const u=URL.createObjectURL(dataUrlToBlob(d));const a=document.createElement('a');a.href=u;a.download=(kind==='receipt'?'receipt':'item')+'_'+Date.now()+(pdf?'.pdf':'.jpg');document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000);toast('⤓ Saved');}
+function closePhotoView(e){if(e.target.id==='photoView')document.getElementById('photoView').style.display='none';}
+
 function closeSheet(){document.getElementById('addOv').classList.remove('on');}
+
+/* ---- Check-out / check-in (loans) ---- */
+let loanForId=null, loanPhoto=null;
+function refreshListAfterChange(){
+  renderHomeGrid(); renderHomeChips();
+  const top=navStack[navStack.length-1];
+  if(top.type==='items') renderItemsList(top.catId,top.subId);
+  else if(top.type==='sub') showSubPage(top.catId,false);
+}
+function renderLoanBox(i){
+  const box=document.getElementById('loanBox'); if(!box) return;
+  if(i&&i.loan){
+    const since=new Date(i.loan.ts).toLocaleDateString();
+    box.innerHTML=`<div class="loanbar">
+      ${i.loan.photo?`<img src="${i.loan.photo}" onclick="viewLoanPhoto('${i.id}')" style="width:44px;height:44px;border-radius:9px;object-fit:cover;cursor:pointer;flex:0 0 auto">`:''}
+      <div class="lb-info"><div class="lb-who">Out · ${i.loan.who}</div>
+      <div class="lb-sub">${i.loan.note?i.loan.note+' · ':''}since ${since}</div></div>
+      <button class="btn btn-p" style="flex:0 0 auto;padding:9px 14px" onclick="checkIn('${i.id}')">Check in</button></div>`;
+  } else {
+    box.innerHTML=`<button class="btn btn-s" style="width:100%" onclick="openLoan('${i.id}')">📤 Check out…</button>`;
+  }
+}
+function loanCompress(file,max,q){return new Promise(res=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>h&&w>max){h=Math.round(h*max/w);w=max}else if(h>max){w=Math.round(w*max/h);h=max}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q));};img.onerror=()=>res(null);img.src=URL.createObjectURL(file);});}
+async function onLoanPhoto(e){const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;toast('Processing…');const d=await loanCompress(f,1100,0.62);if(d){loanPhoto=d;renderLoanPhoto();toast('✅ Photo added');}else toast('Could not read photo');}
+function renderLoanPhoto(){const el=document.getElementById('prow_loan');if(!el)return;if(loanPhoto){el.innerHTML=`<img class="pthumb" src="${loanPhoto}" onclick="showLoanImg()"><button class="btn btn-s" style="flex:0 0 auto;padding:9px 12px" onclick="loanPhoto=null;renderLoanPhoto()">Remove</button>`;}else{el.innerHTML=`<div class="paddbtn" onclick="document.getElementById('file_loan').click()">＋</div><div class="psub">Tap to take a photo</div>`;}}
+function showLoanImg(){const im=document.getElementById('loanViewImg');im.src=loanPhoto;document.getElementById('loanView').style.display='flex';}
+function viewLoanPhoto(id){const i=inv.find(x=>x.id===id);if(!i||!i.loan||!i.loan.photo)return;const im=document.getElementById('loanViewImg');im.src=i.loan.photo;document.getElementById('loanView').style.display='flex';}
+function openLoan(id){loanForId=id;loanPhoto=null;document.getElementById('loanWho').value='';document.getElementById('loanNote').value='';renderLoanPhoto();document.getElementById('loanOv').classList.add('on');setTimeout(()=>document.getElementById('loanWho').focus(),320);}
+function closeLoan(){document.getElementById('loanOv').classList.remove('on');}
+function confirmCheckout(){
+  const who=document.getElementById('loanWho').value.trim();
+  if(!who){document.getElementById('loanWho').focus();toast('Who is it lent to?');return;}
+  const note=document.getElementById('loanNote').value.trim();
+  const i=inv.find(x=>x.id===loanForId); if(!i)return;
+  i.loan={who,note:note||undefined,photo:loanPhoto||undefined,ts:Date.now()};
+  saveData(); closeLoan(); renderLoanBox(i); refreshListAfterChange();
+  toast('📤 '+i.n+' → '+who);
+}
+function checkIn(id){
+  const i=inv.find(x=>x.id===id); if(!i||!i.loan)return;
+  if(!confirm('Check '+i.n+' back in from '+i.loan.who+'?'))return;
+  i.loan=null;
+  saveData(); renderLoanBox(i); refreshListAfterChange();
+  toast('📥 '+i.n+' checked in');
+}
 
 function toast(msg){
   const t=document.getElementById('toast');
@@ -675,6 +840,84 @@ function doExport(){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));
   a.download='stash.csv';a.click();toast('📥 Exported');
+}
+
+/* ── BACKUP & RESTORE ─────────────────────────────────────────────────
+   Auto-snapshots a complete copy of the inventory (items+barcodes+structure,
+   including item photos/receipts/loans) into localStorage on every save, so a
+   bad sync/crash can be undone with one tap. Also supports a downloadable full
+   backup file + restore-from-file. */
+const BAK_APP='stash', BAK_KEY=KEY+'_bak';
+function snapshotData(){ return {items:inv,barcodes:barcodes,structure:STRUCTURE}; }
+function readBackups(){ try{return JSON.parse(localStorage.getItem(BAK_KEY)||'[]');}catch(e){return [];} }
+function autoBackup(){
+  try{
+    let hist=readBackups();
+    const snap={app:BAK_APP,ts:Date.now(),n:inv.length,data:JSON.stringify(snapshotData())};
+    // Collapse rapid edits: replace newest if it's under a minute old, else add new
+    if(hist.length && (snap.ts - hist[0].ts) < 60000) hist[0]=snap; else hist.unshift(snap);
+    hist=hist.slice(0,6);
+    // Write, trimming oldest if storage quota is hit (large photo data etc.)
+    while(hist.length){ try{ localStorage.setItem(BAK_KEY,JSON.stringify(hist)); break; }catch(e){ hist.pop(); } }
+  }catch(e){ console.warn('autoBackup failed',e); }
+}
+function applyRestore(d){
+  if(!d||!Array.isArray(d.items)){ toast('Backup unreadable'); return false; }
+  inv=d.items; barcodes=d.barcodes||{}; if(Array.isArray(d.structure)&&d.structure.length) STRUCTURE=d.structure;
+  saveData(); renderHomeGrid(); renderHomeChips();
+  const top=navStack[navStack.length-1];
+  if(top.type==='items') renderItemsList(top.catId,top.subId);
+  else if(top.type==='sub') showSubPage(top.catId,false);
+  return true;
+}
+function downloadBackup(){
+  const blob=new Blob([JSON.stringify({app:BAK_APP,ts:Date.now(),version:1,data:snapshotData()})],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=BAK_APP+'-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000); toast('💾 Backup saved');
+}
+function parseCsvBackup(text){
+  const rows=[]; let row=[],cur='',q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else { if(c==='"')q=true; else if(c===','){row.push(cur);cur='';} else if(c==='\n'){row.push(cur);rows.push(row);row=[];cur='';} else if(c!=='\r')cur+=c; }
+  }
+  if(cur!==''||row.length){ row.push(cur); rows.push(row); }
+  rows.shift(); // header
+  const items=rows.filter(r=>r[0]&&r[0].trim()).map(r=>({id:uid(),n:r[0],cat:r[1]||'',subcat:r[2]||null,q:parseInt(r[3])||0,u:r[4]||'',t:2,e:''}));
+  return {items,barcodes:{},structure:STRUCTURE};
+}
+function onBackupFile(e){
+  const f=e.target.files&&e.target.files[0]; e.target.value=''; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      let d;
+      if(f.name.toLowerCase().endsWith('.csv')) d=parseCsvBackup(r.result);
+      else { const o=JSON.parse(r.result); d=o.data&&o.data.items?o.data:(Array.isArray(o.items)?o:null); }
+      if(!d||!Array.isArray(d.items)){ toast('Not a valid backup file'); return; }
+      if(!confirm('Restore '+d.items.length+' items from this file? Your current data will be replaced.')) return;
+      if(applyRestore(d)){ toast('✅ Restored '+d.items.length+' items'); renderBackup(); }
+    }catch(err){ toast('Could not read that file'); }
+  };
+  r.readAsText(f);
+}
+function restoreSnapshot(i){
+  const s=readBackups()[i]; if(!s) return;
+  if(!confirm('Restore backup from '+new Date(s.ts).toLocaleString()+' ('+s.n+' items)? Your current data will be replaced.')) return;
+  try{ const d=JSON.parse(s.data); if(applyRestore(d)){ toast('✅ Restored '+d.items.length+' items'); renderBackup(); } }
+  catch(e){ toast('Backup unreadable'); }
+}
+function openBackup(){ renderBackup(); document.getElementById('bakOv').classList.add('on'); }
+function closeBackup(){ document.getElementById('bakOv').classList.remove('on'); }
+function renderBackup(){
+  const el=document.getElementById('bakList'); if(!el) return;
+  const hist=readBackups();
+  if(!hist.length){ el.innerHTML='<div style="font-size:12px;color:var(--muted)">No automatic backups yet — they’re saved as you make changes.</div>'; return; }
+  el.innerHTML=hist.map((s,i)=>`<div style="display:flex;align-items:center;gap:9px;background:var(--s2);border:1px solid var(--border);border-radius:12px;padding:10px 11px;margin-bottom:8px">
+    <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px">${new Date(s.ts).toLocaleString()}${i===0?' · latest':''}</div>
+    <div style="font-size:12px;color:var(--muted)">${s.n} items</div></div>
+    <button class="btn btn-p" style="flex:0 0 auto;padding:9px 14px" onclick="restoreSnapshot(${i})">Restore</button></div>`).join('');
 }
 
 // ── SCANNER ───────────────────────────────────────────────────────────

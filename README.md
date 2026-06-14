@@ -12,29 +12,46 @@ every device that opens it.
 
 > Tracking the kitchen too? See the sister integration **[My Pantry](https://github.com/trstan84/ha-pantry)** — same app, pantry/freezer categories.
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=trstan84&repository=ha-stash&category=integration)
+
 ## Features
 
 - 🧰 Shed-focused categories with sub-categories (Power Tools / Hand Tools / Fixings / Paint & Chemicals / Electrical / Plumbing / Garden / Automotive / Safety / Consumables)
 - ✏️ **Add, edit and delete your own categories and sub-categories** (⚙︎ in the header) — icon, colour and all. Your layout syncs across devices.
+- 🏷️ **Plain-word item icons** that render correctly on every phone (no missing-glyph boxes)
+- 🖼️ **Per-item photo + receipt** — snap a picture of the tool and keep its receipt (image or PDF) attached
+- 📤 **Check-out / check-in** — lend a tool to someone with a note and a handover photo, then check it back in; the list shows who has what
 - ➕➖ One-tap quantity adjust, low-stock thresholds, out-of-stock alerts
 - 📷 Barcode scanning
 - 🔄 Real-time sync — open it on any phone/tablet and see the same list
 - 🗄️ Data stored privately in Home Assistant (`.storage`), nothing leaves your network
-- 📥 CSV export
+- 💾 **Backup & restore** — automatic on-device snapshots with one-tap restore, plus downloadable full backup files and CSV import/export
 
-## Installation (HACS)
+## Installation
 
-1. In HACS → **⋮** → **Custom repositories**, add
-   `https://github.com/trstan84/ha-stash` as an **Integration**.
-2. Install **Stash**, then **restart Home Assistant**.
-3. Go to **Settings → Devices & Services → Add Integration → Stash** and press
-   **Submit** (there's nothing to configure).
-4. A **Stash** item appears in your sidebar. Done.
+### 1 · Add the repository to HACS
 
-### Manual installation
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=trstan84&repository=ha-stash&category=integration)
+
+Click the button above (it opens HACS with this repo pre-filled) → **Download**.
+Or do it manually: HACS → **⋮** → **Custom repositories** → add
+`https://github.com/trstan84/ha-stash` as an **Integration**, then download it.
+
+Then **restart Home Assistant**.
+
+### 2 · Add the integration
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=stash)
+
+Click the button above, or go to **Settings → Devices & Services → Add
+Integration → Stash**, and press **Submit** — there's nothing to configure.
+A **Stash** item then appears in your sidebar. Done.
+
+### Manual installation (no HACS)
 
 Copy `custom_components/stash` into your HA `config/custom_components/` folder,
-restart, then add the integration as in step 3 above.
+restart, then add the integration as in step 2 above.
 
 ## How it works
 
