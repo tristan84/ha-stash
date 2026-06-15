@@ -298,7 +298,20 @@ select.fi option{background:var(--s2)}
     <div id="authErr" style="color:var(--danger);font-size:12.5px;min-height:16px;margin-bottom:6px"></div>
     <button class="btn btn-p" id="authSubmit" style="width:100%" onclick="authSubmit()">Sign in</button>
     <div style="text-align:center;margin-top:12px"><span id="authToggle" onclick="toggleAuthMode()" style="color:var(--accent);font-size:13px;cursor:pointer">New here? Create an account</span></div>
+    <div style="text-align:center;margin-top:8px"><span id="authForgot" onclick="forgotPassword()" style="color:var(--muted);font-size:12.5px;cursor:pointer">Forgot password?</span></div>
     <div style="text-align:center;margin-top:10px"><span onclick="authBackToPicker()" style="color:var(--muted);font-size:12px;cursor:pointer">← Use a different option</span></div>
+  </div>
+</div>
+
+<!-- Set new password (after a reset link) -->
+<div class="ov" id="resetOv" style="z-index:820">
+  <div class="sheet" onclick="event.stopPropagation()" style="max-width:420px">
+    <div class="drag"></div>
+    <div class="stitle">Set a new password</div>
+    <div style="color:var(--muted);font-size:13px;margin:-4px 0 14px">Choose a new password for your account.</div>
+    <div class="fg"><label class="fl">New password</label><input class="fi" id="resetPw" type="password" autocomplete="new-password" placeholder="••••••••"></div>
+    <div id="resetErr" style="color:var(--danger);font-size:12.5px;min-height:16px;margin-bottom:6px"></div>
+    <button class="btn btn-p" style="width:100%" onclick="submitNewPassword()">Save new password</button>
   </div>
 </div>
 
@@ -416,6 +429,7 @@ async function ensureSupa(){
   if(supa) return supa;
   if(!window.supabase) await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
   supa=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  supa.auth.onAuthStateChange((event)=>{ if(event==='PASSWORD_RECOVERY') showResetForm(); });
   return supa;
 }
 async function ensureCloudAuth(){
@@ -441,6 +455,8 @@ function setAuthMode(m){
   document.getElementById('authTitle').textContent = m==='in'?'Sign in':'Create account';
   document.getElementById('authSubmit').textContent = m==='in'?'Sign in':'Create account';
   document.getElementById('authToggle').textContent = m==='in'?'New here? Create an account':'Have an account? Sign in';
+  const fg=document.getElementById('authForgot'); if(fg) fg.style.display = m==='in'?'inline':'none';
+  const er=document.getElementById('authErr'); if(er) er.style.color='var(--danger)';
 }
 function toggleAuthMode(){ setAuthMode(authMode==='in'?'up':'in'); document.getElementById('authErr').textContent=''; }
 function authBackToPicker(){ document.getElementById('authOv').classList.remove('on'); showModePicker(); }
@@ -466,6 +482,37 @@ async function authGoogle(){
 async function signOutCloud(){
   try{ if(!supa) await ensureSupa(); await supa.auth.signOut(); }catch(e){}
   cloudUser=null; toast('Signed out'); showAuth();
+}
+async function forgotPassword(){
+  const email=document.getElementById('authEmail').value.trim();
+  const err=document.getElementById('authErr');
+  if(!email){ err.style.color='var(--danger)'; err.textContent='Enter your email above, then tap “Forgot password”.'; return; }
+  try{
+    const c=await ensureSupa();
+    const {error}=await c.auth.resetPasswordForEmail(email,{redirectTo:window.location.href.split('#')[0]});
+    if(error){ err.style.color='var(--danger)'; err.textContent=error.message; return; }
+    err.style.color='var(--accent)'; err.textContent='Reset link sent — check your email.';
+  }catch(e){ err.style.color='var(--danger)'; err.textContent='Could not send the reset email.'; }
+}
+function showResetForm(){
+  ['modeOv','authOv'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  const e=document.getElementById('resetErr'); if(e) e.textContent='';
+  const p=document.getElementById('resetPw'); if(p) p.value='';
+  document.getElementById('resetOv').classList.add('on');
+  setTimeout(()=>document.getElementById('resetPw').focus(),200);
+}
+async function submitNewPassword(){
+  const pw=document.getElementById('resetPw').value;
+  const err=document.getElementById('resetErr');
+  if(pw.length<6){ err.textContent='Use at least 6 characters.'; return; }
+  try{
+    const c=await ensureSupa();
+    const {error}=await c.auth.updateUser({password:pw});
+    if(error){ err.textContent=error.message; return; }
+    document.getElementById('resetOv').classList.remove('on');
+    history.replaceState(null,'',window.location.href.split('#')[0]);
+    toast('✅ Password updated'); load();
+  }catch(e){ err.textContent='Could not update password.'; }
 }
 
 // ── STRUCTURE ─────────────────────────────────────────────────────────
@@ -538,6 +585,8 @@ function hasSubs(catId){ return (getCat(catId)?.subs.length||0)>0; }
 async function load(){
   // Standalone first run: let the user choose where their data lives.
   if(!HA_INJECTED && !getMode()){ showModePicker(); return; }
+  // Returning from a password-reset email link → show the new-password form.
+  if(getMode()==='cloud' && location.hash.indexOf('type=recovery')>=0){ await ensureSupa(); showResetForm(); return; }
   // Cloud mode needs a signed-in user before we can load.
   if(getMode()==='cloud'){ const signed=await ensureCloudAuth(); if(!signed){ showAuth(); return; } }
   // Load from the active backend first - single source of truth
