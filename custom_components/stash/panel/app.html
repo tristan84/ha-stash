@@ -303,6 +303,19 @@ select.fi option{background:var(--s2)}
   </div>
 </div>
 
+<!-- Subscription paywall (shown only when PAYWALL_ENABLED and trial ended) -->
+<div class="ov" id="payOv" style="z-index:830">
+  <div class="sheet" onclick="event.stopPropagation()" style="max-width:440px">
+    <div class="drag"></div>
+    <div class="stitle">Unlock Stash</div>
+    <div style="color:var(--muted);font-size:13px;margin:-4px 0 16px">Your free trial has ended. Subscribe to keep syncing your inventory across devices.</div>
+    <button class="btn btn-p" style="width:100%;margin-bottom:10px" onclick="startSubscription(PLAY_SKU_YEARLY)">$34.99 / year · best value (2 months free)</button>
+    <button class="btn btn-s" style="width:100%" onclick="startSubscription(PLAY_SKU_MONTHLY)">$3.49 / month</button>
+    <div style="text-align:center;margin-top:14px"><span onclick="restorePurchases()" style="color:var(--accent);font-size:13px;cursor:pointer">Restore purchase</span></div>
+    <div style="text-align:center;margin-top:10px"><span onclick="signOutCloud()" style="color:var(--muted);font-size:12px;cursor:pointer">Sign out</span></div>
+  </div>
+</div>
+
 <!-- Set new password (after a reset link) -->
 <div class="ov" id="resetOv" style="z-index:820">
   <div class="sheet" onclick="event.stopPropagation()" style="max-width:420px">
@@ -424,6 +437,14 @@ const SUPA_URL='https://zceuylsoorvxlmzoibjb.supabase.co';
 const SUPA_KEY='sb_publishable_K4UDZOqdLeB4VwbI2IOrCQ_COZYQy3i';
 const CLOUD_APP='stash';
 let supa=null, cloudUser=null, authMode='in';
+// ── Subscription / paywall (DORMANT until launch) ──
+// Flip PAYWALL_ENABLED to true once packaged for Play + the products exist.
+// Entitlement = comp flag (free forever) OR an active Play subscription
+// (which includes Google's 3-day free trial). HA & local users are never gated.
+const PAYWALL_ENABLED=false;
+const PLAY_SKU_MONTHLY='pro_monthly';   // must match the Play Console product IDs
+const PLAY_SKU_YEARLY='pro_yearly';
+let entitled=true;
 function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
 async function ensureSupa(){
   if(supa) return supa;
@@ -515,6 +536,45 @@ async function submitNewPassword(){
   }catch(e){ err.textContent='Could not update password.'; }
 }
 
+// ── Entitlement / Play Billing (active only when PAYWALL_ENABLED) ──
+async function isComp(){
+  try{ const c=await ensureSupa(); const {data:{user}}=await c.auth.getUser(); if(!user) return false;
+    const {data}=await c.from('profiles').select('comp').eq('user_id',user.id).maybeSingle();
+    return !!(data&&data.comp);
+  }catch(e){ return false; }
+}
+async function getDigitalGoods(){
+  if(!window.getDigitalGoodsService) return null;
+  try{ return await window.getDigitalGoodsService('https://play.google.com/billing'); }catch(e){ return null; }
+}
+async function hasActiveSub(){
+  const svc=await getDigitalGoods(); if(!svc) return false;
+  try{ const p=await svc.listPurchases(); return !!(p&&p.length); }catch(e){ return false; }
+}
+async function checkEntitlement(){
+  if(!PAYWALL_ENABLED) return true;          // dormant
+  if(getMode()!=='cloud') return true;        // HA & local users are free
+  if(await isComp()) return true;             // comp'd users free forever
+  if(await hasActiveSub()) return true;       // active Play sub (incl. 3-day trial)
+  return false;
+}
+function showPaywall(){ document.getElementById('payOv').classList.add('on'); }
+async function startSubscription(sku){
+  const svc=await getDigitalGoods();
+  if(!svc || !window.PaymentRequest){ toast('Subscriptions are available in the Google Play app.'); return; }
+  try{
+    const pr=new PaymentRequest([{supportedMethods:'https://play.google.com/billing',data:{sku}}],
+      {total:{label:'Subscription',amount:{currency:'USD',value:'0'}}});
+    const resp=await pr.show();
+    try{ await resp.complete('success'); }catch(e){}
+    if(await hasActiveSub()){ document.getElementById('payOv').classList.remove('on'); entitled=true; toast('✅ Subscribed — thank you!'); load(); }
+  }catch(e){ console.warn('purchase',e); }
+}
+async function restorePurchases(){
+  if(await hasActiveSub()){ document.getElementById('payOv').classList.remove('on'); entitled=true; toast('✅ Subscription restored'); load(); }
+  else toast('No active subscription found.');
+}
+
 // ── STRUCTURE ─────────────────────────────────────────────────────────
 // DEFAULT_STRUCTURE is just the seed for a brand-new install. The live
 // STRUCTURE can be edited by the user (⚙︎) and is persisted + synced
@@ -589,6 +649,8 @@ async function load(){
   if(getMode()==='cloud' && location.hash.indexOf('type=recovery')>=0){ await ensureSupa(); showResetForm(); return; }
   // Cloud mode needs a signed-in user before we can load.
   if(getMode()==='cloud'){ const signed=await ensureCloudAuth(); if(!signed){ showAuth(); return; } }
+  // Subscription gate (no-op while PAYWALL_ENABLED is false).
+  if(!(await checkEntitlement())){ showPaywall(); return; }
   // Load from the active backend first - single source of truth
   try{
     const d=await remoteLoad();
