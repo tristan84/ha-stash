@@ -1152,6 +1152,7 @@ let deferredInstall=null;
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredInstall=e; });
 (function injectManifest(){
   try{
+    if(document.querySelector('link[rel="manifest"]')) return;   // a static manifest is present (hosted/TWA build)
     const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="104" fill="#10b981"/><text x="256" y="352" font-size="300" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#fff">S</text></svg>';
     const icon='data:image/svg+xml;base64,'+btoa(svg);
     const man={name:'Stash',short_name:'Stash',display:'standalone',background_color:'#0b0c0e',theme_color:'#0b0c0e',start_url:'index.html',scope:'./',icons:[{src:icon,sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]};
