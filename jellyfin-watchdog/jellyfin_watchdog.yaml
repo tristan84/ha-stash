@@ -1,0 +1,82 @@
+# Jellyfin Watchdog — drop this file into your HA packages/ folder.
+#
+# What it does:
+#   1. Polls Jellyfin's local health endpoint every 30 s.
+#   2. If Jellyfin is unreachable for 2 minutes it runs restart_jellyfin.sh,
+#      which restarts both the Jellyfin container and cloudflared.
+#   3. Sends a persistent notification so you know it happened.
+#   4. Clears the notification once Jellyfin is back up.
+#
+# Prerequisites:
+#   - Copy restart_jellyfin.sh to /config/scripts/ and make it executable.
+#   - Add shell_command and command_line platform to configuration.yaml
+#     (or keep them here if you use packages).
+#   - Set JELLYFIN_HOST below to your Jellyfin LAN IP / hostname.
+
+homeassistant:
+  customize:
+    binary_sensor.jellyfin_health:
+      friendly_name: Jellyfin Health
+
+# --------------------------------------------------------------------------- #
+# Sensor — polls Jellyfin's /health endpoint on the local network             #
+# --------------------------------------------------------------------------- #
+command_line:
+  - binary_sensor:
+      name: jellyfin_health
+      # Adjust the host/port if Jellyfin isn't on the default 8096
+      command: >-
+        curl -sf --max-time 5 http://localhost:8096/health
+        && echo "ok" || echo "down"
+      payload_on: "ok"
+      payload_off: "down"
+      scan_interval: 30
+      device_class: connectivity
+
+# --------------------------------------------------------------------------- #
+# Shell command — called by the automation                                     #
+# --------------------------------------------------------------------------- #
+shell_command:
+  restart_jellyfin: "/config/scripts/restart_jellyfin.sh >> /config/logs/jellyfin_watchdog.log 2>&1"
+
+# --------------------------------------------------------------------------- #
+# Automations                                                                  #
+# --------------------------------------------------------------------------- #
+automation:
+  # Trigger restart when Jellyfin has been offline for 2 minutes
+  - id: jellyfin_watchdog_restart
+    alias: "Jellyfin Watchdog — restart on outage"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.jellyfin_health
+        to: "off"
+        for:
+          minutes: 2
+    condition: []
+    action:
+      - service: shell_command.restart_jellyfin
+      - service: persistent_notification.create
+        data:
+          notification_id: jellyfin_outage
+          title: "Jellyfin was down"
+          message: >-
+            Jellyfin went offline at {{ now().strftime('%H:%M on %d %b') }}.
+            Restart command sent — check logs at /config/logs/jellyfin_watchdog.log.
+    mode: single
+
+  # Clear the notification once Jellyfin recovers
+  - id: jellyfin_watchdog_recovered
+    alias: "Jellyfin Watchdog — clear notification on recovery"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.jellyfin_health
+        to: "on"
+    condition:
+      - condition: state
+        entity_id: binary_sensor.jellyfin_health
+        state: "on"
+    action:
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: jellyfin_outage
+    mode: single
