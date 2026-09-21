@@ -66,7 +66,7 @@ that surfaced during the scan.
 - **Mechanic**: three-step named strategy (Breathe → Think → Do) taught
   through a character going through relatable problems, with light
   tap/interaction (pop bubbles, etc.) rather than deep gameplay.
-- **Relevance to this project**: closest analog to the "Robo learns
+- **Relevance to this project**: closest analog to the "Sprocket learns
   alongside the child" premise — a character modeling the skill rather than
   a human authority figure teaching it. Skews younger (2–5) than this
   project's likely age range (Open Decision #2), and is much lighter-weight
@@ -161,7 +161,7 @@ future research pass — not fully audited here]**
   already ad-free even on free tiers. Privacy-first (Principle 1) should be
   understood as table stakes for this category, not something that alone
   sets this app apart — the differentiation is in content/approach (body-mind
-  framing, Robo, Help Me), not in the privacy posture itself.
+  framing, Sprocket, Help Me), not in the privacy posture itself.
 - **A clinical-evidence competitor exists (Mightier)** — if this project
   ever wants to make efficacy claims, Mightier's approach (fund real RCTs,
   cite them plainly, keep marketing framed around "a tool" not "a cure") is

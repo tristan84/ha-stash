@@ -1,11 +1,13 @@
-# The Feelings App (working title) — Plan
+# Sprocket (working title) — Plan
 
 Status: **Phase 0 — Planning & Research**. Nothing is built yet. This document is
 the source of truth for the project. Anything marked **[verify]** is unchecked
 background knowledge and should not be treated as settled until research backs
 it up or removes it.
 
-Last updated: 2026-09-21.
+Last updated: 2026-09-21. Working name **Sprocket** placeholder-set this date
+(app + companion character); not final, needs a proper trademark/domain
+check.
 
 ---
 
@@ -17,7 +19,7 @@ their feelings, covering both **body effects** (what a feeling does physically:
 racing heart, tight chest, hot face) and **mind effects** (what a feeling does
 to thoughts: racing thoughts, tunnel vision, catastrophizing).
 
-A friendly robot character, **Robo**, learns alongside the child rather than
+A friendly robot character, **Sprocket**, learns alongside the child rather than
 teaching down at them. The child plays short games in calm moments to build
 skills, and has a one-tap **"Help me"** mode for hard moments in the wild.
 
@@ -50,10 +52,10 @@ skills, and has a one-tap **"Help me"** mode for hard moments in the wild.
 
 ## 4. Core Experience
 
-### 4.1 Robo (the companion character)
-A robot who is *learning too* — not an all-knowing teacher. Robo models
+### 4.1 Sprocket (the companion character)
+A robot who is *learning too* — not an all-knowing teacher. Sprocket models
 noticing and naming its own (robot) body/mind effects, which lowers the
-stakes for the child to do the same. Design of Robo's personality, voice,
+stakes for the child to do the same. Design of Sprocket's personality, voice,
 and visual style is an open decision (see §9).
 
 ### 4.2 Calm-moment games (skill building)
@@ -72,7 +74,7 @@ tools the child has already practiced in calm-moment games.
 
 ### 4.4 Rewards
 Process-based only, per Principle 2 above. Exact reward mechanic (points,
-collectibles, Robo's own "growth," streaks vs. no-streaks) is an **open
+collectibles, Sprocket's own "growth," streaks vs. no-streaks) is an **open
 decision** — streaks in particular risk punishing kids for hard days, which
 cuts against Principle 2, so streak-based mechanics need explicit scrutiny
 before adoption.
@@ -98,7 +100,7 @@ principles constrain it:
   sensors) via the Capacitor bridge. Risk to validate in the spike:
   animation/audio performance for a young-child-facing, low-friction UI,
   and offline reliability.
-- **Voice**: Robo speaks via TTS first (device TTS engine via a Capacitor
+- **Voice**: Sprocket speaks via TTS first (device TTS engine via a Capacitor
   TTS plugin — both `capacitor-community/text-to-speech` and Capawesome's
   Speech Synthesis plugin exist and wrap native Android/iOS TTS). **Push-to-talk
   input comes later**, not in v1 — v1 is TTS-out only, no speech recognition
@@ -140,7 +142,7 @@ Status legend: ✅ researched (see `research/`) · ⏳ not yet started.
    children (relevant to §4.4 and Principle 2).
 7. ⏳ TTS engine options in depth — on-device vs. cloud voice quality
    tradeoffs, Android TTS engine landscape, licensing for a distinct
-   "Robo voice" if not using stock device TTS.
+   "Sprocket voice" if not using stock device TTS.
 8. ⏳ Smartwatch feasibility — Wear OS sensor access, battery impact,
    privacy model for continuous heart-rate-type data on a child's wrist.
 9. ⏳ Existing children's emotion curricula/frameworks (Zones of
@@ -159,14 +161,14 @@ where Phase 0 research already bears on the decision.
 
 | # | Decision | Status after Phase 0 research so far |
 |---|----------|----------------------------------------|
-| 1 | App name | Not started — see shortlist below for trademark/domain checking. |
+| 1 | App name | **Placeholder set 2026-09-21: "Sprocket"** — used for both the app's working title and the companion character's name. Not final; no formal trademark/domain search has been done, only a light web spot-check that found no obvious app/trademark conflicts. Still needs a proper USPTO/trademark and domain-availability check before locking in. |
 | 2 | Age range / diagnosis-specific tracks | Untouched — needs its own research pass (item 10 above helps). |
 | 3 | Reward mechanic specifics (streaks, points, collectibles) | Informed by Principle 2; streak mechanics flagged as high-risk, needs research item 6. |
 | 4 | Content grounding: original taxonomy vs. existing framework (Zones of Regulation etc.) | Informed by research note 01 (five-stage noticing→naming→linking→understanding→managing model looks like a strong structural fit); licensing still needs research item 9. |
 | 5 | Capacitor: confirmed or fallback to native | Not yet validated — spike still needed (research item 5); early web evidence in note 03 shows Capacitor TTS plugins exist, which is a good sign but not a validation. |
 | 6 | Parent-side data scope (local-only vs. optional sync) | Untouched. |
 | 7 | Smartwatch platform/timing | Untouched, deliberately deferred past v1. |
-| 8 | TTS voice choice (stock device TTS vs. custom "Robo voice") | Untouched — research item 7. |
+| 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | Untouched — research item 7. |
 | 9 | Positioning/legal language to avoid implying therapy or medical claims | Partially informed — competitor scan (note 03) shows Mightier explicitly cites clinical trial evidence while marketing as a *tool*, not a treatment; worth studying their disclaimer language before drafting ours. |
 | 10 | Localization scope for v1 (English only vs. more) | Untouched. |
 | 11 | Monetization / business model (free/nonprofit, freemium-subscription, or other) | **New — added from research.** Competitor scan (note 03) shows three viable precedents (Smiling Mind: free/nonprofit; Otsimo: freemium ~$13–20/mo; Moshi: VC-funded subscription ~$40/yr), each with different tradeoffs against Principle 1 (privacy-first, no ads/trackers). Not in scope of the original plan — flagging for your decision rather than assuming one. |
@@ -182,7 +184,7 @@ where Phase 0 research already bears on the decision.
   behavior. Go/no-go on Capacitor at the end of this phase.
 - **Phase 2: Content design.** Lock the feeling/body-mind-effect taxonomy,
   draft the first set of scripted calm-moment games and the Help Me flow,
-  design Robo.
+  design Sprocket.
 - **Phase 3: v1 build.** Android tablet app, TTS-out voice, no accounts, no
   network dependency for the child path.
 - **Phase 4+: Parent side, push-to-talk input, smartwatch.** Sequenced
