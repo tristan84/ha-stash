@@ -42,6 +42,12 @@
   --button-quiet: #fff6ea;
   --button-quiet-ink: #b1653a;
   --button-quiet-shadow: #f0d9b8;
+  /* Help me is a distinct color from Play — it's the safety-relevant
+     one-tap function (PLAN.md §4.3), so it needs to read as visually
+     different at a glance, not just another same-color option. */
+  --button-help: #ff8a65;
+  --button-help-dark: #ec5a3c;
+  --button-help-shadow: #c8432a;
 }
 
 * { box-sizing: border-box; }
@@ -477,6 +483,56 @@ main {
 }
 .big-button.quiet:active {
   box-shadow: 0 1px 0 var(--button-quiet-shadow), 0 3px 8px rgba(190, 90, 30, 0.08);
+}
+.big-button.help {
+  /* visually primary: distinct color + more flex weight than Play,
+     since this is the one-tap function that matters most */
+  flex: 1.25;
+  background: linear-gradient(180deg, var(--button-help) 0%, var(--button-help-dark) 100%);
+  box-shadow: 0 5px 0 var(--button-help-shadow), 0 8px 16px rgba(200, 67, 42, 0.32);
+}
+.big-button.help:active {
+  box-shadow: 0 1px 0 var(--button-help-shadow), 0 3px 8px rgba(200, 67, 42, 0.24);
+}
+
+/* Sprocket is tappable (hear it speak) — give it an affordance and a
+   visible focus ring for keyboard/switch access. */
+#sprocket {
+  cursor: pointer;
+}
+#sprocket:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 6px;
+  border-radius: 50%;
+}
+
+/* Parent gate: tucked in the opposite corner from the dev toggle,
+   small and unobtrusive — kids aren't meant to be drawn to it. */
+#parent-gate {
+  position: absolute;
+  top: calc(10px + env(safe-area-inset-top));
+  left: 10px;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.7;
+}
+
+.dev-button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  color: #ffe9cf;
+  font-family: inherit;
+  font-size: 11px;
 }
 
 /* --- Dev panel (hidden by default; not part of the kid-facing UI) - */

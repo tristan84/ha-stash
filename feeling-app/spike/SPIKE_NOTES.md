@@ -67,6 +67,31 @@ instead of an unrelated belly patch). Still fully transform/opacity for
 motion — re-verified flat ~61fps up to 100 concurrent bubbles, TTS
 fallback still triggers correctly.
 
+**2026-09-21 update 5**: asked to reconsider the buttons against the
+actual planned functions (PLAN.md), since "Play a wiggle game" /
+"Sprocket says hi" / "Tidy up" were literally just spike-test triggers,
+not real app functions. Reworked to two buttons that map to real
+planned features: **Help me** (§4.3 — the one-tap, low-friction entry
+point for hard moments; made visually primary with a distinct
+coral-red color and more flex weight, not just another same-colored
+option) and **Play a game** (§4.2 — calm-moment games). Added a small
+tucked-away **parent gate** icon (§5 — parent side; deliberately not a
+big obvious button, since kids shouldn't be one tap from it) and made
+Sprocket itself tappable to hear it speak, rather than spending button
+real estate on a dedicated "make Sprocket talk" button. "Tidy up"
+wasn't a real function at all — moved into the dev panel as "Clear
+bubbles", a debug-only utility.
+
+None of these are real flows yet — Help me still just triggers a TTS
+line and a log entry, Play still just runs the bubble stress test,
+and the parent gate has no actual gate logic. That's intentional:
+building the real flows is Phase 2 content design, not this spike;
+this pass only makes sure the *screen* reflects the app's real
+function set instead of leftover test buttons. Re-verified: flat
+~60-61fps through the button rework, offline/service-worker still
+active, all three new interactions (Sprocket tap, Help me, parent
+gate) log correctly.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):

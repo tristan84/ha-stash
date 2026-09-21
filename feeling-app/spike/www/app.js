@@ -53,7 +53,14 @@ function spawnBubbles(n) {
   log(`spawned ${n} bubbles (stage now has ${stage.childElementCount} animating nodes)`);
 }
 
-document.getElementById('btn-spawn').addEventListener('click', () => spawnBubbles(10));
+// "Play" stands in for entering a calm-moment game (PLAN.md §4.2) —
+// the actual game content/design is a Phase 2 task, not this spike.
+// Reuses the bubble-spawn stress test as the placeholder interaction
+// since it's already exercising the real animation-performance
+// question this spike exists to answer.
+document.getElementById('btn-play').addEventListener('click', () => spawnBubbles(10));
+
+// Dev-only utility, not a real app function — resets the stress test.
 document.getElementById('btn-clear').addEventListener('click', () => {
   document.getElementById('bubbles').innerHTML = '';
   log('cleared bubbles');
@@ -88,8 +95,35 @@ function sprocketSpeak(text) {
   }
 }
 
-document.getElementById('btn-speak').addEventListener('click', () => {
+// Tapping Sprocket itself is the greeting interaction — a dedicated
+// "make Sprocket talk" button isn't a real planned function, so this
+// exercises the same TTS path more naturally (tap the character to
+// hear it) than a standalone button would.
+function greet() {
   sprocketSpeak("Hi, I'm Sprocket. I noticed my hands feel a little shaky today.");
+}
+const sprocketEl = document.getElementById('sprocket');
+sprocketEl.addEventListener('click', greet);
+sprocketEl.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); greet(); }
+});
+
+// "Help me" (PLAN.md §4.3): the one-tap, low-friction entry point for
+// hard moments — deliberately the visually primary button, not an
+// equal third option. This spike only validates that the button
+// exists, is prominent, and can trigger TTS; the actual Help Me
+// flow (breathing/grounding tools already practiced in calm moments)
+// is explicitly Phase 2 content design, not built here.
+document.getElementById('btn-help').addEventListener('click', () => {
+  log('Help me tapped — placeholder only; real flow is Phase 2 content design');
+  sprocketSpeak("It's okay. Let's take a slow breath together.");
+});
+
+// Parent gate (PLAN.md §5): tucked away, not a main button, since
+// kids shouldn't be one tap from parent settings. No real gate logic
+// yet — that's a Phase 2/3 task — this just marks where it lives.
+document.getElementById('parent-gate').addEventListener('click', () => {
+  log('parent gate tapped — placeholder only; no gate/settings built yet');
 });
 
 // --- Offline behavior test ------------------------------------------
@@ -117,4 +151,4 @@ document.getElementById('dev-toggle').addEventListener('click', () => {
   devPanel.hidden = !devPanel.hidden;
 });
 
-log('spike loaded — tap "Play a wiggle game" repeatedly while watching fps, then try TTS');
+log('spike loaded — tap Sprocket to hear it speak, or "Play a game" to stress-test animation');

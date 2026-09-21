@@ -18,8 +18,10 @@
     <div class="cloud c3"></div>
   </div>
 
+  <button id="parent-gate" aria-label="For grown-ups">🔒</button>
+
   <section id="stage" aria-label="Sprocket">
-    <div id="sprocket">
+    <div id="sprocket" role="button" tabindex="0" aria-label="Tap Sprocket">
       <div class="ear left"></div>
       <div class="ear right"></div>
       <div class="head">
@@ -48,18 +50,20 @@
     <div id="bubbles"></div>
   </section>
 
+  <!-- Real planned functions (PLAN.md §4.2/§4.3): Help me is the
+       one-tap, low-friction entry point for hard moments, so it's the
+       visually primary button here, not one of several equal ones.
+       Play leads into calm-moment games. Neither does its real Phase 2
+       thing yet — see SPIKE_NOTES.md for exactly what each stands in
+       for right now. -->
   <section id="controls">
-    <button id="btn-spawn" class="big-button">
+    <button id="btn-help" class="big-button help">
+      <span class="icon">💛</span>
+      <span>Help me</span>
+    </button>
+    <button id="btn-play" class="big-button">
       <span class="icon">🎈</span>
-      <span>Play a wiggle game</span>
-    </button>
-    <button id="btn-speak" class="big-button">
-      <span class="icon">💬</span>
-      <span>Sprocket says hi</span>
-    </button>
-    <button id="btn-clear" class="big-button quiet">
-      <span class="icon">✨</span>
-      <span>Tidy up</span>
+      <span>Play a game</span>
     </button>
   </section>
 
@@ -68,6 +72,7 @@
     <div id="fps">fps: --</div>
     <div id="netstatus">net: --</div>
     <div id="ttsstatus">tts: idle</div>
+    <button id="btn-clear" class="dev-button">Clear bubbles</button>
     <div id="log" aria-label="event log"></div>
   </section>
 </main>
