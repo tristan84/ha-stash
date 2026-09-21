@@ -126,6 +126,24 @@ document.getElementById('parent-gate').addEventListener('click', () => {
   log('parent gate tapped — placeholder only; no gate/settings built yet');
 });
 
+// Story time (PLAN.md §4.5): scripted narrative content, the other
+// calm-moment format alongside games. No real story content exists
+// yet (Phase 2) — this only marks the entry point and exercises TTS
+// with a story-shaped line.
+document.getElementById('btn-story').addEventListener('click', () => {
+  log('Story time tapped — placeholder only; no story content built yet');
+  sprocketSpeak('Once upon a time, a little robot noticed its tummy felt fluttery.');
+});
+
+// Feeling diary (PLAN.md §4.6): the child's private, on-device record
+// of noticing/naming feelings over time. No real diary UI or storage
+// exists yet (Phase 2/3) — and per §4.6, whether it's ever
+// parent-visible is still an open decision (PLAN.md §9 #14), not
+// something to assume while building this placeholder.
+document.getElementById('btn-diary').addEventListener('click', () => {
+  log('My diary tapped — placeholder only; no diary storage/UI built yet');
+});
+
 // --- Offline behavior test ------------------------------------------
 function updateNetStatus() {
   const el = document.getElementById('netstatus');

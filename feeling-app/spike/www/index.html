@@ -50,21 +50,34 @@
     <div id="bubbles"></div>
   </section>
 
-  <!-- Real planned functions (PLAN.md §4.2/§4.3): Help me is the
-       one-tap, low-friction entry point for hard moments, so it's the
-       visually primary button here, not one of several equal ones.
-       Play leads into calm-moment games. Neither does its real Phase 2
-       thing yet — see SPIKE_NOTES.md for exactly what each stands in
-       for right now. -->
+  <!-- Real planned functions (PLAN.md §4.2-§4.6): Help me is the
+       one-tap, low-friction entry point for hard moments, so it gets
+       its own full-width row rather than competing with the other
+       three for visual weight. The second row is the three
+       calm-moment content types: games, story books, and the
+       feeling diary. None of these do their real Phase 2 thing yet
+       — see SPIKE_NOTES.md for exactly what each stands in for. -->
   <section id="controls">
-    <button id="btn-help" class="big-button help">
-      <span class="icon">💛</span>
-      <span>Help me</span>
-    </button>
-    <button id="btn-play" class="big-button">
-      <span class="icon">🎈</span>
-      <span>Play a game</span>
-    </button>
+    <div class="row-primary">
+      <button id="btn-help" class="big-button help">
+        <span class="icon">💛</span>
+        <span>Help me</span>
+      </button>
+    </div>
+    <div class="row-secondary">
+      <button id="btn-play" class="big-button">
+        <span class="icon">🎈</span>
+        <span>Play a game</span>
+      </button>
+      <button id="btn-story" class="big-button">
+        <span class="icon">📖</span>
+        <span>Story time</span>
+      </button>
+      <button id="btn-diary" class="big-button">
+        <span class="icon">📔</span>
+        <span>My diary</span>
+      </button>
+    </div>
   </section>
 
   <button id="dev-toggle" aria-label="Developer info">🛠️</button>

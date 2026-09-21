@@ -444,13 +444,23 @@ main {
 }
 
 /* --- Controls -------------------------------------------------- */
+/* Two rows: Help me gets its own full-width row so it never has to
+   compete for visual weight with the other three (PLAN.md §4.3 — it's
+   meant to be found without thinking). The second row is the three
+   calm-moment content types (§4.2, §4.5, §4.6), equal weight with
+   each other since none of them is more urgent than the others. */
 #controls {
   position: relative;
   z-index: 3;
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+}
+
+.row-primary, .row-secondary {
+  display: flex;
   gap: 10px;
-  padding: 12px 14px calc(14px + env(safe-area-inset-bottom));
-  flex-wrap: wrap;
 }
 
 .big-button {
@@ -476,6 +486,14 @@ main {
   transform: translateY(4px);
   box-shadow: 0 1px 0 var(--button-primary-shadow), 0 3px 8px rgba(190, 90, 30, 0.2);
 }
+
+.row-secondary .big-button {
+  min-width: 90px;
+  padding: 10px 6px 9px;
+  border-radius: 18px;
+  font-size: 12.5px;
+}
+.row-secondary .big-button .icon { font-size: 21px; }
 .big-button.quiet {
   background: var(--button-quiet);
   color: var(--button-quiet-ink);

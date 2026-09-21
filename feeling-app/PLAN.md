@@ -84,6 +84,45 @@ decision** — streaks in particular risk punishing kids for hard days, which
 cuts against Principle 2, so streak-based mechanics need explicit scrutiny
 before adoption.
 
+### 4.5 Story books
+Short, scripted stories — the other calm-moment content format alongside
+games (§4.2). Where a game builds recognition/vocabulary through
+interaction, a story models a character (plausibly Sprocket, plausibly a
+relatable child character, or both) going through a specific situation and
+its body/mind effects, then noticing, naming, and trying a tool — the same
+skill sequence as the rest of the app, delivered narratively instead of as
+a game. Scripted per Principle 4 (no AI/generative narration in the child
+path for v1).
+
+This sits close to what "Social Stories" (a specific, trademarked,
+licensed method — see research note 12) does conceptually, but per that
+note's finding, Sprocket's stories should be original content inspired by
+the general "short supportive narrative for a specific situation" idea,
+not built on the named/licensed method or its specific criteria, unless a
+license is deliberately pursued later. Whether story content is fully
+original vs. drawing on other (non-trademarked) published
+children's-bibliotherapy patterns is an **open decision** (see §9).
+
+### 4.6 Feeling diary
+A child-owned, private place to record "I noticed ___ today" / "I felt
+___" entries — the persistent, revisitable form of the app's core
+noticing-and-naming practice (§1), not a separate bolt-on feature. Each
+diary entry is itself an instance of "noticing" and "naming," so it's a
+natural fit for process-based rewards (§4.4) — logging an entry earns the
+same kind of recognition as completing a game or story, never tied to
+which feeling was logged (Principle 2).
+
+Privacy needs particular care here specifically because it's the one
+place in the app that stores the child's actual feelings content, not
+just which skills they practiced: per Principle 1 and research note 04's
+recommendation (local-only by default, sync opt-in only if truly needed),
+diary entries should stay on-device and **not** be part of any default
+parent-visible data — consistent with §5's existing "process metrics, not
+feelings surveillance" rule for the parent side. Whether the diary is
+**ever** visible to parents (even opt-in, even aggregated) is an **open
+decision** (see §9) that needs your explicit call, not an assumption
+either way.
+
 ## 5. Parent Side
 
 A separate parent-facing surface. Scope for v1 is an **open decision**, but
@@ -190,6 +229,8 @@ where Phase 0 research already bears on the decision.
 | 11 | Monetization / business model (free/nonprofit, freemium-subscription, or other) | **New — added from research.** Competitor scan (note 03) shows three viable precedents (Smiling Mind: free/nonprofit; Otsimo: freemium ~$13–20/mo; Moshi: VC-funded subscription ~$40/yr), each with different tradeoffs against Principle 1 (privacy-first, no ads/trackers). Not in scope of the original plan — flagging for your decision rather than assuming one. |
 | 12 | Commercial child/character-voice TTS vendor (if Decision #8 goes the pre-generated-voice route) | **Recommended by research** (note 11): shortlist narrowed to **SpeechGen** (commercial license included in every plan, pay-once credits, cheapest/simplest for a one-time static-asset generation) and **Amazon Polly's named "Child" voice** (purpose-built child voice from a major cloud vendor, cheap per-character, but exact perpetual-reuse terms for shipped static audio need direct ToS confirmation). **ElevenLabs is ruled out** — its policy explicitly disallows child-like voices in its Voice Library. Final pick needs a hands-on audio listening comparison (a Phase 2 task, not further research). Not locked — awaiting your sign-off. |
 | 13 | Social Stories™ licensing, as a possible additional content-grounding input alongside Decision #4 | **Researched** (note 12). Same conclusion as Decision #4: the specific "Social Stories™" name and Carol Gray's copyrighted 10.2/10.4 criteria/materials should not be used without a license (trademark-registration status itself is ambiguous in available sources, but the underlying methodology documents are clearly copyrighted); the general concept (short, supportive, first-person narrative for a specific situation) remains usable as inspiration for original content. Reinforces, does not change, Decision #4's recommendation. |
+| 14 | Feeling diary parent visibility (§4.6) — fully private to the child, or opt-in/aggregate-only visibility for parents? | **New — added 2026-09-21 when Story books (§4.5) and Feeling diary (§4.6) were added to the plan.** Recommend defaulting to fully private-to-child (strongest reading of Principle 1 and §5's "process metrics, not feelings surveillance" rule), with any parent-facing signal limited to process metrics ("practiced noticing 5 times this week") never diary content itself — but this is explicitly your call, not assumed. |
+| 15 | Story book content sourcing (§4.5) — fully original vs. drawing on other (non-trademarked) published children's-bibliotherapy patterns | **New — added 2026-09-21.** Research note 12 already rules out building on the specifically named/licensed "Social Stories" method without a license; this decision is narrower — whether to look at other (non-trademarked) bibliotherapy writing patterns for craft inspiration, or write fully from scratch. Untouched otherwise. |
 
 ## 10. Roadmap / Phases
 

@@ -92,6 +92,22 @@ function set instead of leftover test buttons. Re-verified: flat
 active, all three new interactions (Sprocket tap, Help me, parent
 gate) log correctly.
 
+**2026-09-21 update 6**: asked about story books and a feeling diary —
+neither was in PLAN.md yet, so added them properly as §4.5 (Story
+books) and §4.6 (Feeling diary), plus two new open decisions (#14
+diary parent-visibility, #15 story content sourcing) rather than
+silently assuming an answer. Reflected on the spike screen too:
+restructured the button area into two rows — Help me alone on its own
+full-width row (so it doesn't compete for visual weight with anything,
+consistent with it being the safety-relevant one-tap function), and a
+second row with three equal buttons for the three calm-moment content
+types (Play a game, Story time, My diary). Story time exercises TTS
+with a story-shaped line; My diary is a placeholder log entry only —
+per §4.6, whether it's ever parent-visible is still an open decision,
+so nothing about visibility/sync was assumed while wiring the
+placeholder. Re-verified: flat ~60-61fps, offline/service-worker still
+active, both new buttons log correctly.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
