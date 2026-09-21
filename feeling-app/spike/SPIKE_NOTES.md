@@ -40,6 +40,18 @@ hop with a bottom-anchored transform-origin, plus independent arm-swing,
 antenna-wiggle, and blink animations). Re-verified: still a flat ~60fps
 up to 100 concurrent bubbles with the extra body parts.
 
+**2026-09-21 update 3**: called "too cold" — the whole scene (not just
+Sprocket) moved from a cool blue palette to a warm one: golden-hour
+cream-to-peach sky, sunnier yellow-green grass, warm-white clouds,
+Sprocket recolored from blue to a warm orange with a cream belly and
+warm coral cheeks, buttons recolored to match. Also improved the
+character itself per feedback ("do better with the robot"): bigger head
+relative to body for a cuter proportion, a soft glossy highlight on the
+head/body for dimensionality instead of flat shading, small round hands
+at the arm tips, a two-tone foot cap on each leg, and a friendlier
+(more open) arm resting angle. Re-verified: still a flat ~60fps up to
+100 concurrent bubbles.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):

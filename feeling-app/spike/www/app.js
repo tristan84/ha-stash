@@ -33,7 +33,7 @@ requestAnimationFrame(fpsTick);
 // Spawns independently CSS-animated "bubble" nodes to load up the
 // number of concurrently-animating elements — this is the scenario
 // most likely to expose WebView jank per the reports in note 05.
-const BUBBLE_COLORS = ['#7fd4ff', '#ffd27f', '#ffb0c0', '#b6f2a4', '#c9b6ff'];
+const BUBBLE_COLORS = ['#ffcf9c', '#ffb199', '#ffe08a', '#ffb8c6', '#e3b8d9'];
 function spawnBubbles(n) {
   const stage = document.getElementById('bubbles');
   for (let i = 0; i < n; i++) {
