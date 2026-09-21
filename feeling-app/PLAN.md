@@ -103,6 +103,21 @@ license is deliberately pursued later. Whether story content is fully
 original vs. drawing on other (non-trademarked) published
 children's-bibliotherapy patterns is an **open decision** (see §9).
 
+**A first prototype story exists**: `spike/www/story.html` — "Sprocket's
+Fluttery Day," about **Worried** (picked as the starting feeling: highly
+relatable, and has clear body effects — fluttery tummy, fast heart — and
+mind effects — racing thoughts — per research note 01). The story is
+structured as nine pages walking notice (body) → notice (mind) → name →
+normalize ("every robot and every kid gets this sometimes") → try a tool
+(breathing) → process-reward close ("proud — not for feeling calm, for
+trying"), i.e. it's a narrative instantiation of the five-stage model
+research note 01 already recommended for the taxonomy (Open Decision #4).
+Illustrated with inline SVG in the same warm palette/character design as
+the rest of the app, with page-turn animation and a read-aloud toggle
+(reusing the shared TTS module). This is a content-format and
+tone prototype, not a locked story — see `spike/SPIKE_NOTES.md` for what
+it does and doesn't validate.
+
 ### 4.6 Feeling diary
 A child-owned, private place to record "I noticed ___ today" / "I felt
 ___" entries — the persistent, revisitable form of the app's core

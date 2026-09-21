@@ -1,0 +1,232 @@
+/* Book reader — layered on top of the shared palette/font in style.css.
+   Page-turn animation is a pseudo-3D tilt+slide (rotateY + translateX +
+   opacity, all compositor-only) rather than a literal double-sided page
+   flip, which would need mirrored back-page rendering. Reads as "turning"
+   without that complexity, and stays on the same transform/opacity-only
+   technique validated at 60fps elsewhere in this spike. */
+
+.story-body {
+  background: var(--sky-top);
+}
+
+.story-main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Header ------------------------------------------------------ */
+.story-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(10px + env(safe-area-inset-top)) 12px 8px;
+}
+
+.story-back {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.story-title-chip {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.story-read-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  border-radius: 16px;
+  padding: 8px 12px;
+  background: var(--button-primary);
+  color: #fffaf3;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12.5px;
+}
+.story-read-btn[aria-pressed="true"] {
+  background: var(--button-help);
+}
+
+/* --- Book stage ---------------------------------------------------- */
+.book-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 0 10px;
+  perspective: 1200px;
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fffaf2;
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(190, 110, 40, 0.22);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.page-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.page-text {
+  margin: 0;
+  padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--ink);
+  text-align: center;
+  background: #fffaf2;
+}
+.page-text strong { color: var(--button-help-dark); }
+.page-text--cover {
+  font-size: 14px;
+  opacity: 0.75;
+  padding-top: 4px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+.cover-text {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 16px;
+}
+.cover-text h1 {
+  margin: 0;
+  font-size: 26px;
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgba(255,255,255,0.6);
+}
+.cover-sub {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--button-help-dark);
+  font-weight: 600;
+}
+
+/* --- Page-turn animation ------------------------------------------- */
+.page.leaving-to-left {
+  animation: leaveLeft 0.42s ease forwards;
+  z-index: 3;
+}
+.page.entering-from-right {
+  animation: enterRight 0.42s ease forwards;
+  z-index: 2;
+}
+.page.leaving-to-right {
+  animation: leaveRight 0.42s ease forwards;
+  z-index: 3;
+}
+.page.entering-from-left {
+  animation: enterLeft 0.42s ease forwards;
+  z-index: 2;
+}
+
+@keyframes leaveLeft {
+  from { transform: rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+  to { transform: rotateY(-18deg) translateX(-8%) scale(0.92); opacity: 0; }
+}
+@keyframes enterRight {
+  from { transform: rotateY(18deg) translateX(8%) scale(0.92); opacity: 0; }
+  to { transform: rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+}
+@keyframes leaveRight {
+  from { transform: rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+  to { transform: rotateY(18deg) translateX(8%) scale(0.92); opacity: 0; }
+}
+@keyframes enterLeft {
+  from { transform: rotateY(-18deg) translateX(-8%) scale(0.92); opacity: 0; }
+  to { transform: rotateY(0deg) translateX(0) scale(1); opacity: 1; }
+}
+
+/* --- Breathing-tool illustration (pages 6 & 8) ---------------------- */
+.breathe-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 3.6s ease-in-out infinite;
+}
+.breathe-ring-small {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 3.6s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.4; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+/* --- Nav ------------------------------------------------------------ */
+.story-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+}
+
+.nav-btn {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: var(--button-primary);
+  color: #fffaf3;
+  font-size: 22px;
+  box-shadow: 0 4px 0 var(--button-primary-shadow);
+}
+.nav-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--button-primary-shadow); }
+.nav-btn:disabled { opacity: 0.35; box-shadow: none; }
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--button-quiet-shadow);
+}
+.dot.dot-active {
+  background: var(--button-help);
+  width: 16px;
+  border-radius: 4px;
+}

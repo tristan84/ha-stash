@@ -67,32 +67,17 @@ document.getElementById('btn-clear').addEventListener('click', () => {
 });
 
 // --- TTS test -------------------------------------------------------
-// Native path uses the capacitor-community/text-to-speech plugin,
-// which Capacitor auto-registers on window.Capacitor.Plugins at
-// runtime inside a native build — no bundler needed for this spike.
-// Browser path falls back to the Web Speech API purely for local
-// preview; it does NOT validate the native Android TTS path (this
-// sandbox has no Android SDK to build/run that against — see
-// SPIKE_NOTES.md).
+// Thin wrapper around the shared window.sprocketTTS (tts.js) that
+// also updates this screen's status readout and log — story.js uses
+// the same shared module directly for the book's read-aloud toggle.
 function sprocketSpeak(text) {
   const status = document.getElementById('ttsstatus');
-  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
-  if (isNative && window.Capacitor.Plugins && window.Capacitor.Plugins.TextToSpeech) {
-    status.textContent = 'tts: speaking (native plugin)';
-    log('tts: native path — Capacitor TextToSpeech plugin');
-    window.Capacitor.Plugins.TextToSpeech.speak({ text, rate: 1.0, pitch: 1.0 })
-      .then(() => { status.textContent = 'tts: idle'; })
-      .catch((err) => { status.textContent = 'tts: error'; log(`tts error: ${err}`); });
-  } else if ('speechSynthesis' in window) {
-    status.textContent = 'tts: speaking (browser fallback)';
-    log('tts: browser fallback path (Web Speech API) — native path unvalidated in this sandbox');
-    const u = new SpeechSynthesisUtterance(text);
-    u.onend = () => { status.textContent = 'tts: idle'; };
-    speechSynthesis.speak(u);
-  } else {
-    status.textContent = 'tts: unavailable';
-    log('tts: no TTS API available in this context');
-  }
+  sprocketTTS.speak(text, {
+    onStatus: (s) => {
+      status.textContent = `tts: ${s}`;
+      if (s.startsWith('speaking')) log(`tts: ${s}`);
+    },
+  });
 }
 
 // Tapping Sprocket itself is the greeting interaction — a dedicated
@@ -126,13 +111,10 @@ document.getElementById('parent-gate').addEventListener('click', () => {
   log('parent gate tapped — placeholder only; no gate/settings built yet');
 });
 
-// Story time (PLAN.md §4.5): scripted narrative content, the other
-// calm-moment format alongside games. No real story content exists
-// yet (Phase 2) — this only marks the entry point and exercises TTS
-// with a story-shaped line.
+// Story time (PLAN.md §4.5): opens the first prototype story,
+// "Sprocket's Fluttery Day" (about Worried) — see story.html/story.js.
 document.getElementById('btn-story').addEventListener('click', () => {
-  log('Story time tapped — placeholder only; no story content built yet');
-  sprocketSpeak('Once upon a time, a little robot noticed its tummy felt fluttery.');
+  window.location.href = 'story.html';
 });
 
 // Feeling diary (PLAN.md §4.6): the child's private, on-device record

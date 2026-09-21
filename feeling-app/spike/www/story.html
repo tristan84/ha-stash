@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sprocket's Fluttery Day</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="story.css" />
+</head>
+<body class="story-body">
+<!-- Phase 1 spike prototype for PLAN.md §4.5 (Story books). Picked
+     "Worried" as the first feeling: universally relatable, has clear
+     body effects (fluttery tummy, fast heart) and mind effects (racing
+     thoughts) per research note 01, and the story below walks the
+     notice -> name -> normalize -> tool -> process-reward sequence
+     that note already recommended as the app's core taxonomy. Not
+     final content or final art direction — see SPIKE_NOTES.md. -->
+
+<!-- Shared illustration pieces, reused via <use> across every page
+     instead of redrawing Sprocket and the sky/hill backdrop 9 times. -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb15e" />
+      <stop offset="100%" stop-color="#f0873a" />
+    </linearGradient>
+    <radialGradient id="coreGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff8e8" />
+      <stop offset="100%" stop-color="#ffd35e" />
+    </radialGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff2d9" />
+      <stop offset="100%" stop-color="#ffdcb3" />
+    </linearGradient>
+
+    <symbol id="bookBg" viewBox="0 0 400 260">
+      <rect width="400" height="260" fill="url(#skyGrad)" />
+      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dcea97" />
+      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c6db76" />
+    </symbol>
+
+    <symbol id="cloud" viewBox="0 0 70 26">
+      <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" />
+      <ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" />
+      <ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+    </symbol>
+
+    <symbol id="sprocketMini" viewBox="0 0 120 150">
+      <ellipse class="mini-ear" cx="18" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <ellipse class="mini-ear" cx="102" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
+      <circle class="mini-antenna-tip" cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" />
+      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+      <circle class="mini-eye" cx="45" cy="49" r="7" fill="#ffedc9" />
+      <circle class="mini-eye" cx="75" cy="49" r="7" fill="#ffedc9" />
+      <path class="mini-mouth" d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" />
+      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
+      <circle class="mini-core" cx="60" cy="122" r="13" fill="url(#coreGrad)" />
+      <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+    </symbol>
+  </defs>
+</svg>
+
+<main class="story-main">
+  <header class="story-header">
+    <a href="index.html" class="story-back" aria-label="Back home">←</a>
+    <span class="story-title-chip">Sprocket's Fluttery Day</span>
+    <button id="read-toggle" class="story-read-btn" aria-pressed="false">
+      🔊 <span id="read-label">Read to me</span>
+    </button>
+  </header>
+
+  <div class="book-stage" id="book-stage">
+
+    <section class="page" data-page="0">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#cloud" x="20" y="18" width="70" height="26" />
+        <use href="#cloud" x="290" y="10" width="60" height="22" />
+        <circle cx="350" cy="45" r="22" fill="#ffd35e" opacity="0.85" />
+        <rect x="150" y="150" width="10" height="70" fill="#e8722c" />
+        <rect x="240" y="150" width="10" height="70" fill="#e8722c" />
+        <path d="M150,150 Q200,120 250,150" stroke="#e8722c" stroke-width="10" fill="none" stroke-linecap="round" />
+        <rect x="168" y="130" width="64" height="20" rx="6" fill="#fff4e2" stroke="#e8722c" stroke-width="2" />
+        <text x="200" y="144" text-anchor="middle" font-size="11" font-weight="700" fill="#5a3822" font-family="inherit">PARK</text>
+        <use href="#sprocketMini" x="160" y="150" width="90" height="112" />
+      </svg>
+      <div class="cover-text">
+        <h1>Sprocket's Fluttery Day</h1>
+        <p class="cover-sub">a story about the worried feeling</p>
+      </div>
+      <p class="page-text page-text--cover">Tap the arrow to begin →</p>
+    </section>
+
+    <section class="page" data-page="1">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#cloud" x="240" y="14" width="60" height="22" />
+        <rect x="60" y="140" width="8" height="60" fill="#e8722c" />
+        <rect x="130" y="140" width="8" height="60" fill="#e8722c" />
+        <path d="M60,140 Q99,112 138,140" stroke="#e8722c" stroke-width="9" fill="none" stroke-linecap="round" />
+        <use href="#sprocketMini" x="190" y="120" width="100" height="125" />
+        <circle cx="300" cy="120" r="6" fill="#ffedc9"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.6s" repeatCount="indefinite" /></circle>
+        <circle cx="316" cy="134" r="4" fill="#ffedc9"><animate attributeName="opacity" values="0.2;1;0.2" dur="1.6s" begin="0.3s" repeatCount="indefinite" /></circle>
+      </svg>
+      <p class="page-text">Today was the day Sprocket got to try Robot Park for the very first time. Sprocket had been waiting all week!</p>
+    </section>
+
+    <section class="page" data-page="2">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g stroke="#ff8a72" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85">
+          <path d="M186,190 q6,-10 0,-18 q-6,-8 0,-16"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" repeatCount="indefinite" /></path>
+          <path d="M214,190 q-6,-10 0,-18 q6,-8 0,-16"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" begin="0.4s" repeatCount="indefinite" /></path>
+          <path d="M200,196 q6,-12 0,-22 q-6,-10 0,-18"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.4s" begin="0.8s" repeatCount="indefinite" /></path>
+        </g>
+      </svg>
+      <p class="page-text">But right before walking through the gate, Sprocket's tummy started to feel fluttery. Flutter, flutter, flutter — like tiny leaves blowing around inside.</p>
+    </section>
+
+    <section class="page" data-page="3">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#sprocketMini" x="150" y="100" width="100" height="125" />
+        <g fill="#fff4e2" stroke="#f0873a" stroke-width="2">
+          <circle cx="270" cy="70" r="14" /><circle cx="290" cy="50" r="9" /><circle cx="300" cy="34" r="20" />
+        </g>
+        <text x="300" y="41" text-anchor="middle" font-size="20" fill="#5a3822" font-family="inherit">?</text>
+        <g fill="#fff4e2" stroke="#f0873a" stroke-width="2">
+          <circle cx="120" cy="80" r="12" /><circle cx="102" cy="60" r="8" /><circle cx="92" cy="44" r="17" />
+        </g>
+        <path d="M82,44 h20 M82,50 h14" stroke="#5a3822" stroke-width="3" stroke-linecap="round" />
+      </svg>
+      <p class="page-text">Sprocket's mind started to race too. What if the games are too hard? What if nobody wants to play? What if I get lost?</p>
+    </section>
+
+    <section class="page" data-page="4">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#sprocketMini" x="150" y="105" width="100" height="125" />
+        <rect x="255" y="60" width="120" height="46" rx="20" fill="#fff4e2" stroke="#ffd35e" stroke-width="3" />
+        <text x="315" y="90" text-anchor="middle" font-size="22" font-weight="700" fill="#5a3822" font-family="inherit">WORRIED</text>
+      </svg>
+      <p class="page-text">Sprocket stopped and noticed: <em>my tummy feels fluttery, my thoughts are going fast.</em> This feeling has a name — it's called <strong>WORRIED</strong>.</p>
+    </section>
+
+    <section class="page" data-page="5">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <path d="M40,60 Q200,10 360,60" stroke="#ffd35e" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.7" />
+        <path d="M40,60 Q200,10 360,60" stroke="#ff8a72" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.5" transform="translate(0,10)" />
+        <use href="#sprocketMini" x="150" y="120" width="90" height="112" />
+        <use href="#sprocketMini" x="45" y="135" width="66" height="82" style="filter:hue-rotate(30deg)" />
+        <use href="#sprocketMini" x="260" y="135" width="66" height="82" style="filter:hue-rotate(-25deg)" />
+      </svg>
+      <p class="page-text">Worried is a feeling every robot — and every kid — gets sometimes. It shows up before new things, big things, and exciting things too. It doesn't mean something is wrong.</p>
+    </section>
+
+    <section class="page" data-page="6">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <circle class="breathe-ring" cx="200" cy="150" r="70" fill="#ffedc9" opacity="0.55" />
+        <use href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <rect x="28" y="34" width="60" height="4" fill="#4a2e1c" opacity="0" />
+      </svg>
+      <p class="page-text">So Sprocket tried something: three slow breaths. In through the nose… and out real slow. In… and out.</p>
+    </section>
+
+    <section class="page" data-page="7">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <rect x="120" y="140" width="8" height="60" fill="#e8722c" />
+        <rect x="200" y="140" width="8" height="60" fill="#e8722c" />
+        <path d="M120,140 Q164,108 208,140" stroke="#e8722c" stroke-width="9" fill="none" stroke-linecap="round" />
+        <use href="#sprocketMini" x="130" y="110" width="100" height="125" transform="rotate(-4 180 170)" />
+        <path d="M300,90 l6,-16 l6,16 l16,6 l-16,6 l-6,16 l-6,-16 l-16,-6 z" fill="#ffd35e" opacity="0.9" />
+      </svg>
+      <p class="page-text">The fluttery feeling didn't disappear completely — but it got a little quieter. Sprocket noticed that, and felt proud. Not for feeling calm. For trying.</p>
+    </section>
+
+    <section class="page" data-page="8">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use href="#sprocketMini" x="150" y="118" width="100" height="125" />
+        <g font-family="inherit" fill="#5a3822">
+          <circle cx="70" cy="60" r="26" fill="#fff4e2" stroke="#f0873a" stroke-width="3" />
+          <circle cx="65" cy="55" r="9" fill="none" stroke="#5a3822" stroke-width="3" />
+          <line x1="72" y1="62" x2="82" y2="72" stroke="#5a3822" stroke-width="3" stroke-linecap="round" />
+        </g>
+        <rect x="150" y="30" width="100" height="40" rx="18" fill="#fff4e2" stroke="#ff8a65" stroke-width="3" />
+        <text x="200" y="56" text-anchor="middle" font-size="20" font-weight="700" fill="#5a3822" font-family="inherit">WORRIED</text>
+        <g>
+          <circle cx="330" cy="60" r="26" fill="#fff4e2" stroke="#f0873a" stroke-width="3" />
+          <circle class="breathe-ring-small" cx="330" cy="60" r="12" fill="#ffedc9" />
+        </g>
+      </svg>
+      <p class="page-text">The next time your tummy feels fluttery or your thoughts start to race, try what Sprocket did: <strong>notice</strong> it, <strong>name</strong> it, <strong>try a tool</strong>. You don't have to feel brave to be brave.</p>
+    </section>
+
+  </div>
+
+  <nav class="story-nav">
+    <button id="btn-prev" class="nav-btn" aria-label="Previous page">‹</button>
+    <div id="dots" class="dots"></div>
+    <button id="btn-next" class="nav-btn" aria-label="Next page">›</button>
+  </nav>
+</main>
+<script src="tts.js"></script>
+<script src="story.js"></script>
+</body>
+</html>

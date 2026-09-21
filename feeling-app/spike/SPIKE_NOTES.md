@@ -108,6 +108,51 @@ so nothing about visibility/sync was assumed while wiring the
 placeholder. Re-verified: flat ~60-61fps, offline/service-worker still
 active, both new buttons log correctly.
 
+**2026-09-21 update 7**: asked to actually build out Story books (§4.5)
+— pick a feeling, write it as an illustrated kids'-book-style reader
+with page-turn animation and a read-aloud option. Picked **Worried**
+(see PLAN.md §4.5 for why) and wrote **"Sprocket's Fluttery Day"**, a
+9-page story at `spike/www/story.html` (+ `story.css`, `story.js`),
+reachable from the home screen's "Story time" button.
+
+What it does:
+- **Illustrations**: inline SVG, one per page, built from a shared
+  `sprocketMini` symbol (a simplified version of the home-screen
+  character, reused via `<use>`) plus per-page props — a park gate,
+  flutter/thought-bubble accents, a name-tag banner, a row of
+  differently-tinted friend characters, and a looping "breathing
+  circle" animation on the tool-page specifically (the one page with
+  content-tied motion, not just a page-turn).
+- **Page-turn animation**: a pseudo-3D tilt+slide (rotateY +
+  translateX + opacity, transform/opacity-only — the same technique
+  validated at 60fps elsewhere in this spike), not a literal
+  double-sided flip (which would need mirrored back-page rendering).
+  Verified visually via a mid-transition screenshot showing the
+  outgoing page fading/tilting under the incoming one.
+- **Read aloud**: a header toggle that speaks the current page's text
+  via the shared TTS module (factored `sprocketSpeak` out of `app.js`
+  into `tts.js` so both the home screen and the book use one
+  implementation instead of two copies), and re-speaks automatically
+  on page turn while active. Cover page reads its title + subtitle
+  instead of the "tap to begin" cue.
+- **Offline**: found and fixed a real gap — the service worker was
+  only ever registered from `app.js` (home screen), so a session that
+  opened `story.html` directly (skipping `index.html`) had no offline
+  support. Not a bug in the real Capacitor app (webDir root is always
+  `index.html`), but fixed anyway by registering the same worker from
+  `story.js` too (idempotent), and added `story.html`/`.css`/`.js` and
+  `tts.js` to the cached asset list. Re-verified: offline reload of
+  `story.html` as a direct entry point now works.
+
+Re-verified across the whole change: flat ~60fps on both the home
+screen and through repeated rapid page flips, no console errors beyond
+the expected favicon 404, read-aloud toggles and re-triggers correctly
+across page turns.
+
+This is a content-format and tone prototype for Open Decision #4/§4.5,
+not locked story content or final art direction — see PLAN.md §4.5 for
+how the story's structure maps to research note 01's five-stage model.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
