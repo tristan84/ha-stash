@@ -11,6 +11,27 @@ things the Capacitor decision hinges on — concurrent-animation
 performance, a TTS output path, offline behavior — plus confirm the
 Capacitor→Android project scaffolding itself works cleanly.
 
+**2026-09-21 update**: the first version of this spike was a bare
+functional test harness (dark background, an unstyled colored square for
+Sprocket, an always-visible FPS/log console) — it proved the technical
+points above but looked nothing like the actual product and got
+reasonable pushback for that. It's since been given an actual visual
+pass: a sky/grass scene, a real Sprocket character design (rounded body,
+face, blush, glowing antenna, idle squash-and-stretch + blink + antenna
+wiggle), a self-hosted rounded kid-friendly font (Baloo 2, SIL Open Font
+License — free for commercial use, self-hosted under `www/fonts/` so it
+stays offline like everything else), pastel floating-balloon bubbles
+instead of plain green circles, and real button copy/icons. The
+FPS/net/TTS/log readouts still exist (still needed for the actual spike
+purpose) but are now tucked behind a small toggle in the corner instead
+of being the first thing on screen. All FPS numbers above were re-verified
+after this pass and are unchanged (still a flat ~60fps up to 100
+concurrent animated nodes) — the extra visual polish (gradients, box
+shadows, radial-gradient bubbles) didn't cost anything measurable.
+This is still not final art direction — see PLAN.md Open Decision #1
+(Sprocket's actual visual design is explicitly still open) — it's meant
+to look and feel like a real screen from the app, not final character art.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):

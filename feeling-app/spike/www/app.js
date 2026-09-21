@@ -33,13 +33,12 @@ requestAnimationFrame(fpsTick);
 // Spawns independently CSS-animated "bubble" nodes to load up the
 // number of concurrently-animating elements — this is the scenario
 // most likely to expose WebView jank per the reports in note 05.
-let bubbleId = 0;
+const BUBBLE_COLORS = ['#7fd4ff', '#ffd27f', '#ffb0c0', '#b6f2a4', '#c9b6ff'];
 function spawnBubbles(n) {
   const stage = document.getElementById('bubbles');
   for (let i = 0; i < n; i++) {
     const b = document.createElement('div');
     b.className = 'bubble';
-    b.textContent = String(++bubbleId);
     const left = Math.random() * 85;
     const size = 40 + Math.random() * 40;
     const duration = 2.5 + Math.random() * 2.5;
@@ -47,6 +46,7 @@ function spawnBubbles(n) {
     b.style.bottom = '0px';
     b.style.width = b.style.height = `${size}px`;
     b.style.animationDuration = `${duration}s`;
+    b.style.setProperty('--bcolor', BUBBLE_COLORS[Math.floor(Math.random() * BUBBLE_COLORS.length)]);
     b.addEventListener('animationend', () => b.remove());
     stage.appendChild(b);
   }
@@ -109,4 +109,12 @@ if ('serviceWorker' in navigator) {
   log('service worker API unavailable in this context');
 }
 
-log('spike loaded — tap "Spawn" repeatedly while watching fps, then try TTS');
+// --- Dev panel toggle -------------------------------------------
+// Kept out of the kid-facing screen entirely by default; this spike
+// still needs the readouts for the actual performance test.
+const devPanel = document.getElementById('dev-panel');
+document.getElementById('dev-toggle').addEventListener('click', () => {
+  devPanel.hidden = !devPanel.hidden;
+});
+
+log('spike loaded — tap "Play a wiggle game" repeatedly while watching fps, then try TTS');

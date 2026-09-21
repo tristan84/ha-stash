@@ -8,29 +8,50 @@
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<!-- Throwaway Phase 1 spike, not product UI. See research/05-capacitor-vs-native-spike-plan.md -->
+<!-- Throwaway Phase 1 spike, not final product UI — but styled to
+     actually look like the target kids' app, not a debug harness.
+     See research/05-capacitor-vs-native-spike-plan.md -->
 <main>
-  <section id="stage" aria-label="animation test stage">
-    <div id="sprocket" aria-hidden="true">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
+  <div id="sky">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+
+  <section id="stage" aria-label="Sprocket">
+    <div id="sprocket">
+      <div class="antenna"><span class="antenna-tip"></span></div>
+      <div class="cheek left"></div>
+      <div class="cheek right"></div>
+      <div class="eye left"><span class="glint"></span></div>
+      <div class="eye right"><span class="glint"></span></div>
+      <div class="mouth"></div>
     </div>
     <div id="bubbles"></div>
   </section>
 
-  <section id="hud">
+  <section id="controls">
+    <button id="btn-spawn" class="big-button">
+      <span class="icon">🎈</span>
+      <span>Play a wiggle game</span>
+    </button>
+    <button id="btn-speak" class="big-button">
+      <span class="icon">💬</span>
+      <span>Sprocket says hi</span>
+    </button>
+    <button id="btn-clear" class="big-button quiet">
+      <span class="icon">✨</span>
+      <span>Tidy up</span>
+    </button>
+  </section>
+
+  <button id="dev-toggle" aria-label="Developer info">🛠️</button>
+  <section id="dev-panel" hidden>
     <div id="fps">fps: --</div>
     <div id="netstatus">net: --</div>
     <div id="ttsstatus">tts: idle</div>
+    <div id="log" aria-label="event log"></div>
   </section>
-
-  <section id="controls">
-    <button id="btn-spawn">Spawn 10 tap-bubbles</button>
-    <button id="btn-speak">Sprocket: say a line</button>
-    <button id="btn-clear">Clear bubbles</button>
-  </section>
-
-  <section id="log" aria-label="event log"></section>
 </main>
 <script src="app.js"></script>
 </body>

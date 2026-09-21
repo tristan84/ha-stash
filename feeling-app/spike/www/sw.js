@@ -2,8 +2,11 @@
 // assets, so "offline behavior" is testable by disabling network and
 // reloading. Not a real offline strategy for the product — Phase 3
 // will need a proper cache-versioning/update strategy.
-const CACHE = 'sprocket-spike-v1';
-const ASSETS = ['./', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest'];
+const CACHE = 'sprocket-spike-v2';
+const ASSETS = [
+  './', 'index.html', 'style.css', 'app.js', 'manifest.webmanifest',
+  'fonts/baloo2-400.ttf', 'fonts/baloo2-600.ttf', 'fonts/baloo2-800.ttf',
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
