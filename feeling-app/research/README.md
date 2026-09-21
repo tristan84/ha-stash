@@ -1,10 +1,10 @@
 # Phase 0 Research
 
 Notes for the research agenda in `../PLAN.md` §8. All ten original agenda
-items are now researched. Each note has Sources, Key Takeaways, "What This
-Changes In The Plan," and an "Unverified / Needs Follow-Up" section —
-anything not traceable to a primary source is marked **[unverified]** rather
-than presented as settled.
+items, plus both follow-up gaps surfaced along the way, are now researched.
+Each note has Sources, Key Takeaways, "What This Changes In The Plan," and
+an "Unverified / Needs Follow-Up" section — anything not traceable to a
+primary source is marked **[unverified]** rather than presented as settled.
 
 1. [Interoception & Body-First Teaching](01-interoception-body-first-teaching.md)
 2. [Emotion-Regulation Evidence for Autistic and ADHD Children](02-emotion-regulation-evidence-autism-adhd.md)
@@ -20,8 +20,12 @@ than presented as settled.
 9. [Existing Children's Emotion Curricula & Frameworks](09-existing-curricula-frameworks.md)
    (Zones of Regulation, Incredible 5-Point Scale — licensing)
 10. [Accessibility & Neurodivergent-Friendly UX Standards](10-accessibility-neurodivergent-ux.md)
+11. [Commercial Child/Character-Voice TTS Vendor Comparison](11-tts-vendor-comparison.md)
+    (follow-up to note 07 — SpeechGen and Amazon Polly shortlisted, ElevenLabs ruled out)
+12. [Social Stories™ Licensing](12-social-stories-licensing.md) (follow-up
+    to note 09 — same conclusion as the Zones/5-Point Scale finding)
 
-Follow-up gaps surfaced but not yet researched (see individual notes'
-"Unverified" sections and `../PLAN.md` §9 decisions #12–13): a deeper
-vendor comparison of commercial child-voice TTS services, and Social
-Stories™ licensing specifically.
+No Phase 0 research agenda items remain outstanding. Remaining gaps are
+scoped as Phase 2 tasks, not further research — see notes 11 and 12's
+"Unverified" sections (a hands-on TTS voice listening comparison; a
+possible trademark-register search for "Social Story").

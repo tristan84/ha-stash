@@ -7,9 +7,10 @@ it up or removes it.
 
 Last updated: 2026-09-21. Working name **Sprocket** placeholder-set this date
 (app + companion character); not final, needs a proper trademark/domain
-check. All ten original Phase 0 research agenda items (§8) are now
-researched; several open decisions (§9) carry research-backed
-recommendations but remain unlocked pending sign-off.
+check. All ten original Phase 0 research agenda items (§8), plus both
+follow-up research gaps (TTS vendor comparison, Social Stories™
+licensing), are now researched; several open decisions (§9) carry
+research-backed recommendations but remain unlocked pending sign-off.
 
 ---
 
@@ -153,15 +154,18 @@ Status legend: ✅ researched (see `research/`) · ⏳ not yet started.
 9. ✅ Existing children's emotion curricula/frameworks (Zones of
    Regulation, Incredible 5-Point Scale, Sesame Workshop material) —
    licensing and content grounding options — `research/09-existing-curricula-frameworks.md`
-   (Social Stories™ specifically was not covered — see note's follow-up list)
 10. ✅ Accessibility/UX standards for neurodivergent-friendly design —
     `research/10-accessibility-neurodivergent-ux.md`
 
-All ten original Phase 0 research agenda items are now researched. Possible
-follow-up items surfaced along the way (not yet researched, not yet added
-to this numbered list pending your go-ahead): Social Stories™ licensing
-specifically (gap noted in note 09), and a deeper vendor comparison of
-commercial child-voice TTS services (gap noted in note 07).
+Follow-up gaps surfaced along the way, now also closed:
+
+11. ✅ Commercial child/character-voice TTS vendor comparison (gap from
+    item 7) — `research/11-tts-vendor-comparison.md`
+12. ✅ Social Stories™ licensing (gap from item 9) — `research/12-social-stories-licensing.md`
+
+All ten original Phase 0 research agenda items, plus both follow-up gaps
+surfaced along the way, are now researched. No further Phase 0 research
+agenda items are outstanding.
 
 ## 9. Open Decisions
 
@@ -178,12 +182,12 @@ where Phase 0 research already bears on the decision.
 | 5 | Capacitor: confirmed or fallback to native | Still not validated — the Phase 1 spike remains the actual decision point. Research (note 05) sharpens what the spike must prove: Capacitor's known weak spot is animation/gesture-heavy UI in the WebView (reported laggy on older devices/WebView versions), which is closer to Sprocket's character-driven game style than the "content app" case Capacitor is usually recommended for — so the spike should specifically stress-test animation on a lower-end tablet, not just confirm the app runs. TTS and offline-first are both de-risked already (plugins exist; Capacitor is a good fit for offline-first). |
 | 6 | Parent-side data scope (local-only vs. optional sync) | **Recommended by research** (note 04): local-only by default, sync opt-in only if truly needed. On-device-only design is what lets this project largely avoid COPPA's verifiable-parental-consent machinery and GDPR-K's per-country consent-age handling; any sync feature reopens that whole compliance surface. Not locked — awaiting your sign-off. |
 | 7 | Smartwatch platform/timing | Still deliberately deferred past v1. Research (note 08) adds a sharper requirement if/when this is taken up: process sensor data on-watch only, never transmit raw signal off-device (keeps it out of COPPA's health-data consent requirements per note 04, and avoids the "kids' smartwatch" category's bad privacy reputation, which is about GPS/communication watches, not this feature). Wear OS's Health Services API and battery model both favor the "passive nudge" framing already in §6 over continuous biofeedback streaming. |
-| 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | **Recommended by research** (note 07): pre-generate Sprocket's scripted lines with a commercial child/character-voice service as shipped static audio (gives a distinctive voice, stays fully offline, fits Principle 4's "no live AI in the child path"), with on-device TTS as a fallback only for any dynamic/non-scripted text. Sub-decision not yet resolved: which commercial voice vendor (needs its own comparison pass). Not locked — awaiting your sign-off. |
+| 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | **Recommended by research** (note 07): pre-generate Sprocket's scripted lines with a commercial child/character-voice service as shipped static audio (gives a distinctive voice, stays fully offline, fits Principle 4's "no live AI in the child path"), with on-device TTS as a fallback only for any dynamic/non-scripted text. Vendor shortlist now narrowed (note 11, Decision #12) to SpeechGen and Amazon Polly's "Child" voice, pending a hands-on listening comparison. Not locked — awaiting your sign-off. |
 | 9 | Positioning/legal language to avoid implying therapy or medical claims | Further informed — Mightier's approach (note 03) remains the template; research note 02 adds a concrete reason to keep claims modest (autism emotion-regulation evidence is mixed overall, ~48% of studies show improvement; ADHD-specific *digital* emotion-regulation evidence is thin, only a handful of RCTs found) — supports "skill-building/practice" language over any efficacy claim. Note 04 adds that Apple's Kids Category and Google Play Families rules operationalize "no behavioral ads, no third-party tracking" as hard review requirements, not just a values choice, which should shape this language too. |
 | 10 | Localization scope for v1 (English only vs. more) | Untouched, though note 04 flags that any EU launch means handling different per-country GDPR-K consent-age thresholds (13–16) if the app ever collects personal data — relevant context whenever this is picked up. |
 | 11 | Monetization / business model (free/nonprofit, freemium-subscription, or other) | **New — added from research.** Competitor scan (note 03) shows three viable precedents (Smiling Mind: free/nonprofit; Otsimo: freemium ~$13–20/mo; Moshi: VC-funded subscription ~$40/yr), each with different tradeoffs against Principle 1 (privacy-first, no ads/trackers). Not in scope of the original plan — flagging for your decision rather than assuming one. |
-| 12 | Commercial child/character-voice TTS vendor (if Decision #8 goes the pre-generated-voice route) | **New — added from research** (note 07). Candidates identified but not compared in depth: SpeechGen, Narakeet, others. Needs its own vendor-comparison pass before Phase 2 content production. |
-| 13 | Social Stories™ licensing, as a possible additional content-grounding input alongside Decision #4 | **New — added from research** (note 09's follow-up list). Not yet researched — PLAN.md §8 originally named it under item 9 but this pass covered only Zones of Regulation and the Incredible 5-Point Scale. |
+| 12 | Commercial child/character-voice TTS vendor (if Decision #8 goes the pre-generated-voice route) | **Recommended by research** (note 11): shortlist narrowed to **SpeechGen** (commercial license included in every plan, pay-once credits, cheapest/simplest for a one-time static-asset generation) and **Amazon Polly's named "Child" voice** (purpose-built child voice from a major cloud vendor, cheap per-character, but exact perpetual-reuse terms for shipped static audio need direct ToS confirmation). **ElevenLabs is ruled out** — its policy explicitly disallows child-like voices in its Voice Library. Final pick needs a hands-on audio listening comparison (a Phase 2 task, not further research). Not locked — awaiting your sign-off. |
+| 13 | Social Stories™ licensing, as a possible additional content-grounding input alongside Decision #4 | **Researched** (note 12). Same conclusion as Decision #4: the specific "Social Stories™" name and Carol Gray's copyrighted 10.2/10.4 criteria/materials should not be used without a license (trademark-registration status itself is ambiguous in available sources, but the underlying methodology documents are clearly copyrighted); the general concept (short, supportive, first-person narrative for a specific situation) remains usable as inspiration for original content. Reinforces, does not change, Decision #4's recommendation. |
 
 ## 10. Roadmap / Phases
 
