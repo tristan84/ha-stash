@@ -33,6 +33,9 @@
   --cheek: #ff8a72;
   --ink: #5a3822;
   --antenna-glow: #ffd35e;
+  --visor: #4a2e1c;
+  --visor-dark: #341d10;
+  --visor-glow: #ffedc9;
   --button-primary: #ff9b5e;
   --button-primary-dark: #e8642f;
   --button-primary-shadow: #c94f22;
@@ -104,21 +107,23 @@ main {
   min-height: 0;
 }
 
-/* Full-body character: head + body + arms + legs, standing on the
-   grass rather than floating. The whole figure hops from a
-   bottom-anchored transform-origin so it reads as "grounded", and
-   every part animates via transform/opacity only (see SPIKE_NOTES.md
-   — this is the technique that kept FPS flat at 100+ concurrent
-   animated nodes). Head is oversized relative to the body (a bit more
-   than "realistic" proportions) — reads cuter/friendlier for a kids'
-   companion character than an even head:body ratio would. */
+/* Full redesign: this is meant to read unmistakably as a robot, not a
+   generic rounded blob character. Key moves: a dark lit "visor" screen
+   carries the face (instead of eyes sitting directly on the body
+   color), small ear pods and a neck collar give it an articulated
+   toy-robot silhouette, and a glowing chest core echoes the antenna
+   light so the two "power" details tie the design together. Every
+   part still animates via transform/opacity only (see SPIKE_NOTES.md
+   — the technique that kept FPS flat at 100+ concurrent animated
+   nodes), and the whole figure hops from a bottom-anchored
+   transform-origin so it reads as grounded, standing on the grass. */
 #sprocket {
   position: absolute;
   left: 50%;
-  bottom: 86px;
-  width: 184px;
-  height: 258px;
-  margin-left: -92px;
+  bottom: 82px;
+  width: 204px;
+  height: 268px;
+  margin-left: -102px;
   transform-origin: bottom center;
   animation: bob 1.8s cubic-bezier(.45,0,.55,1) infinite;
   will-change: transform;
@@ -131,15 +136,29 @@ main {
   55% { transform: translateY(-10px) scale(1.03, 0.97); }
 }
 
+/* Ears --------------------------------------------------------------- */
+.ear {
+  position: absolute;
+  top: 72px;
+  width: 24px;
+  height: 30px;
+  border-radius: 45% 55% 50% 50% / 50%;
+  background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
+  box-shadow: 0 4px 8px rgba(190, 100, 40, 0.2);
+  z-index: 1;
+}
+.ear.left { left: 20px; }
+.ear.right { left: 160px; }
+
 /* Head ------------------------------------------------------------ */
 .head {
   position: absolute;
-  top: 0;
-  left: 29px;
-  width: 126px;
-  height: 112px;
+  top: 14px;
+  left: 37px;
+  width: 130px;
+  height: 104px;
   background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  border-radius: 46% 46% 50% 50% / 55% 55% 45% 45%;
+  border-radius: 50% 50% 44% 44% / 62% 62% 38% 38%;
   box-shadow: 0 8px 16px rgba(190, 100, 40, 0.28);
   z-index: 3;
 }
@@ -148,10 +167,10 @@ main {
      than flat-shaded */
   content: "";
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 18px;
-  width: 44px;
-  height: 30px;
+  width: 42px;
+  height: 26px;
   background: rgba(255, 255, 255, 0.35);
   border-radius: 50%;
   filter: blur(1px);
@@ -191,77 +210,88 @@ main {
   50% { box-shadow: 0 0 16px 5px rgba(255, 211, 94, 0.95); }
 }
 
+/* Visor — a lit "screen" carries the face, instead of eyes sitting
+   directly on the shell. This one change does more than anything
+   else here to make the character read as a robot rather than a
+   generic rounded mascot. */
+.visor {
+  position: absolute;
+  top: 28px;
+  left: 19px;
+  width: 92px;
+  height: 46px;
+  background: linear-gradient(160deg, var(--visor) 0%, var(--visor-dark) 100%);
+  border-radius: 26px;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.12);
+  z-index: 2;
+}
+
 .eye {
   position: absolute;
-  top: 40px;
-  width: 24px;
-  height: 24px;
-  background: #fffaf3;
+  top: 13px;
+  width: 15px;
+  height: 15px;
+  background: var(--visor-glow);
   border-radius: 50%;
-  z-index: 2;
+  box-shadow: 0 0 8px 2px rgba(255, 237, 201, 0.75);
   animation: blink 4.5s infinite;
 }
-.eye.left { left: 21px; }
-.eye.right { right: 21px; }
-.eye::after {
-  content: "";
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 12px;
-  height: 12px;
-  background: var(--ink);
-  border-radius: 50%;
-}
-.glint {
-  position: absolute;
-  top: 5px;
-  left: 14px;
-  width: 4px;
-  height: 4px;
-  background: #ffffff;
-  border-radius: 50%;
-  z-index: 1;
-}
+.eye.left { left: 16px; }
+.eye.right { right: 16px; }
 @keyframes blink {
   0%, 92%, 100% { transform: scaleY(1); }
-  96% { transform: scaleY(0.12); }
+  96% { transform: scaleY(0.15); }
+}
+
+.mouth {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 26px;
+  height: 10px;
+  margin-left: -13px;
+  border-bottom: 3px solid var(--visor-glow);
+  border-radius: 0 0 16px 16px;
+  filter: drop-shadow(0 0 3px rgba(255, 237, 201, 0.6));
 }
 
 .cheek {
   position: absolute;
-  top: 64px;
-  width: 18px;
-  height: 11px;
+  top: 78px;
+  width: 16px;
+  height: 10px;
   background: var(--cheek);
   border-radius: 50%;
   opacity: 0.8;
   z-index: 1;
 }
-.cheek.left { left: 10px; }
-.cheek.right { right: 10px; }
+.cheek.left { left: 8px; }
+.cheek.right { right: 8px; }
 
-.mouth {
+/* Collar — a small neck joint between head and body, so the figure
+   reads as articulated (a toy robot) rather than a head melting
+   straight into a body. */
+.collar {
   position: absolute;
-  top: 74px;
+  top: 110px;
   left: 50%;
-  width: 30px;
-  height: 14px;
-  margin-left: -15px;
-  border-bottom: 4px solid var(--ink);
-  border-radius: 0 0 22px 22px;
-  z-index: 2;
+  width: 44px;
+  height: 16px;
+  margin-left: -22px;
+  background: linear-gradient(180deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
+  border-radius: 8px;
+  z-index: 1;
 }
 
 /* Body -------------------------------------------------------------- */
 .body {
   position: absolute;
-  top: 92px;
-  left: 22px;
-  width: 140px;
+  top: 122px;
+  left: 28px;
+  width: 148px;
   height: 112px;
   background: linear-gradient(165deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  border-radius: 44% 44% 40% 40% / 46% 46% 40% 40%;
+  border-radius: 42% 42% 38% 38% / 44% 44% 36% 36%;
   box-shadow: 0 10px 20px rgba(190, 100, 40, 0.3), inset 0 -12px 18px rgba(170, 85, 30, 0.2);
   z-index: 2;
 }
@@ -270,38 +300,81 @@ main {
   position: absolute;
   top: 10px;
   left: 20px;
-  width: 40px;
-  height: 22px;
+  width: 38px;
+  height: 20px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   filter: blur(1px);
 }
-.belly {
+
+/* Chest core — a glowing "power" light echoing the antenna tip, so
+   the two lit details tie the design together instead of the belly
+   being a flat, unrelated patch. */
+.core-ring {
   position: absolute;
   left: 50%;
-  bottom: 10px;
-  width: 76px;
-  height: 62px;
-  margin-left: -38px;
+  top: 40px;
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
   background: var(--sprocket-belly);
   border-radius: 50%;
-  opacity: 0.95;
+  box-shadow: inset 0 -4px 8px rgba(170, 85, 30, 0.15);
 }
+.core {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle at 35% 32%, #fff8e8, var(--antenna-glow) 75%);
+  border-radius: 50%;
+  box-shadow: 0 0 14px 4px rgba(255, 211, 94, 0.55);
+  animation: glow 1.8s ease-in-out infinite;
+}
+
+/* Shoulder / knee joints — small mechanical details where the limbs
+   attach, rather than arms/legs floating flush against the body. */
+.shoulder {
+  position: absolute;
+  top: 132px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
+  box-shadow: 0 2px 4px rgba(190, 100, 40, 0.25);
+  z-index: 1;
+}
+.shoulder.left { left: 22px; }
+.shoulder.right { right: 22px; }
+
+.knee {
+  position: absolute;
+  bottom: 40px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
+  box-shadow: 0 2px 4px rgba(160, 80, 20, 0.25);
+  z-index: 1;
+}
+.knee.left { left: 46px; }
+.knee.right { right: 46px; }
 
 /* Arms --------------------------------------------------------------- */
 .arm {
   position: absolute;
-  top: 104px;
-  width: 28px;
-  height: 62px;
-  border-radius: 16px;
+  top: 140px;
+  width: 26px;
+  height: 58px;
+  border-radius: 14px;
   background: linear-gradient(180deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
   box-shadow: 0 4px 8px rgba(190, 100, 40, 0.22);
   z-index: 1;
   animation: armSwing 1.8s ease-in-out infinite;
 }
 .arm::after {
-  /* little hand, reads friendlier than a flat capsule tip */
+  /* little hand in the cream accent color, ties to the belly/core */
   content: "";
   position: absolute;
   bottom: -6px;
@@ -309,11 +382,12 @@ main {
   width: 20px;
   height: 20px;
   margin-left: -10px;
-  background: var(--sprocket-body-dark);
+  background: var(--sprocket-belly);
   border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(190, 100, 40, 0.2);
 }
-.arm.left { left: -4px; transform-origin: top center; }
-.arm.right { right: -4px; transform-origin: top center; animation-name: armSwingRight; }
+.arm.left { left: 8px; transform-origin: top center; }
+.arm.right { right: 8px; transform-origin: top center; animation-name: armSwingRight; }
 @keyframes armSwing {
   0%, 100% { transform: rotate(-14deg); }
   50% { transform: rotate(-24deg); }
@@ -328,8 +402,8 @@ main {
   position: absolute;
   bottom: 0;
   width: 38px;
-  height: 42px;
-  border-radius: 16px 16px 10px 10px;
+  height: 40px;
+  border-radius: 14px 14px 10px 10px;
   background: linear-gradient(180deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
   box-shadow: 0 4px 8px rgba(160, 80, 20, 0.28);
   z-index: 1;
@@ -345,8 +419,8 @@ main {
   background: var(--sprocket-foot);
   border-radius: 12px;
 }
-.leg.left { left: 28px; }
-.leg.right { right: 28px; }
+.leg.left { left: 36px; }
+.leg.right { right: 36px; }
 
 /* --- Tap-bubble game elements -------------------------------------- */
 .bubble {

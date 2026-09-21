@@ -52,6 +52,21 @@ at the arm tips, a two-tone foot cap on each leg, and a friendlier
 (more open) arm resting angle. Re-verified: still a flat ~60fps up to
 100 concurrent bubbles.
 
+**2026-09-21 update 4**: asked for a "full redesign of the robot" — the
+previous version was a rounded blob head/body with eyes floating
+directly on the body color, which read more like a generic mascot than
+a robot. Rebuilt the character around a lit visor "screen" that carries
+the whole face (glowing dot eyes + a glowing smile on a dark
+screen-like panel) instead of eyes sitting on the shell — this is the
+single change that does the most to make it read as a robot rather
+than a soft toy. Added around it: ear pods for a distinct silhouette, a
+neck collar joint between head and body, shoulder and knee joints where
+the limbs attach, and a glowing chest core that echoes the antenna's
+light (so the two lit details feel like one coherent "power" motif
+instead of an unrelated belly patch). Still fully transform/opacity for
+motion — re-verified flat ~61fps up to 100 concurrent bubbles, TTS
+fallback still triggers correctly.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
