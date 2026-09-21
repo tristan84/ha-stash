@@ -1,0 +1,6 @@
+{
+  "appId": "app.sprocket.spike",
+  "appName": "Sprocket Spike",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

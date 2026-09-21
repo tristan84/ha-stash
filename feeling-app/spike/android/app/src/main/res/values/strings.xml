@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Sprocket Spike</string>
+    <string name="title_activity_main">Sprocket Spike</string>
+    <string name="package_name">app.sprocket.spike</string>
+    <string name="custom_url_scheme">app.sprocket.spike</string>
+</resources>

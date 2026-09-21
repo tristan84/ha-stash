@@ -1,0 +1,19 @@
+{
+  "name": "sprocket-spike",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Phase 1 throwaway spike: validates Capacitor on Android tablet per research/05-capacitor-vs-native-spike-plan.md. Not shipped product code.",
+  "scripts": {
+    "serve": "npx http-server www -p 8090 -c-1"
+  },
+  "dependencies": {
+    "@capacitor-community/text-to-speech": "^8.0.2",
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2",
+    "http-server": "^14.1.1",
+    "playwright": "^1.63.0"
+  }
+}

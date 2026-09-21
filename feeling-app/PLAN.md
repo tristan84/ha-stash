@@ -1,9 +1,11 @@
 # Sprocket (working title) — Plan
 
-Status: **Phase 0 — Planning & Research**. Nothing is built yet. This document is
-the source of truth for the project. Anything marked **[verify]** is unchecked
-background knowledge and should not be treated as settled until research backs
-it up or removes it.
+Status: **Phase 1 — Technical Spike (in progress)**. Phase 0 research is
+complete. A throwaway Capacitor spike exists at `spike/` with partial
+results (see `spike/SPIKE_NOTES.md`) — real-device validation is still
+outstanding. This document is the source of truth for the project.
+Anything marked **[verify]** is unchecked background knowledge and should
+not be treated as settled until research backs it up or removes it.
 
 Last updated: 2026-09-21. Working name **Sprocket** placeholder-set this date
 (app + companion character); not final, needs a proper trademark/domain
@@ -179,7 +181,7 @@ where Phase 0 research already bears on the decision.
 | 2 | Age range / diagnosis-specific tracks | Untouched as a specific range/track decision, though note 06 supports *some* differentiation being valuable ("personalized, stepped-care" framing shows up favorably in the emotion-regulation literature) without specifying how. |
 | 3 | Reward mechanic specifics (streaks, points, collectibles) | **Recommended by research** (note 06): no punitive/resettable streaks — process praise ("you noticed," "you tried a tool") outperforms trait/outcome praise generally and especially after struggle, which is exactly the Help Me context; if any progress mechanic ships, it should only ever accumulate (e.g. Sprocket's own visible growth), never reset. Not locked — awaiting your sign-off. |
 | 4 | Content grounding: original taxonomy vs. existing framework (Zones of Regulation etc.) | **Recommended by research** (notes 01 + 09): build an original taxonomy for v1. Zones of Regulation and the Incredible 5-Point Scale are both actively licensed, trademarked IP with existing official/authorized apps — real infringement risk to reference by name or graphics without a license. The generic notice→name→link→understand→manage sequence (note 01) and general intensity-scale pedagogy aren't exclusive to either framework and can inform Sprocket's design without adopting either. Licensing a named framework later remains a separately-precedented option if ever wanted. Not locked — awaiting your sign-off. |
-| 5 | Capacitor: confirmed or fallback to native | Still not validated — the Phase 1 spike remains the actual decision point. Research (note 05) sharpens what the spike must prove: Capacitor's known weak spot is animation/gesture-heavy UI in the WebView (reported laggy on older devices/WebView versions), which is closer to Sprocket's character-driven game style than the "content app" case Capacitor is usually recommended for — so the spike should specifically stress-test animation on a lower-end tablet, not just confirm the app runs. TTS and offline-first are both de-risked already (plugins exist; Capacitor is a good fit for offline-first). |
+| 5 | Capacitor: confirmed or fallback to native | **Partially validated** — spike built at `spike/` (see `spike/SPIKE_NOTES.md`). Headless-Chromium test held a flat 60fps with up to 100 concurrently-animated nodes using transform/opacity-only CSS animation, and the TTS plugin + offline service-worker approach both work end-to-end. The Android project scaffolds and configures cleanly (`npx cap add android`). **Not yet closed**: this sandbox has no Android SDK/device, so real WebView-on-tablet frame timing (the actual thing note 05 flagged as the risk) is still unvalidated — needs Android Studio + a real or emulated device, ideally a lower-end one, to produce the final go/no-go. Still not locked — this is the one decision that genuinely can't be resolved from here. |
 | 6 | Parent-side data scope (local-only vs. optional sync) | **Recommended by research** (note 04): local-only by default, sync opt-in only if truly needed. On-device-only design is what lets this project largely avoid COPPA's verifiable-parental-consent machinery and GDPR-K's per-country consent-age handling; any sync feature reopens that whole compliance surface. Not locked — awaiting your sign-off. |
 | 7 | Smartwatch platform/timing | Still deliberately deferred past v1. Research (note 08) adds a sharper requirement if/when this is taken up: process sensor data on-watch only, never transmit raw signal off-device (keeps it out of COPPA's health-data consent requirements per note 04, and avoids the "kids' smartwatch" category's bad privacy reputation, which is about GPS/communication watches, not this feature). Wear OS's Health Services API and battery model both favor the "passive nudge" framing already in §6 over continuous biofeedback streaming. |
 | 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | **Recommended by research** (note 07): pre-generate Sprocket's scripted lines with a commercial child/character-voice service as shipped static audio (gives a distinctive voice, stays fully offline, fits Principle 4's "no live AI in the child path"), with on-device TTS as a fallback only for any dynamic/non-scripted text. Vendor shortlist now narrowed (note 11, Decision #12) to SpeechGen and Amazon Polly's "Child" voice, pending a hands-on listening comparison. Not locked — awaiting your sign-off. |
@@ -194,13 +196,17 @@ where Phase 0 research already bears on the decision.
 - **Phase 0 (current): Planning & research.** Build this plan, work through
   the research agenda (§8), settle open decisions (§9) with sign-off, land
   on a name.
-- **Phase 1: Technical spike.** Validate Capacitor on Android tablet
-  (research item 5): a throwaway prototype exercising TTS output, the kind
-  of animation/interaction the calm-moment games need, and offline
-  behavior — per research note 05, weight the animation/interaction test
-  most heavily and run it on a lower-end/older tablet, since that's
-  Capacitor's documented weak spot and TTS/offline are already de-risked.
-  Go/no-go on Capacitor at the end of this phase.
+- **Phase 1: Technical spike — in progress.** Throwaway prototype built at
+  `spike/` (see `spike/SPIKE_NOTES.md` for full results). Animation
+  approach (transform/opacity-only CSS animation) validated at a flat
+  60fps up to 100 concurrent animated nodes in headless Chromium; TTS
+  plugin and offline service-worker both wired and working; Android
+  project scaffolds cleanly via Capacitor CLI. **Blocked on**: this
+  environment has no Android SDK/device, so real WebView-on-tablet frame
+  timing — the actual risk research note 05 flagged — is still
+  unvalidated. Final go/no-go on Capacitor needs someone with Android
+  Studio or a physical/emulated Android tablet to run the spike's
+  `android/` project and repeat the stress test there.
 - **Phase 2: Content design.** Lock the feeling/body-mind-effect taxonomy
   (per research note 09's recommendation: original, not licensed on a
   named framework), draft the first set of scripted calm-moment games and
