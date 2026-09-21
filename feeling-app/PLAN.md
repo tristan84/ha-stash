@@ -7,7 +7,9 @@ it up or removes it.
 
 Last updated: 2026-09-21. Working name **Sprocket** placeholder-set this date
 (app + companion character); not final, needs a proper trademark/domain
-check.
+check. All ten original Phase 0 research agenda items (§8) are now
+researched; several open decisions (§9) carry research-backed
+recommendations but remain unlocked pending sign-off.
 
 ---
 
@@ -132,26 +134,34 @@ Status legend: ✅ researched (see `research/`) · ⏳ not yet started.
 1. ✅ Interoception and body-first teaching — `research/01-interoception-body-first-teaching.md`
 2. ✅ Emotion-regulation evidence for autistic and ADHD children — `research/02-emotion-regulation-evidence-autism-adhd.md`
 3. ✅ Competitor scan: Mightier, Breathe Think Do with Sesame, Smiling Mind, Otsimo, Moshi — `research/03-competitor-scan.md`
-4. ⏳ Privacy/regulatory landscape for children's apps (COPPA, GDPR-K, Google
-   Play Families Policy, Apple's Kids Category rules) — early signal only,
-   captured as an unverified note in research note 03; needs its own pass.
-5. ⏳ Capacitor vs. native Android — technical spike plan, plugin
-   availability audit (TTS, later sensors/Wear OS), performance risk.
-6. ⏳ Reward-system design literature — process vs. outcome praise/reward,
+4. ✅ Privacy/regulatory landscape for children's apps (COPPA, GDPR-K, Google
+   Play Families Policy, Apple's Kids Category rules) — `research/04-privacy-regulatory-landscape.md`
+5. ✅ Capacitor vs. native Android — technical spike plan, plugin
+   availability audit (TTS, later sensors/Wear OS), performance risk —
+   `research/05-capacitor-vs-native-spike-plan.md` (narrows the Phase 1
+   spike's scope; does not itself settle Open Decision #5 — the spike
+   still does that)
+6. ✅ Reward-system design literature — process vs. outcome praise/reward,
    effects of streak mechanics on children, especially neurodivergent
-   children (relevant to §4.4 and Principle 2).
-7. ⏳ TTS engine options in depth — on-device vs. cloud voice quality
+   children — `research/06-reward-system-design.md`
+7. ✅ TTS engine options in depth — on-device vs. cloud voice quality
    tradeoffs, Android TTS engine landscape, licensing for a distinct
-   "Sprocket voice" if not using stock device TTS.
-8. ⏳ Smartwatch feasibility — Wear OS sensor access, battery impact,
-   privacy model for continuous heart-rate-type data on a child's wrist.
-9. ⏳ Existing children's emotion curricula/frameworks (Zones of
-   Regulation, Incredible 5-Point Scale, Social Stories, Sesame Workshop's
-   Little Children, Big Challenges materials) — licensing and content
-   grounding options.
-10. ⏳ Accessibility/UX standards for neurodivergent-friendly design
-    (sensory-friendly UI patterns, WCAG applicability to a kids' app,
-    autism-specific UX guidance).
+   "Sprocket voice" — `research/07-tts-voice-options.md`
+8. ✅ Smartwatch feasibility — Wear OS sensor access, battery impact,
+   privacy model — `research/08-smartwatch-feasibility.md` (exploratory;
+   feature itself stays deferred past v1)
+9. ✅ Existing children's emotion curricula/frameworks (Zones of
+   Regulation, Incredible 5-Point Scale, Sesame Workshop material) —
+   licensing and content grounding options — `research/09-existing-curricula-frameworks.md`
+   (Social Stories™ specifically was not covered — see note's follow-up list)
+10. ✅ Accessibility/UX standards for neurodivergent-friendly design —
+    `research/10-accessibility-neurodivergent-ux.md`
+
+All ten original Phase 0 research agenda items are now researched. Possible
+follow-up items surfaced along the way (not yet researched, not yet added
+to this numbered list pending your go-ahead): Social Stories™ licensing
+specifically (gap noted in note 09), and a deeper vendor comparison of
+commercial child-voice TTS services (gap noted in note 07).
 
 ## 9. Open Decisions
 
@@ -162,16 +172,18 @@ where Phase 0 research already bears on the decision.
 | # | Decision | Status after Phase 0 research so far |
 |---|----------|----------------------------------------|
 | 1 | App name | **Placeholder set 2026-09-21: "Sprocket"** — used for both the app's working title and the companion character's name. Not final; no formal trademark/domain search has been done, only a light web spot-check that found no obvious app/trademark conflicts. Still needs a proper USPTO/trademark and domain-availability check before locking in. |
-| 2 | Age range / diagnosis-specific tracks | Untouched — needs its own research pass (item 10 above helps). |
-| 3 | Reward mechanic specifics (streaks, points, collectibles) | Informed by Principle 2; streak mechanics flagged as high-risk, needs research item 6. |
-| 4 | Content grounding: original taxonomy vs. existing framework (Zones of Regulation etc.) | Informed by research note 01 (five-stage noticing→naming→linking→understanding→managing model looks like a strong structural fit); licensing still needs research item 9. |
-| 5 | Capacitor: confirmed or fallback to native | Not yet validated — spike still needed (research item 5); early web evidence in note 03 shows Capacitor TTS plugins exist, which is a good sign but not a validation. |
-| 6 | Parent-side data scope (local-only vs. optional sync) | Untouched. |
-| 7 | Smartwatch platform/timing | Untouched, deliberately deferred past v1. |
-| 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | Untouched — research item 7. |
-| 9 | Positioning/legal language to avoid implying therapy or medical claims | Partially informed — competitor scan (note 03) shows Mightier explicitly cites clinical trial evidence while marketing as a *tool*, not a treatment; worth studying their disclaimer language before drafting ours. |
-| 10 | Localization scope for v1 (English only vs. more) | Untouched. |
+| 2 | Age range / diagnosis-specific tracks | Untouched as a specific range/track decision, though note 06 supports *some* differentiation being valuable ("personalized, stepped-care" framing shows up favorably in the emotion-regulation literature) without specifying how. |
+| 3 | Reward mechanic specifics (streaks, points, collectibles) | **Recommended by research** (note 06): no punitive/resettable streaks — process praise ("you noticed," "you tried a tool") outperforms trait/outcome praise generally and especially after struggle, which is exactly the Help Me context; if any progress mechanic ships, it should only ever accumulate (e.g. Sprocket's own visible growth), never reset. Not locked — awaiting your sign-off. |
+| 4 | Content grounding: original taxonomy vs. existing framework (Zones of Regulation etc.) | **Recommended by research** (notes 01 + 09): build an original taxonomy for v1. Zones of Regulation and the Incredible 5-Point Scale are both actively licensed, trademarked IP with existing official/authorized apps — real infringement risk to reference by name or graphics without a license. The generic notice→name→link→understand→manage sequence (note 01) and general intensity-scale pedagogy aren't exclusive to either framework and can inform Sprocket's design without adopting either. Licensing a named framework later remains a separately-precedented option if ever wanted. Not locked — awaiting your sign-off. |
+| 5 | Capacitor: confirmed or fallback to native | Still not validated — the Phase 1 spike remains the actual decision point. Research (note 05) sharpens what the spike must prove: Capacitor's known weak spot is animation/gesture-heavy UI in the WebView (reported laggy on older devices/WebView versions), which is closer to Sprocket's character-driven game style than the "content app" case Capacitor is usually recommended for — so the spike should specifically stress-test animation on a lower-end tablet, not just confirm the app runs. TTS and offline-first are both de-risked already (plugins exist; Capacitor is a good fit for offline-first). |
+| 6 | Parent-side data scope (local-only vs. optional sync) | **Recommended by research** (note 04): local-only by default, sync opt-in only if truly needed. On-device-only design is what lets this project largely avoid COPPA's verifiable-parental-consent machinery and GDPR-K's per-country consent-age handling; any sync feature reopens that whole compliance surface. Not locked — awaiting your sign-off. |
+| 7 | Smartwatch platform/timing | Still deliberately deferred past v1. Research (note 08) adds a sharper requirement if/when this is taken up: process sensor data on-watch only, never transmit raw signal off-device (keeps it out of COPPA's health-data consent requirements per note 04, and avoids the "kids' smartwatch" category's bad privacy reputation, which is about GPS/communication watches, not this feature). Wear OS's Health Services API and battery model both favor the "passive nudge" framing already in §6 over continuous biofeedback streaming. |
+| 8 | TTS voice choice (stock device TTS vs. custom "Sprocket voice") | **Recommended by research** (note 07): pre-generate Sprocket's scripted lines with a commercial child/character-voice service as shipped static audio (gives a distinctive voice, stays fully offline, fits Principle 4's "no live AI in the child path"), with on-device TTS as a fallback only for any dynamic/non-scripted text. Sub-decision not yet resolved: which commercial voice vendor (needs its own comparison pass). Not locked — awaiting your sign-off. |
+| 9 | Positioning/legal language to avoid implying therapy or medical claims | Further informed — Mightier's approach (note 03) remains the template; research note 02 adds a concrete reason to keep claims modest (autism emotion-regulation evidence is mixed overall, ~48% of studies show improvement; ADHD-specific *digital* emotion-regulation evidence is thin, only a handful of RCTs found) — supports "skill-building/practice" language over any efficacy claim. Note 04 adds that Apple's Kids Category and Google Play Families rules operationalize "no behavioral ads, no third-party tracking" as hard review requirements, not just a values choice, which should shape this language too. |
+| 10 | Localization scope for v1 (English only vs. more) | Untouched, though note 04 flags that any EU launch means handling different per-country GDPR-K consent-age thresholds (13–16) if the app ever collects personal data — relevant context whenever this is picked up. |
 | 11 | Monetization / business model (free/nonprofit, freemium-subscription, or other) | **New — added from research.** Competitor scan (note 03) shows three viable precedents (Smiling Mind: free/nonprofit; Otsimo: freemium ~$13–20/mo; Moshi: VC-funded subscription ~$40/yr), each with different tradeoffs against Principle 1 (privacy-first, no ads/trackers). Not in scope of the original plan — flagging for your decision rather than assuming one. |
+| 12 | Commercial child/character-voice TTS vendor (if Decision #8 goes the pre-generated-voice route) | **New — added from research** (note 07). Candidates identified but not compared in depth: SpeechGen, Narakeet, others. Needs its own vendor-comparison pass before Phase 2 content production. |
+| 13 | Social Stories™ licensing, as a possible additional content-grounding input alongside Decision #4 | **New — added from research** (note 09's follow-up list). Not yet researched — PLAN.md §8 originally named it under item 9 but this pass covered only Zones of Regulation and the Incredible 5-Point Scale. |
 
 ## 10. Roadmap / Phases
 
@@ -181,11 +193,30 @@ where Phase 0 research already bears on the decision.
 - **Phase 1: Technical spike.** Validate Capacitor on Android tablet
   (research item 5): a throwaway prototype exercising TTS output, the kind
   of animation/interaction the calm-moment games need, and offline
-  behavior. Go/no-go on Capacitor at the end of this phase.
-- **Phase 2: Content design.** Lock the feeling/body-mind-effect taxonomy,
-  draft the first set of scripted calm-moment games and the Help Me flow,
-  design Sprocket.
+  behavior — per research note 05, weight the animation/interaction test
+  most heavily and run it on a lower-end/older tablet, since that's
+  Capacitor's documented weak spot and TTS/offline are already de-risked.
+  Go/no-go on Capacitor at the end of this phase.
+- **Phase 2: Content design.** Lock the feeling/body-mind-effect taxonomy
+  (per research note 09's recommendation: original, not licensed on a
+  named framework), draft the first set of scripted calm-moment games and
+  the Help Me flow, design Sprocket (including a pre-generated voice per
+  research note 07, if Open Decision #8 is confirmed that way). Build in
+  the neurodivergent-UX requirements from research note 10 (motion
+  kill-switch, no autoplay audio/video, fixed navigation positions
+  app-wide, literal non-sarcastic dialogue) as acceptance criteria from
+  the start, and plan direct testing/feedback sessions with autistic and
+  ADHD children (and parents/clinicians), not just internal review.
 - **Phase 3: v1 build.** Android tablet app, TTS-out voice, no accounts, no
   network dependency for the child path.
 - **Phase 4+: Parent side, push-to-talk input, smartwatch.** Sequenced
-  after v1 ships and is validated with real families.
+  after v1 ships and is validated with real families. If parent-side sync
+  is ever added, revisit research note 04 first (it reopens COPPA/GDPR-K
+  consent requirements the on-device-only v1 largely avoids).
+
+**Timeline flag**: the FTC's amended COPPA Rule (research note 04) has a
+compliance deadline of **April 22, 2026** for any app collecting children's
+personal information. This project's on-device-first design (Principle 1)
+is expected to fall largely outside the rule's hardest requirements, but
+this date is worth tracking explicitly if that design assumption changes at
+any point before then.
