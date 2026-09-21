@@ -32,6 +32,14 @@ This is still not final art direction — see PLAN.md Open Decision #1
 (Sprocket's actual visual design is explicitly still open) — it's meant
 to look and feel like a real screen from the app, not final character art.
 
+**2026-09-21 update 2**: first pass was a floating head only, called out
+as looking incomplete. Sprocket now has a full body — head, arms, torso
+with a belly patch, and two legs/feet — standing on the grass instead of
+floating mid-screen, still all transform/opacity animation (a whole-figure
+hop with a bottom-anchored transform-origin, plus independent arm-swing,
+antenna-wiggle, and blink animations). Re-verified: still a flat ~60fps
+up to 100 concurrent bubbles with the extra body parts.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
