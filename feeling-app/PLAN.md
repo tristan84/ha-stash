@@ -91,14 +91,20 @@ neither locked as final content/mechanic, both real, playable, and tested:
   practiced here, then available there, per this section's own rule that
   Help Me only surfaces already-practiced tools.
 - **Bubble Pop** (`game-match.html`) — real-time gameplay, not a quiz: a
-  target feeling is called out, and labeled bubbles continuously float up
-  a play field; tap the ones matching the target before they drift past
-  (target rotates every 3 catches). Went through two earlier versions
-  (a multiple-choice list, then a static memory-card grid) that both read
-  as content review rather than a game — this one has actual moving
-  parts and timing. Added a visible goal after feedback that it "looked
-  boring, no goal": a fill-as-you-catch jar meter (8 correct catches)
-  that celebrates and empties for the next fill, plus scenery (drifting
+  target feeling word is shown, and face-only (no text label) bubbles
+  continuously float up a play field; tap the ones whose expression
+  matches the target before they drift past (target rotates every 3
+  catches). Bubbles originally printed the feeling's name as text too,
+  which made catching one word-matching rather than expression
+  recognition — a real design gap caught by feedback that the point of
+  the game wasn't clear; fixed by making the bubbles face-only, with a
+  line stating the point directly. Went through two earlier full-mechanic
+  versions (a multiple-choice list, then a static memory-card grid) that
+  both read as content review rather than a game — this one has actual
+  moving parts and timing. Added a visible goal after feedback that it
+  "looked boring, no goal": a fill-as-you-catch jar meter (8 correct
+  catches) that celebrates and empties for the next fill, plus scenery
+  (drifting
   clouds, a hill) behind the play field instead of a flat gradient. No
   score or fail state either way (Principle 2): a miss just pops the
   bubble too, an untapped bubble costs nothing, and the jar goal is a

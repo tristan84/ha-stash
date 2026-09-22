@@ -309,6 +309,60 @@ correctly, all nine pages of the (re-colored) Worried book paging
 through without error, and the diary's typed-note-save, skip, and
 mic-feature-detection paths.
 
+**2026-09-22 update 10**: tried update 9's build and reported three more
+issues, one of which was a genuine bug rather than a design complaint:
+
+1. **"the flowers, they only grow a stem"** — real bug, not just "make
+   it more fun." Each flower's `<g class="bloom" transform="translate(x,y)">`
+   carried a positional `transform` *attribute* and was also the CSS
+   *animation target* for the bloom-in scale (`.flower-slot[data-stage="2"]
+   .bloom { transform: scale(1); }`). Per the SVG2/CSS spec, when an
+   element has both a `transform` attribute and a CSS `transform`
+   property, the CSS value **replaces** the attribute value rather than
+   composing with it — so the bloom animation correctly grew a flower
+   to full size, just at the untranslated (0,0) origin instead of at the
+   stem tip, rendering off in the corner of the scene. Screenshot review
+   at the time showed a bare stem and missed it (the bloom was there,
+   just not where anyone was looking). Fixed by splitting each flower
+   into a position-only outer group (`bloom-anchor`, keeps the attribute
+   transform, never touched by CSS) and a scale-only inner group
+   (`bloom`, no attribute transform, purely a CSS animation target) — in
+   both `game-breathe.html` and `help.html`'s copy of the same markup.
+   Audited the rest of the codebase afterward for the same
+   attribute-transform + CSS-transform-on-the-same-element pattern (a
+   quick script over every `.html` file's tags); only `flower-slot` and
+   `bloom-anchor` still carry both, and confirmed neither is itself a
+   CSS transform target — worth remembering as a pattern for any future
+   SVG work in this codebase. Also added a small cheer-bounce on
+   Sprocket on each bloom for more payoff.
+2. **"i dont really understand the point of [Bubble Pop] ... how dose
+   that do anything"** — investigating turned up a real design gap, not
+   just unclear copy: bubbles printed the feeling's *name* as text, so
+   catching one was word-matching (read "WORRIED", find the bubble
+   that also says "Worried"), not feeling-recognition. That's a
+   different, much shallower skill than what §4.2 says the game is for.
+   Bubbles now show only the face — catching one requires recognizing
+   the expression against the target word shown at the top, which is
+   the actual point — and a short line under the target banner now
+   states that directly ("Faces only, no labels — this is practice for
+   spotting how a feeling looks...").
+3. **"the covers need to be story book covers"** (a follow-up to
+   update 9's shelf redesign, with a screenshot) — the book covers were
+   still a flat color gradient with one small emoji, which reads as a
+   color-coded icon, not an illustrated cover. Added a shared inline-SVG
+   Sprocket (same character design/gradients as the books themselves,
+   defined once in `stories.html` and reused via `<use>` across all
+   three covers) standing on a simple ground shape on every cover, and
+   moved the feeling's prop emoji (butterfly / blocks / star) to sit
+   near his feet as an in-scene detail instead of floating alone.
+
+Re-verified after these changes: full 12-page console-error sweep clean,
+the two-breath bloom fix confirmed visually in both `game-breathe.html`
+and `help.html` (screenshot shows the flower head, not just a stem),
+Bubble Pop's bubbles confirmed emoji-only via DOM text content, all
+three illustrated covers screenshotted, service worker cache bumped to
+v11.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
