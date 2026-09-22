@@ -129,6 +129,47 @@ canvas wash) needs someone in the actual Godot editor with a live
 viewport — tune `glow_hdr_threshold`/mip levels interactively and
 watch the buffer, rather than blind file-based iteration.
 
+## Round 2 — character redesign: "not kiddie/friendly looking, colourful"
+
+The first render (proven pipeline, but still just the direct 3D
+translation of the existing 2D palette) got direct feedback: not kid-
+friendly, not colorful, and to look at actual cartoon robots as
+reference rather than guess. Pulled real reference images this time —
+not just text search results, which turned out to be nearly useless
+for this (search summaries describe character designs in prose; you
+need to actually look at the shapes/colors). Downloaded and viewed
+official images: **Baymax** (Big Hero 6 Wikipedia infobox) for the
+soft/huggable roundness case study, **WALL-E** (Wikipedia infobox) for
+how much a single design lever — enormous, simple, expressive eyes —
+carries a robot's entire emotional readability. Text search also
+surfaced (though couldn't fetch direct images for) BMO, Rescue Bots,
+and Rosie the Robot as the reference points for the other missing
+piece: real kids'-character robots almost never use one hue for the
+whole body — they color-block 2–3 bold, saturated, contrasting colors
+across the design (body vs. face/screen vs. hands-and-feet), where the
+first pass was orange-on-orange-on-gold throughout.
+
+Changed in `blender/build_sprocket.py`:
+- **Eyes ~40% bigger** and given actual black pupils (previously plain
+  small white spheres) — the single highest-impact change, directly
+  from the WALL-E reference.
+- **Visor recolored** from a near-black "camera lens" to a bright glow-
+  ing teal "screen" — reads as a friendly lit face, not a sensor.
+- **Three-color-block palette**: body stays warm orange (brand
+  continuity with the 2D app) but the visor/core are now teal (a real
+  second hue, replacing a same-family gold) and the hands/feet/antenna
+  tip/collar are a third color, bright yellow — matching how actual
+  toy/character robots block color rather than shading one hue.
+- **Cheeks** bumped from muted salmon to vivid hot pink.
+
+Re-ran through the full Godot toon-shader/lighting/outline pipeline
+unchanged (no shader/lighting code changed this round — the fix was
+entirely in the asset, confirming the pipeline built in round 1
+transfers a palette/geometry change through cleanly without needing
+re-tuning). New result: `godot/sprocket_3d_proof.png` (overwrites the
+round-1 image — round 1's version is still in git history if needed
+for comparison).
+
 ## What this doesn't answer yet
 
 This spike proves the *pipeline* — Blender asset authoring, Godot
