@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 640" width="400" height="640">
+  <defs>
+    <linearGradient id="gradHelmet" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+      <stop offset="0%" stop-color="#C3D7DA"/>
+      <stop offset="55%" stop-color="#9AB4B8"/>
+      <stop offset="100%" stop-color="#79949A"/>
+    </linearGradient>
+    <linearGradient id="gradBody" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#B9CDD1"/>
+      <stop offset="55%" stop-color="#93AEB2"/>
+      <stop offset="100%" stop-color="#77949A"/>
+    </linearGradient>
+    <linearGradient id="gradFace" x1="0.2" y1="0.05" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#FFE7C9"/>
+      <stop offset="100%" stop-color="#F0C79C"/>
+    </linearGradient>
+    <linearGradient id="gradRed" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#F17E6B"/>
+      <stop offset="100%" stop-color="#D0503D"/>
+    </linearGradient>
+    <linearGradient id="gradOrange" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#FFCC5C"/>
+      <stop offset="100%" stop-color="#F2A017"/>
+    </linearGradient>
+    <linearGradient id="gradYellow" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#FFE477"/>
+      <stop offset="100%" stop-color="#F7C61C"/>
+    </linearGradient>
+    <linearGradient id="gradDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#333E4B"/>
+      <stop offset="100%" stop-color="#1A222C"/>
+    </linearGradient>
+    <radialGradient id="gradIris" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#6FC2F0"/>
+      <stop offset="60%" stop-color="#2E8FCB"/>
+      <stop offset="100%" stop-color="#1B6699"/>
+    </radialGradient>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000000" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <!-- ===================== back limbs (behind body) ===================== -->
+  <g id="armBack" transform="translate(300,0)">
+    <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+    <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="4"/>
+  </g>
+  <g id="legBack" transform="translate(228,0)">
+    <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="3"/>
+    <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="3"/>
+    <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#C99A12" stroke-width="4"/>
+  </g>
+
+  <!-- ===================== antennae ===================== -->
+  <g stroke="#6C8388" stroke-width="7" stroke-linecap="round">
+    <line x1="150" y1="70" x2="112" y2="22"/>
+    <line x1="250" y1="70" x2="288" y2="22"/>
+  </g>
+  <circle cx="112" cy="20" r="15" fill="url(#gradYellow)" stroke="#C99A12" stroke-width="3"/>
+  <circle cx="288" cy="20" r="15" fill="url(#gradYellow)" stroke="#C99A12" stroke-width="3"/>
+
+  <!-- ===================== helmet ===================== -->
+  <circle cx="200" cy="180" r="140" fill="url(#gradHelmet)" stroke="#4B6167" stroke-width="5" filter="url(#softShadow)"/>
+  <ellipse cx="160" cy="110" rx="55" ry="30" fill="#FFFFFF" opacity="0.16"/>
+
+  <!-- crest -->
+  <rect x="182" y="28" width="36" height="54" rx="12" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="4"/>
+
+  <!-- ear pods -->
+  <rect x="46" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="4"/>
+  <rect x="302" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="4"/>
+
+  <!-- face trim + face plate -->
+  <rect x="80" y="88" width="240" height="188" rx="44" fill="url(#gradDark)"/>
+  <rect x="92" y="100" width="216" height="164" rx="38" fill="url(#gradFace)" stroke="#E0AE82" stroke-width="3"/>
+
+  <!-- eyes -->
+  <g>
+    <circle cx="163" cy="168" r="38" fill="#FFFFFF" stroke="#1A222C" stroke-width="4"/>
+    <circle cx="163" cy="172" r="24" fill="url(#gradIris)"/>
+    <circle cx="163" cy="172" r="11" fill="#14181D"/>
+    <circle cx="154" cy="161" r="6" fill="#FFFFFF"/>
+    <path d="M 128,148 Q 155,130 190,146" fill="none" stroke="#1A222C" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g>
+    <circle cx="237" cy="168" r="38" fill="#FFFFFF" stroke="#1A222C" stroke-width="4"/>
+    <circle cx="237" cy="172" r="24" fill="url(#gradIris)"/>
+    <circle cx="237" cy="172" r="11" fill="#14181D"/>
+    <circle cx="228" cy="161" r="6" fill="#FFFFFF"/>
+    <path d="M 210,146 Q 245,130 272,148" fill="none" stroke="#1A222C" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- nose + mouth -->
+  <circle cx="200" cy="205" r="5" fill="#FFFFFF" opacity="0.85"/>
+  <path d="M 172,224 Q 200,246 228,224" fill="none" stroke="#1A222C" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- cheeks -->
+  <ellipse cx="122" cy="212" rx="20" ry="14" fill="url(#gradRed)" opacity="0.7"/>
+  <ellipse cx="278" cy="212" rx="20" ry="14" fill="url(#gradRed)" opacity="0.7"/>
+
+  <!-- ===================== front limbs ===================== -->
+  <g id="armFront" transform="translate(54,0)">
+    <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+    <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="4"/>
+  </g>
+
+  <!-- neck -->
+  <rect x="163" y="292" width="74" height="46" rx="16" fill="url(#gradDark)"/>
+
+  <!-- body -->
+  <rect x="120" y="310" width="160" height="150" rx="58" fill="url(#gradBody)" stroke="#4B6167" stroke-width="5" filter="url(#softShadow)"/>
+  <ellipse cx="165" cy="345" rx="34" ry="18" fill="#FFFFFF" opacity="0.14"/>
+
+  <!-- shoulders -->
+  <circle cx="128" cy="330" r="34" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="4"/>
+  <circle cx="272" cy="330" r="34" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="4"/>
+
+  <!-- chest dial -->
+  <circle cx="170" cy="368" r="28" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="3"/>
+  <circle cx="170" cy="368" r="15" fill="url(#gradDark)"/>
+  <circle cx="170" cy="404" r="8" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="2"/>
+
+  <!-- waist + hip -->
+  <rect x="100" y="424" width="200" height="34" rx="17" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="4"/>
+  <rect x="112" y="444" width="176" height="38" rx="19" fill="url(#gradRed)" stroke="#A23A2C" stroke-width="3"/>
+
+  <g id="legFront" transform="translate(124,0)">
+    <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="3"/>
+    <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#4B6167" stroke-width="4"/>
+    <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#C97E10" stroke-width="3"/>
+    <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#C99A12" stroke-width="4"/>
+  </g>
+</svg>

@@ -280,6 +280,45 @@ glowing screen (round 2) doesn't automatically work for an anatomical
 face (round 3)" — the fix in both cases came from looking hard at what
 the render actually shows instead of reasoning from the code.
 
+## Round 4 — "still freaky, make it 2d"
+
+Three rounds of 3D fixes (bigger eyes, real color-blocking, fixed
+floating-part gaps, anti-aliasing, a bigger face, flat disc eyes
+instead of bulging spheres) still didn't land. In hindsight the
+pattern across every round is the same: the reference image the user
+picked out and said to "work from" (round 3) was itself a flat 2D
+vector illustration, not a 3D render — every attempt to translate a
+flat illustration's proportions into real 3D geometry has to solve
+problems (perspective, protrusion, what an eye looks like from a 3/4
+angle) that the flat original never had to. Rather than attempt a
+fourth 3D pass, built the character directly as 2D vector art —
+`2d/sprocket-2d.svg`: hand-written SVG using the same technique as the
+Capacitor spike's `academy-icons.js` (which the user already responded
+well to) — flat shapes with a light-to-dark linear gradient per color
+for a soft "premium mobile game" shaded-flat look, consistent dark
+outlines, a front-facing symmetric pose. Matches the reference's
+proportions and palette directly rather than reprojecting them through
+a 3D pipeline: big helmet with a face plate covering most of its
+front, large white/blue/black layered-circle eyes with brow lines,
+red ear pods and crest, blue-grey body/limbs, orange shoulders/chest
+dial/joint bands, red hip panel, yellow boots.
+
+Rendered via a headless Chromium screenshot (`2d/sprocket-2d-proof.png`)
+to verify the actual visual result rather than just checking the SVG
+source is well-formed.
+
+This doesn't retroactively invalidate the Blender/Godot pipeline work
+in rounds 1–3b — that pipeline (headless asset authoring, toon
+shading, real-time lighting/outline, Android export path) is still
+real and still documented above — but it does mean **the character
+itself, going forward, is 2D**, and any continued Godot work would
+use this flat art as a 2D sprite (Godot supports 2D scenes natively)
+rather than trying to sculpt a 3D equivalent of it. Which direction to
+take next (integrate this into the existing Capacitor/SVG app the same
+way `academy-icons.js` already works, or bring this flat art into
+Godot as 2D sprite-based content) is an open question for the user,
+not assumed here.
+
 ## What this doesn't answer yet
 
 This spike proves the *pipeline* — Blender asset authoring, Godot
