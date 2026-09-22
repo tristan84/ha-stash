@@ -107,6 +107,13 @@
 .book-worried .book-face { background: linear-gradient(160deg, #ffb98a, #f0873a 78%); }
 .book-frustrated .book-face { background: linear-gradient(160deg, #ff9b85, #e05a3c 78%); }
 .book-excited .book-face { background: linear-gradient(160deg, #ffd97a, #f0a800 78%); }
+.book-sad .book-face { background: linear-gradient(160deg, #d9a3c9, #a3628f 78%); }
+.book-angry .book-face { background: linear-gradient(160deg, #ff8a5e, #e0431f 78%); }
+.book-scared .book-face { background: linear-gradient(160deg, #c294c2, #8a5c8a 78%); }
+.book-embarrassed .book-face { background: linear-gradient(160deg, #ff9ec2, #e0568f 78%); }
+.book-proud .book-face { background: linear-gradient(160deg, #ffcf6a, #e8a300 78%); }
+.book-overwhelmed .book-face { background: linear-gradient(160deg, #c2ad8a, #967f5c 78%); }
+.book-happy .book-face { background: linear-gradient(160deg, #ffdb8a, #f0b347 78%); }
 
 .shelf-plank {
   height: 16px;

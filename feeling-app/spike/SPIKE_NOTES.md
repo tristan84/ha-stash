@@ -363,6 +363,66 @@ Bubble Pop's bubbles confirmed emoji-only via DOM text content, all
 three illustrated covers screenshotted, service worker cache bumped to
 v11.
 
+**2026-09-22 update 11**: "im not loving the cover images for the
+books" — a follow-up on update 10's cover fix, which had put Sprocket
+on the cover but still just standing on a flat translucent smudge, thin
+compared to a real storybook cover. Rebuilt each cover as a proper small
+illustrated scene reusing the same prop symbols each book already draws
+from inside itself (bush pair for Worried, scattered blocks for
+Frustrated, star sparks for Excited) plus a sun/cloud, composed fresh
+for the portrait cover shape rather than cropping a landscape book page.
+Kept each book's existing saturated CSS gradient as the "sky" layer so
+the title stayed legible, with the new ground/props/character drawn on
+top of it. Service worker cache bumped to v12.
+
+**2026-09-22 update 12 — seven more books**: asked to "make 7 more
+books," bringing the shelf from 3 to 10. Added Sad ("Sprocket's Rainy
+Afternoon"), Angry ("Sprocket's Scattered Puzzle"), Scared ("Sprocket's
+Big Thunderstorm"), Embarrassed ("Sprocket's Spilled Juice"), Proud
+("Sprocket's Big Bike Ride"), Overwhelmed ("Sprocket's Very Full Day"),
+and Happy ("Sprocket's Sunny Saturday") — see PLAN.md §4.5 for each
+one's body/mind signature and tool, chosen so no two books share a
+signature or a tool (Angry's stomp-then-tell-a-grownup differs from
+Frustrated's shake-and-count; Sad's comfort self-hug differs from every
+breathing/movement tool; Overwhelmed's quiet-then-pick-one differs from
+Scared's breathe-then-anchor; Proud and Happy are both positive but
+distinct — achievement-glow-and-share vs. ordinary-day-savoring).
+Overwhelmed was picked deliberately to speak directly to the app's named
+audience (§2: autistic children, ADHD).
+
+Each new book is a straight copy of the established per-book template
+(shared `story.css`/`story.js` reader engine needed zero changes — the
+whole book-reader machinery is already fully generic) with its own
+`<defs>` block: a distinct color-graded sky/hill palette (extending the
+warm-palette-only rule — muted lavender-rose for Sad, the hottest
+red-orange of any book for Angry, dusky violet-plum for Scared, warm
+blush-pink for Embarrassed, celebratory gold for Proud, muted foggy
+taupe for Overwhelmed, soft peach-yellow for Happy) and 1-3 new
+book-specific prop symbols (raindrop/window, puzzle-scatter/wind-gust,
+lightning/storm-cloud, juice-cup/spill, bike/ribbon, balloon-cluster/
+noise-lines, sun-rays/flower). Three books also needed a new character
+pose variant reusing the same `sprocketMini`-style construction — arms
+crossed for Sad's comfort hug, arms raised for Proud's pose, hands over
+ears for Overwhelmed's body-sensation page — rather than the default
+open-arms stance.
+
+The shelf (`stories.html`) gained seven more illustrated covers in the
+same style as update 11's redesign (reusing the shared `coverSprocket`
+symbol plus new cover-scale prop symbols) and seven new `.book-*` CSS
+theme gradients in `stories.css`, still one horizontally-scrolling row
+on one shelf plank. The diary's feeling picker (`diary.js`) grew from
+six chips to eleven, adding Angry/Scared/Embarrassed/Proud/Overwhelmed
+so every book's feeling can also be logged (Calm remains diary-only,
+with no book).
+
+Re-verified all ten books individually: each pages through all nine
+pages with zero console errors, each custom character pose variant
+(hug/proud/cover-ears) screenshotted and confirmed rendering correctly,
+full 19-page app-wide console-error sweep clean, offline reload
+confirmed working for a new book via the service worker (cache bumped
+to v13), and two new-book shelf links confirmed navigating to the right
+file.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -479,11 +539,15 @@ rather than guessing at a result I can't actually produce here.
   support, registered from every page
 - `www/stories.html`, `www/stories.css` — book shelf (real book-cover
   cards on a shelf plank)
-- `www/story.html`, `www/story-frustrated.html`, `www/story-excited.html`
-  — the three books (Worried, Frustrated, Excited), each with its own
-  backdrop color grading
+- `www/story.html`, `www/story-frustrated.html`, `www/story-excited.html`,
+  `www/story-sad.html`, `www/story-angry.html`, `www/story-scared.html`,
+  `www/story-embarrassed.html`, `www/story-proud.html`,
+  `www/story-overwhelmed.html`, `www/story-happy.html` — the ten books
+  (Worried, Frustrated, Excited, Sad, Angry, Scared, Embarrassed, Proud,
+  Overwhelmed, Happy), each with its own backdrop color grading
 - `www/story.css`, `www/story.js` — shared book-reader machinery (page
-  flip, dots, read-aloud) used by all three books
+  flip, dots, read-aloud) used by all ten books, unchanged since it's
+  fully generic
 - `www/games.html` — game shelf
 - `www/game-breathe.html/.css/.js` — Sprocket's Garden, the breathing
   tool (also embedded in `help.html`)

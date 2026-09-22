@@ -150,9 +150,9 @@ license is deliberately pursued later. Whether story content is fully
 original vs. drawing on other (non-trademarked) published
 children's-bibliotherapy patterns is an **open decision** (see §9).
 
-**Three prototype stories exist**, on a shelf at `spike/www/stories.html`,
+**Ten prototype stories exist**, on a shelf at `spike/www/stories.html`,
 each a different feeling with its own body/mind signature and its own
-tool — deliberately not the same fix reused three times:
+tool — deliberately not the same fix reused ten times:
 - **"Sprocket's Fluttery Day"** (`story.html`) — **Worried**: fluttery
   tummy, fast heart, racing "what if" thoughts; tool is three slow
   breaths.
@@ -166,8 +166,35 @@ tool — deliberately not the same fix reused three times:
   its normalize page; its tool is channeling the energy (a wiggle dance)
   rather than calming down, reinforcing Principle 2 that tools are for
   any big feeling, not just uncomfortable ones.
+- **"Sprocket's Rainy Afternoon"** (`story-sad.html`) — **Sad**: heavy
+  chest, low energy, quiet withdrawn thoughts; tool is a comfort self-hug
+  and naming one warm thing you love — deliberately not an energizing or
+  breathing tool, since sad needs comfort, not fixing.
+- **"Sprocket's Scattered Puzzle"** (`story-angry.html`) — **Angry**:
+  hot-and-fast (bigger, quicker than Frustrated's slow build); tool is a
+  big safe physical release (stomping) followed by telling a grown-up.
+- **"Sprocket's Big Thunderstorm"** (`story-scared.html`) — **Scared**:
+  racing heart, frozen legs, darting "what if" danger-thoughts; tool is a
+  slow brave breath plus finding a nearby anchor (a safe person or thing).
+- **"Sprocket's Spilled Juice"** (`story-embarrassed.html`) —
+  **Embarrassed**: hot cheeks, want-to-hide, replaying the moment; tool
+  is a physical shake-off plus normalizing that everyone messes up.
+- **"Sprocket's Big Bike Ride"** (`story-proud.html`) — **Proud**: a
+  positive achievement feeling distinct from Excited's high-energy
+  signature — warm chest, tall posture; tool is a physical "proud pose"
+  plus sharing the moment with someone, reinforcing (same as Excited)
+  that tools exist for good feelings too.
+- **"Sprocket's Very Full Day"** (`story-overwhelmed.html`) —
+  **Overwhelmed**: too-much-at-once, tight/heavy body, loud/foggy head;
+  tool is stepping to quiet then picking just one small thing to focus
+  on — directly relevant to the app's named audience (§2: autistic
+  children, ADHD).
+- **"Sprocket's Sunny Saturday"** (`story-happy.html`) — **Happy**: an
+  ordinary-good-day feeling, deliberately with no dramatic trigger at
+  all; tool is "savoring" — pausing to notice one good thing happening
+  right now.
 
-All three share the same nine-page structure — notice (body) → notice
+All ten share the same nine-page structure — notice (body) → notice
 (mind) → name → normalize → try a tool → process-reward close ("proud —
 not for feeling calm/quiet/settled, for trying") — a narrative
 instantiation of the five-stage model research note 01 already
@@ -209,8 +236,9 @@ decision** (see §9) that needs your explicit call, not an assumption
 either way.
 
 **A working prototype exists** at `spike/www/diary.html`: tap a feeling
-chip (six options — the three story-book feelings plus Happy, Calm, Sad)
-to log it immediately, stored in `localStorage` only, nothing sent
+chip (eleven options — all ten story-book feelings plus Calm, which has
+no book of its own) to log it immediately, stored in `localStorage` only,
+nothing sent
 anywhere. Logging itself stays a single tap — fast and low-friction — but
 an optional reflection panel now follows each tap, offering to say more
 by typing or by voice, always skippable in one tap since not every child

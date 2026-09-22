@@ -11,6 +11,11 @@ const FEELINGS = [
   { name: 'Happy', emoji: '😊' },
   { name: 'Calm', emoji: '😌' },
   { name: 'Sad', emoji: '😢' },
+  { name: 'Angry', emoji: '😠' },
+  { name: 'Scared', emoji: '😨' },
+  { name: 'Embarrassed', emoji: '😳' },
+  { name: 'Proud', emoji: '🙌' },
+  { name: 'Overwhelmed', emoji: '😵‍💫' },
 ];
 
 const STORAGE_KEY = 'sprocket-diary';
