@@ -11,13 +11,14 @@
 </head>
 <body class="screen-body">
 <!-- Feeling diary (PLAN.md §4.6): a real, working, on-device diary.
-     Tap a feeling to log noticing it — that's the whole entry action,
-     no typed note field. That's a deliberate scope choice for this
-     prototype, not a missing feature: it keeps entries fast/low-friction
-     to log, sidesteps needing a text-input UI, and avoids a child
-     typing anything identifying. Entries live in localStorage only
-     (Principle 1 / Open Decision #14's default: private to the child,
-     nothing sent anywhere, no parent view of this data exists). -->
+     Tapping a feeling logs it immediately — that stays the fast,
+     low-friction core action — and then offers an optional reflection
+     note (typed or voice) so a child who wants to say more can, without
+     it ever being required to complete an entry. Entries (and typed
+     notes) live in localStorage only (Principle 1 / Open Decision #14's
+     default: private to the child, nothing sent anywhere, no parent
+     view of this data exists). The voice option is the one exception
+     to "nothing sent anywhere" — see the comment in diary.js. -->
 <main class="screen-main">
   <header class="screen-header">
     <a href="index.html" class="screen-back" aria-label="Back home">←</a>
@@ -31,6 +32,24 @@
     <p class="screen-intro">What are you noticing right now?</p>
     <div id="feeling-picker" class="feeling-picker"></div>
     <p id="add-feedback" class="add-feedback" aria-live="polite"></p>
+
+    <!-- Optional reflection note, shown right after logging a feeling.
+         Typing and voice are both optional and skippable (not every
+         child types comfortably) — never required to complete an
+         entry. See diary.js for the on-device-privacy caveat on the
+         voice option specifically. -->
+    <div id="note-panel" class="note-panel" hidden>
+      <p class="note-panel-title">Want to say more about <span id="note-feeling-label"></span>?</p>
+      <div class="note-input-row">
+        <textarea id="note-input" class="note-input" rows="2" maxlength="240" placeholder="Type here… (optional)"></textarea>
+        <button id="btn-mic" class="mic-btn" aria-label="Add note by voice" hidden>🎤</button>
+      </div>
+      <p id="mic-status" class="mic-status" aria-live="polite"></p>
+      <div class="note-panel-actions">
+        <button id="btn-skip-note" class="pill-btn quiet">Skip</button>
+        <button id="btn-save-note" class="pill-btn help">Save note</button>
+      </div>
+    </div>
 
     <h2 class="diary-list-heading">Your notebook</h2>
     <div id="entry-list" class="entry-list"></div>
