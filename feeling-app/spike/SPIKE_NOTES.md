@@ -476,6 +476,91 @@ shelf) and re-ran the full app-wide sweep: 21 pages, zero console
 errors, 60fps on both new games (idle and mid-interaction), offline
 reload confirmed for both via the service worker (cache bumped to v14).
 
+**2026-09-22 update 14 — Feelings Academy replaces the flat games
+shelf**: tried update 13's two new games and was unambiguous — "im not
+happy with the games. any of them... there is no leasons in them and
+thay are far to basic. they are all basicly the same. i want the games
+more like the high end games that are on the play store with leasons
+and rewards." Not a request for another mini-game alongside the other
+four; a request to rethink the whole "games" section as one real
+leveled structure with actual teaching and a persistent reward loop,
+the way Duolingo or a Candy-Crush-style map does it.
+
+Built **Feelings Academy**: a level map (`academy.html`) of ten nodes,
+one per book feeling, unlocked in order, each showing 0–3 stars once
+played; a data-driven level engine (`academy-level.html` +
+`academy-data.js`, one template serving all ten feelings) that runs
+four phases per level — **Teach** (3 scripted screens condensed from
+that feeling's story book: body signal, mind signal, name), **Spot the
+Signal** (multiple-choice recognition, retryable), **Tool Match**
+(drag the correct tool onto Sprocket from a tray — same
+feeling→tool pairings the books teach), **Quick Recall** (3 timed
+tap-the-face rounds with a shrinking timer bar) — then a **Complete**
+screen with stars, Sparks currency, and (at thresholds) a cosmetic
+unlock; and **Sprocket's Closet** (`academy-shop.html`), where earned
+Sparks buy cosmetics (bow, scarf, crown, cape, star badge) that show up
+on Sprocket both in the Academy and — the actual payoff moment — on the
+home screen character itself (`index.html`/`app.js`/`style.css`), not
+just inside a sub-screen.
+
+Retired the three flat games from update 13 (`game-match.*`,
+`game-sort.*`, `game-tool.*` — deleted, not just unlinked) since their
+content is what got the complaint; their drag-and-drop mechanic wasn't
+thrown away, it's the same pick-up/follow-pointer/check-overlap-on-drop
+logic now powering the Academy's Tool Match phase. Sprocket's Garden
+(the breathing tool, also embedded in Help Me) stayed untouched and
+keeps its own card on `games.html` — it's a regulation tool a child
+reaches for in a moment, not a lesson with a beginning and an end, so
+folding it into the Academy's level structure would have been a
+category error.
+
+**Reward design, and why it isn't a Principle 2 problem**: real
+mobile-game reward loops (stars, currency, unlocks) are new territory
+for this app, and the obvious risk is a system that ends up rewarding
+*which* feeling a child got right rather than the *skill* of
+recognizing it. Documented the guardrail directly in
+`academy-data.js`: every level, regardless of which feeling it teaches,
+uses the exact same formula — star 1 for finishing, star 2 for no
+retry needed on Spot or Tool, star 3 for beating the Recall timer on
+≥2 of 3 rounds, and the same flat+bonus Sparks amount (10/15/20).
+Nothing about a level's difficulty, reward size, or unlock pacing
+varies by feeling. Verified this isn't just a claim on paper: ran one
+level to a deliberate 3-star finish and a different level to a
+deliberate 1-star finish (wrong Spot answer, all three Recall rounds
+left to time out) and confirmed the star count, Sparks earned, and
+unlock trigger actually differ by *performance*, not by which feeling
+was on screen.
+
+**Two real bugs caught during testing, both before being called
+done:**
+1. Tool tray labels were derived by truncating the tool's long label to
+   its first word (`'Three Slow Breaths'.split(' ')[0]` → "Three"),
+   which was meaningless out of context — a child would see a tile
+   that just says "Three" next to a wind emoji. Fixed by adding an
+   explicit short label per tool in `academy-data.js` (`short:
+   'Breathe'`, etc.) instead of deriving one, and re-verified every
+   level's tray shows a real word.
+2. The level-map's star spans had only a `.star-off` CSS rule; a
+   `.star-on` class existed in the markup but nothing styled it,
+   relying on "undecorated = looks earned" by default. Screenshot
+   review at a glance made an unlocked-but-unplayed level's three dim
+   stars look indistinguishable from an earned level's three bright
+   ones. Confirmed via direct DOM inspection (not just a screenshot)
+   that the underlying data and class assignment were already correct
+   — only the explicit `.star-on { opacity: 1 }` rule was missing —
+   and added it so the distinction doesn't depend on emoji-default
+   rendering.
+
+Re-verified: all ten `academy-level.html?level=X` URLs plus
+`academy.html` and `academy-shop.html` load with zero console errors
+(29-page app-wide sweep, up from 21 — three retired, ten added net
+seven plus the shop and one map), 60fps on a level page, offline reload
+confirmed for the map/level/shop trio via the service worker (cache
+bumped to v15), a full Teach→Spot→Tool→Recall→Complete run confirmed
+end-to-end with real simulated drag events (not `.click()`), and the
+Sprocket's Closet equip flow confirmed round-tripping through
+localStorage to the home screen.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -601,13 +686,17 @@ rather than guessing at a result I can't actually produce here.
 - `www/story.css`, `www/story.js` — shared book-reader machinery (page
   flip, dots, read-aloud) used by all ten books, unchanged since it's
   fully generic
-- `www/games.html` — game shelf
+- `www/games.html`, `www/games.css` — game shelf: Sprocket's Garden card
+  plus a featured card into Feelings Academy
 - `www/game-breathe.html/.css/.js` — Sprocket's Garden, the breathing
   tool (also embedded in `help.html`)
-- `www/game-match.html/.css/.js` — Bubble Pop
-- `www/game-sort.html/.css/.js` — Feeling Sort (drag faces into baskets)
-- `www/game-tool.html/.css/.js` — Tool Match (drag the right tool onto
-  Sprocket)
+- `www/academy-data.js` — shared Feelings Academy data: all ten levels'
+  body/mind/tool content, plus progress/Sparks/rewards state helpers
+- `www/academy.html/.css/.js` — the level map
+- `www/academy-level.html/.css/.js` — the level engine (Teach → Spot →
+  Tool → Recall → Complete), one template for all ten levels
+- `www/academy-shop.html/.css/.js` — Sprocket's Closet (spend Sparks on
+  cosmetics)
 - `www/diary.html/.css/.js` — feeling diary, with optional typed/voice
   reflection notes per entry
 - `www/help.html/.css/.js` — Help Me (embeds Sprocket's Garden)

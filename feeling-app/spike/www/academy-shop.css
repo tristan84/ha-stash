@@ -1,0 +1,45 @@
+.closet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.closet-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: 18px;
+  padding: 16px 10px;
+  background: #fffaf2;
+  box-shadow: 0 6px 14px rgba(190,110,40,0.15);
+  font-family: inherit;
+}
+.closet-item:active { transform: translateY(2px); }
+.closet-item.locked {
+  background: #f0e9dc;
+  opacity: 0.75;
+}
+.closet-item.equipped {
+  box-shadow: 0 0 0 3px var(--button-help), 0 6px 14px rgba(190,110,40,0.15);
+}
+
+.closet-icon { font-size: 34px; }
+.closet-icon.locked-icon { font-size: 26px; opacity: 0.5; }
+.closet-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.closet-threshold {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--button-help-dark);
+  opacity: 0.8;
+}
+.closet-equipped-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--button-help);
+  padding: 2px 8px;
+  border-radius: 10px;
+}

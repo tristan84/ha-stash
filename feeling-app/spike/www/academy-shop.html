@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sprocket's Closet</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="academy.css" />
+<link rel="stylesheet" href="academy-shop.css" />
+</head>
+<body class="screen-body academy-body">
+<!-- Sprocket's Closet: spend Sparks earned from Academy levels on
+     cosmetics for Sprocket. Purely cosmetic/collectible — never
+     affects which levels are available or how a level plays — so the
+     reward loop stays about practicing, not about buying power. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="academy.html" class="screen-back" aria-label="Back to Academy">←</a>
+    <span class="screen-title-chip">Sprocket's Closet</span>
+    <span class="sparks-chip"><span aria-hidden="true">✨</span> <span id="sparks-total">0</span></span>
+  </header>
+
+  <div class="academy-hero">
+    <div id="hero-sprocket" class="hero-sprocket">
+      <div class="hs-antenna"><span class="hs-antenna-tip"></span></div>
+      <div id="hs-cosmetic" class="hs-cosmetic" aria-hidden="true"></div>
+      <div class="hs-head"><div class="hs-eye left"></div><div class="hs-eye right"></div></div>
+      <div class="hs-body"><div class="hs-core"></div></div>
+    </div>
+  </div>
+
+  <div class="screen-content">
+    <p class="screen-intro">Tap an unlocked item to put it on Sprocket.</p>
+    <div id="closet-grid" class="closet-grid"></div>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="academy-data.js"></script>
+<script src="academy-shop.js"></script>
+</body>
+</html>

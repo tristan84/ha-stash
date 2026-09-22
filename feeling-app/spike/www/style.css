@@ -351,6 +351,26 @@ main {
   box-shadow: 0 0 12px 3px rgba(255, 211, 94, 0.75);
   animation: glow 1.8s ease-in-out infinite;
 }
+/* Cosmetic unlocked in Sprocket's Closet (Feelings Academy), mirrored
+   here so the reward actually shows up on the character the child sees
+   every time the app opens, not just inside the Academy. Purely
+   visual — set/read from localStorage by app.js, never affects
+   anything else about the home screen. */
+.home-cosmetic {
+  position: absolute;
+  z-index: 5;
+  font-size: 48px;
+  line-height: 1;
+  display: none;
+  pointer-events: none;
+}
+.home-cosmetic.show { display: block; }
+.home-cosmetic.cosmetic-bow { top: -6px; left: 50%; transform: translateX(-50%) rotate(-6deg); font-size: 36px; }
+.home-cosmetic.cosmetic-scarf { top: 118px; left: 50%; transform: translateX(-50%); font-size: 44px; }
+.home-cosmetic.cosmetic-crown { top: -32px; left: 50%; transform: translateX(-50%); font-size: 50px; }
+.home-cosmetic.cosmetic-cape { top: 100px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 0; opacity: 0.92; }
+.home-cosmetic.cosmetic-star-badge { top: 150px; left: 50%; transform: translateX(-50%); font-size: 34px; }
+
 @keyframes wiggle {
   0%, 100% { transform: rotate(-6deg); }
   50% { transform: rotate(6deg); }

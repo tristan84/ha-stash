@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Feelings Academy</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="academy-level.css" />
+</head>
+<body class="screen-body">
+<!-- One Academy level = a short structured lesson, not a single
+     repeated mechanic: a scripted teach sequence (reusing the matching
+     book's body/mind/name content), a recognition round, a drag-drop
+     tool round, and a timed quick-recall round, then stars + Sparks.
+     Fully data-driven off academy-data.js so this one template serves
+     all ten levels. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="academy.html" id="btn-exit" class="screen-back" aria-label="Back to map">←</a>
+    <div id="step-dots" class="step-dots"></div>
+    <span class="sparks-chip"><span aria-hidden="true">✨</span> <span id="sparks-total">0</span></span>
+  </header>
+
+  <div id="phase-stage" class="phase-stage"></div>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="academy-data.js"></script>
+<script src="academy-level.js"></script>
+</body>
+</html>

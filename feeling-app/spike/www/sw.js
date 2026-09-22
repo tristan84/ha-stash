@@ -2,16 +2,17 @@
 // assets, so "offline behavior" is testable by disabling network and
 // reloading. Not a real offline strategy for the product — Phase 3
 // will need a proper cache-versioning/update strategy.
-const CACHE = 'sprocket-spike-v14';
+const CACHE = 'sprocket-spike-v15';
 const ASSETS = [
   './', 'index.html', 'style.css', 'app.js', 'tts.js', 'common.css', 'manifest.webmanifest',
   'stories.html', 'stories.css', 'story.html', 'story-frustrated.html', 'story-excited.html',
   'story-sad.html', 'story-angry.html', 'story-scared.html', 'story-embarrassed.html',
   'story-proud.html', 'story-overwhelmed.html', 'story-happy.html', 'story.css', 'story.js',
-  'games.html', 'game-breathe.html', 'game-breathe.css', 'game-breathe.js',
-  'game-match.html', 'game-match.css', 'game-match.js',
-  'game-sort.html', 'game-sort.css', 'game-sort.js',
-  'game-tool.html', 'game-tool.css', 'game-tool.js',
+  'games.html', 'games.css', 'game-breathe.html', 'game-breathe.css', 'game-breathe.js',
+  'academy-data.js',
+  'academy.html', 'academy.css', 'academy.js',
+  'academy-level.html', 'academy-level.css', 'academy-level.js',
+  'academy-shop.html', 'academy-shop.css', 'academy-shop.js',
   'diary.html', 'diary.css', 'diary.js',
   'help.html', 'help.css', 'help.js',
   'parent-gate.html', 'parent-gate.css', 'parent-gate.js',

@@ -89,6 +89,21 @@ sprocketEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); greet(); }
 });
 
+// Show whichever Feelings Academy cosmetic is currently equipped
+// (Sprocket's Closet, academy-shop.js) on the home-screen character —
+// the actual payoff moment for earning it, not just inside the Academy.
+(function renderHomeCosmetic() {
+  const cosmeticEl = document.getElementById('home-cosmetic');
+  if (!cosmeticEl || typeof academyGetSparks !== 'function') return;
+  const equipped = localStorage.getItem(ACADEMY_EQUIPPED_KEY);
+  if (!equipped) return;
+  const unlocked = academyUnlockedRewards(academyGetSparks());
+  const reward = unlocked.find((r) => r.id === equipped);
+  if (!reward) return;
+  cosmeticEl.textContent = reward.icon;
+  cosmeticEl.classList.add('show', `cosmetic-${reward.id}`);
+})();
+
 // Every home-screen button now leads to a real, working screen.
 document.getElementById('btn-help').addEventListener('click', () => { window.location.href = 'help.html'; });
 document.getElementById('btn-play').addEventListener('click', () => { window.location.href = 'games.html'; });

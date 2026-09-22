@@ -7,10 +7,19 @@
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="games.css" />
 </head>
 <body class="screen-body">
 <!-- Game shelf: the home screen's "Play a game" button (PLAN.md §4.2)
-     lands here. Four real games now exist — see SPIKE_NOTES.md. -->
+     lands here. Used to be four flat, similar-feeling mini-games —
+     replaced with Feelings Academy (a real leveled lesson structure
+     with stars and unlockable rewards, see academy.html) after direct
+     feedback that the old games were "far to basic... all basicly the
+     same" and a request for something "more like the high-end games
+     on the play store." Sprocket's Garden stays separate: it's the
+     breathing regulation tool (also embedded in Help Me), not a
+     lesson, so it keeps its own card rather than folding into the
+     Academy's level structure. -->
 <main class="screen-main">
   <header class="screen-header">
     <a href="index.html" class="screen-back" aria-label="Back home">←</a>
@@ -19,8 +28,37 @@
   </header>
   <div class="screen-content">
     <p class="screen-intro">Pick something to play with Sprocket.</p>
-    <div class="shelf-grid">
 
+    <a class="academy-feature-card" href="academy.html">
+      <svg class="academy-feature-art" viewBox="0 0 340 150">
+        <defs>
+          <linearGradient id="cardSkyAcademy" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+          </linearGradient>
+        </defs>
+        <rect width="340" height="150" fill="url(#cardSkyAcademy)" />
+        <path d="M0,118 Q170,96 340,114 V150 H0 Z" fill="#dcea97" opacity="0.65" />
+        <circle cx="40" cy="118" r="10" fill="#ffb15e" /><circle cx="40" cy="118" r="4" fill="#fff4e2" />
+        <line x1="52" y1="112" x2="80" y2="122" stroke="#d9a464" stroke-width="3" stroke-dasharray="2 4" />
+        <circle cx="92" cy="126" r="12" fill="#ffd35e" /><text x="92" y="131" font-size="12" text-anchor="middle">😟</text>
+        <line x1="105" y1="118" x2="133" y2="100" stroke="#d9a464" stroke-width="3" stroke-dasharray="2 4" />
+        <circle cx="146" cy="94" r="14" fill="#ff9b5e" /><text x="146" y="100" font-size="14" text-anchor="middle">😤</text>
+        <line x1="160" y1="88" x2="188" y2="102" stroke="#d9a464" stroke-width="3" stroke-dasharray="2 4" />
+        <circle cx="200" cy="110" r="12" fill="#e6dcc9" /><text x="200" y="115" font-size="13" text-anchor="middle">🔒</text>
+        <line x1="212" y1="104" x2="240" y2="88" stroke="#d9a464" stroke-width="3" stroke-dasharray="2 4" />
+        <circle cx="252" cy="82" r="12" fill="#e6dcc9" /><text x="252" y="87" font-size="13" text-anchor="middle">🔒</text>
+        <circle cx="290" cy="55" r="30" fill="#ffedc9" opacity="0.5" />
+        <circle cx="285" cy="40" r="20" fill="#ffb15e" />
+        <rect x="272" y="32" width="26" height="13" rx="6" fill="#4a2e1c" />
+        <circle cx="278" cy="38" r="3" fill="#ffedc9" /><circle cx="292" cy="38" r="3" fill="#ffedc9" />
+      </svg>
+      <div class="academy-feature-body">
+        <p class="academy-feature-title">✨ Feelings Academy</p>
+        <p class="academy-feature-sub">Ten levels. Real lessons. Stars &amp; rewards.</p>
+      </div>
+    </a>
+
+    <div class="shelf-grid">
       <a class="shelf-card" href="game-breathe.html">
         <svg class="shelf-card-art" viewBox="0 0 200 150">
           <defs>
@@ -48,74 +86,6 @@
           <p class="shelf-card-sub">breathe to grow flowers</p>
         </div>
       </a>
-
-      <a class="shelf-card" href="game-match.html">
-        <svg class="shelf-card-art" viewBox="0 0 200 150">
-          <defs>
-            <linearGradient id="cardSky2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
-            </linearGradient>
-          </defs>
-          <rect width="200" height="150" fill="url(#cardSky2)" />
-          <ellipse cx="164" cy="22" rx="18" ry="7" fill="#fffaf2" opacity="0.9" />
-          <path d="M0,122 Q100,104 200,118 V150 H0 Z" fill="#dcea97" opacity="0.7" />
-          <circle cx="52" cy="88" r="19" fill="#ffcf9c" /><text x="52" y="94" font-size="18" text-anchor="middle">😟</text>
-          <circle cx="104" cy="52" r="22" fill="#ffb199" /><text x="104" y="59" font-size="20" text-anchor="middle">😤</text>
-          <circle cx="150" cy="98" r="16" fill="#ffe08a" /><text x="150" y="104" font-size="15" text-anchor="middle">🤩</text>
-          <rect x="168" y="112" width="18" height="26" rx="4" fill="#fffaf2" opacity="0.7" />
-          <rect x="168" y="122" width="18" height="16" rx="3" fill="#ffb15e" />
-        </svg>
-        <span class="shelf-card-play" aria-hidden="true">🎯</span>
-        <div class="shelf-card-body">
-          <p class="shelf-card-title">Bubble Pop</p>
-          <p class="shelf-card-sub">catch the right feeling</p>
-        </div>
-      </a>
-
-      <a class="shelf-card" href="game-sort.html">
-        <svg class="shelf-card-art" viewBox="0 0 200 150">
-          <defs>
-            <linearGradient id="cardSky3" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
-            </linearGradient>
-          </defs>
-          <rect width="200" height="150" fill="url(#cardSky3)" />
-          <ellipse cx="170" cy="20" rx="16" ry="6" fill="#fffaf2" opacity="0.9" />
-          <text x="60" y="60" font-size="20" text-anchor="middle">😢</text>
-          <text x="110" y="40" font-size="18" text-anchor="middle">🙌</text>
-          <rect x="30" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
-          <rect x="79" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
-          <rect x="128" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
-        </svg>
-        <span class="shelf-card-play" aria-hidden="true">🧺</span>
-        <div class="shelf-card-body">
-          <p class="shelf-card-title">Feeling Sort</p>
-          <p class="shelf-card-sub">drag each face to its basket</p>
-        </div>
-      </a>
-
-      <a class="shelf-card" href="game-tool.html">
-        <svg class="shelf-card-art" viewBox="0 0 200 150">
-          <defs>
-            <linearGradient id="cardSky4" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
-            </linearGradient>
-          </defs>
-          <rect width="200" height="150" fill="url(#cardSky4)" />
-          <path d="M0,120 Q100,102 200,116 V150 H0 Z" fill="#dcea97" opacity="0.6" />
-          <circle cx="100" cy="78" r="30" fill="#ffb15e" />
-          <rect x="84" y="66" width="32" height="16" rx="8" fill="#4a2e1c" />
-          <circle cx="92" cy="74" r="4" fill="#ffedc9" /><circle cx="108" cy="74" r="4" fill="#ffedc9" />
-          <text x="150" y="45" font-size="22" text-anchor="middle">🌬️</text>
-          <text x="45" y="110" font-size="18" text-anchor="middle">🫂</text>
-        </svg>
-        <span class="shelf-card-play" aria-hidden="true">🧰</span>
-        <div class="shelf-card-body">
-          <p class="shelf-card-title">Tool Match</p>
-          <p class="shelf-card-sub">drag the right tool to Sprocket</p>
-        </div>
-      </a>
-
     </div>
   </div>
 </main>

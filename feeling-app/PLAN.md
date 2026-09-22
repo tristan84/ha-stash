@@ -78,60 +78,68 @@ vocabulary and recognition skill before it's needed in a hard moment
 see research note 01). Game content is organized by feeling and by
 body/mind effect.
 
-**Four working prototypes exist** at `spike/www/games.html` (the shelf) —
-none locked as final content/mechanic, all real, playable, and tested:
+**Two working prototypes exist** at `spike/www/games.html` (the shelf) —
+neither locked as final content/mechanic, both real, playable, and
+tested:
 - **Sprocket's Garden** (`game-breathe.html`, was "Breathing Buddy") —
   hold a glowing orb to grow it (breathe in), release to let it shrink on
-  a guided pace (breathe out); the mechanic is unchanged from the earlier
-  bubble version, but each full breath now visibly grows a flower (bud →
-  bloom across two breaths, three flowers per garden, sparkle burst and a
-  running tally on each bloom), rebuilt after prototype feedback that the
-  plain bubble "looked boring." This is the actual tool referenced in the
-  story books' "tool" pages and reused directly inside Help Me (§4.3) —
-  practiced here, then available there, per this section's own rule that
-  Help Me only surfaces already-practiced tools.
-- **Bubble Pop** (`game-match.html`) — real-time gameplay, not a quiz: a
-  target feeling word is shown, and face-only (no text label) bubbles
-  continuously float up a play field; tap the ones whose expression
-  matches the target before they drift past (target rotates every 3
-  catches). Bubbles originally printed the feeling's name as text too,
-  which made catching one word-matching rather than expression
-  recognition — a real design gap caught by feedback that the point of
-  the game wasn't clear; fixed by making the bubbles face-only, with a
-  line stating the point directly. Went through two earlier full-mechanic
-  versions (a multiple-choice list, then a static memory-card grid) that
-  both read as content review rather than a game — this one has actual
-  moving parts and timing. Added a visible goal after feedback that it
-  "looked boring, no goal": a fill-as-you-catch jar meter (8 correct
-  catches) that celebrates and empties for the next fill, plus scenery
-  (drifting
-  clouds, a hill) behind the play field instead of a flat gradient. No
-  score or fail state either way (Principle 2): a miss just pops the
-  bubble too, an untapped bubble costs nothing, and the jar goal is a
-  recurring milestone, never a required finish line.
-- **Feeling Sort** (`game-sort.html`) — real drag-and-drop: faces drift
-  slowly down the play field and the child picks one up and drags it
-  into the basket labeled with the matching feeling before it reaches
-  the bottom (baskets rotate through the app's ten book feelings every
-  6 correct sorts). A picked-up face pauses exactly where it's held —
-  no fighting a moving target mid-drag — and a drop anywhere but the
-  right basket just lets it resume drifting, never a penalty. Requested
-  directly ("make more game, make them very interactive") as a genuinely
-  different interaction shape from tap-to-pop.
-- **Tool Match** (`game-tool.html`) — also drag-and-drop, but a still
-  tray instead of a falling field: a feeling is shown and the child
-  drags the matching tool onto Sprocket from four tray tiles (one
-  correct, three decoys). Uses the exact same feeling→tool pairings the
-  ten story books teach (§4.5) — Worried→breathe, Frustrated→shake,
-  Excited→wiggle, Sad→hug, Angry→stomp, Proud→pose — so this is direct
-  practice for the books' "try a tool" step, not an invented mapping. A
-  wrong drop springs the tile back to the tray with a small bounce; no
-  penalty either way.
-
-Both new games share the goal-jar pattern from Bubble Pop (fill,
-celebrate, empty, repeat) rather than a single terminal score, and were
-verified with simulated pointer-drag sequences (not just clicks) for
-both the correct-drop and wrong-drop paths before being called done.
+  a guided pace (breathe out); each full breath visibly grows a flower
+  (bud → bloom across two breaths, three flowers per garden, sparkle
+  burst and a running tally on each bloom). This is the actual tool
+  referenced in the story books' "tool" pages and reused directly inside
+  Help Me (§4.3) — practiced here, then available there, per this
+  section's own rule that Help Me only surfaces already-practiced tools.
+  Kept as a standalone card rather than folded into the Academy below:
+  it's a regulation tool the child reaches for in the moment, not a
+  lesson with a beginning and an end.
+- **Feelings Academy** (`academy.html` map → `academy-level.html`, one
+  level per book feeling) — replaced three earlier flat mini-games
+  (Bubble Pop, Feeling Sort, Tool Match) after direct feedback that they
+  were "far to basic... all basicly the same" and a request for
+  something "more like the high-end games on the play store with
+  leasons and rewards." A real leveled structure, not one repeated
+  mechanic:
+  - **A level map** (`academy.html`) — ten level nodes in a winding
+    path, one per book feeling, each locked until the previous level is
+    completed, showing a 0–3 star rating once played. A Sparks currency
+    total and Sprocket's currently-equipped cosmetic are shown at the
+    top, with a link into **Sprocket's Closet** (`academy-shop.html`) to
+    spend Sparks on unlockable cosmetics (a bow, scarf, crown, cape,
+    star badge) — purely visual, never gating a level or changing how
+    one plays.
+  - **A level** (`academy-level.html`, one data-driven template serving
+    all ten feelings via `academy-data.js`) runs four phases in
+    sequence: **Teach** (three short scripted screens — body signal,
+    mind signal, name — condensed from that feeling's story book, §4.5,
+    so the Academy and the books teach the same content rather than a
+    competing second taxonomy); **Spot the Signal** (multiple-choice
+    recognition — pick the body description matching the named
+    feeling, retryable, never penalized); **Tool Match** (drag the
+    correct tool from a tray onto Sprocket — the same feeling→tool
+    pairings the books teach: Worried→breathe, Frustrated→shake,
+    Excited→wiggle, Sad→hug, Angry→stomp, Scared→anchor,
+    Embarrassed→shrug, Proud→pose, Overwhelmed→quiet, Happy→savor);
+    **Quick Recall** (three timed rounds — tap the target's face among
+    four before a shrinking timer bar runs out, for pace and
+    arcade-style energy). Ends with a **Complete** screen: stars,
+    Sparks earned, and (at Spark thresholds) a cosmetic-unlock reveal.
+  - **Reward design is skill-based, never valence-based** (a deliberate
+    Principle 2 safeguard, documented in `academy-data.js`): every
+    level uses the identical formula regardless of which feeling it
+    teaches — star 1 for finishing, star 2 for no retry needed on Spot
+    or Tool, star 3 for beating the timer on ≥2 of 3 Recall rounds; the
+    same flat+bonus Sparks amount (10/15/20). Nothing in the scoring
+    ever implies one feeling was better to have practiced, or better to
+    feel, than another.
+  - The drag mechanics (pick up, follow the pointer via live
+    `transform: translate()`, check overlap against the real drop
+    target's `getBoundingClientRect()` on release) are carried over
+    from the retired Tool Match/Feeling Sort games rather than
+    reinvented, and were re-verified with simulated pointer drag
+    sequences across all ten levels, plus both a "perfect" run (3
+    stars) and a deliberately imperfect run (wrong Spot answer, all
+    three Recall rounds timed out → 1 star) to confirm the scoring
+    actually differentiates.
 
 ### 4.3 "Help me" mode
 One-tap entry point for hard moments. Deliberately minimal-friction (one

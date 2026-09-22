@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Feelings Academy</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="academy.css" />
+</head>
+<body class="screen-body academy-body">
+<!-- Feelings Academy (PLAN.md §4.2): replaces the flat games shelf
+     after feedback that the four standalone games were "too basic...
+     all basically the same" and a request for something "more like
+     the high-end games on the play store with lessons and rewards."
+     This is a real leveled structure: one level per book feeling, each
+     a short lesson (teach -> practice -> quick challenge) rather than
+     one repeated mechanic, with stars and a Sparks currency that
+     unlocks cosmetics for Sprocket. Sprocket's Garden (the breathing
+     tool, also embedded in Help Me) stays separate — it's a regulation
+     tool, not a lesson, so it keeps its own entry on games.html. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="games.html" class="screen-back" aria-label="Back to games">←</a>
+    <span class="screen-title-chip">Feelings Academy</span>
+    <span class="sparks-chip"><span aria-hidden="true">✨</span> <span id="sparks-total">0</span></span>
+  </header>
+
+  <div class="academy-hero">
+    <div id="hero-sprocket" class="hero-sprocket">
+      <div class="hs-antenna"><span class="hs-antenna-tip"></span></div>
+      <div id="hs-cosmetic" class="hs-cosmetic" aria-hidden="true"></div>
+      <div class="hs-head"><div class="hs-eye left"></div><div class="hs-eye right"></div></div>
+      <div class="hs-body"><div class="hs-core"></div></div>
+    </div>
+    <p id="hero-line" class="hero-line">Complete levels to earn Sparks and dress up Sprocket!</p>
+    <a href="academy-shop.html" class="pill-btn quiet shop-btn">🎁 Sprocket's Closet</a>
+  </div>
+
+  <div class="screen-content academy-content">
+    <div id="level-path" class="level-path"></div>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="academy-data.js"></script>
+<script src="academy.js"></script>
+</body>
+</html>
