@@ -230,6 +230,85 @@ None of this is locked content, final IA, or final visual design — it's
 a much fuller *prototype* than existed before this pass, covering every
 function named in PLAN.md §4, built and tested rather than described.
 
+**2026-09-22 update 9**: after trying update 8's build, feedback was six
+specific, numbered points plus a screenshot of the plain home screen
+("very basic and boaring, it all need a very big visual make over").
+Addressed each:
+
+1. **Breathing Buddy → Sprocket's Garden** (`game-breathe.html/.css/.js`,
+   shared into `help.html`): "as crap, dont like it at all." Same
+   underlying mechanic (hold to breathe in, release for a guided 4s
+   breathe-out) but rebuilt around an illustrated garden scene — each
+   full breath grows a flower (bud → bloom across two breaths, three
+   flowers per garden), with a sparkle burst and a running "flowers
+   grown" tally on each bloom, and Sprocket present in the scene the
+   whole time. Also widened the scene's viewBox (260 → 300 tall) after
+   the first pass looked sparse against the phone-height flex-centered
+   layout.
+2. **Bubble Pop given a visible goal**: "boaring to play, there seems to
+   be no goal." Added a fill-as-you-catch jar meter (goal of 8 correct
+   catches) with a mini Sprocket that cheers on every catch; the jar
+   pulses and celebrates when full, then empties for the next fill — a
+   recurring, achievable goal rather than a bare running tally. Also
+   replaced the flat gradient play field with drifting clouds and a
+   hill silhouette.
+3. **Games shelf cards redesigned**: cards now show a small illustrated
+   scene matching what's actually inside each game (the garden's
+   flower/sun/hill; floating feeling-bubbles and a jar) plus a play
+   badge, instead of a flat gradient with a couple of plain circles.
+4. **Story shelf rebuilt as a real bookshelf** (`stories.css`, new):
+   "the books need to look like real books with real covers." Replaced
+   generic icon cards with portrait book covers — spine edge, a themed
+   color per feeling, title/author treatment, a small cover emblem —
+   standing on a wooden shelf plank. The row scrolls horizontally
+   (found via screenshot: a plain wrapping grid left the first row of
+   books floating with no plank under it once a third book didn't fit
+   the viewport width) so it keeps working as more books get added.
+5. **Each story book color-graded distinctly**: "alot can be done with
+   the images, all the books look the same." Turned out true at the
+   code level, not just visually — `skyGrad`'s stop-colors and the hill
+   path fills were byte-identical across all three books' shared
+   `bookBg`/`bookBgQuiet` `<symbol>` defs (each page reuses one symbol
+   via `<use>`, so this was a single fix per file, not per-page).
+   Re-tinted each to its cover's color family: Worried paler/duskier,
+   Frustrated hotter orange-red, Excited brighter gold/green — applied
+   to both the in-book backdrop and the screen background behind the
+   reader so the mood carries through the whole screen.
+6. **Diary reflection notes** (`diary.html/.css/.js`): "when ther pick a
+   feeling it would be good if they can then add notes via typing or
+   voice." Tapping a feeling still logs it immediately; an optional
+   panel now follows, offering to type or speak a note, Skip always one
+   tap away. Voice uses the Web Speech API, feature-detected (hidden
+   entirely where unsupported) — flagged explicitly in code that this is
+   the one place in the diary that isn't on-device: browser speech
+   recognition typically streams audio to a cloud STT service to
+   produce a transcript, a real tension with Principle 1 that a real
+   product decision should weigh deliberately, not something to build
+   quietly as if it were private.
+
+Also gave the home screen its first pass of scenery — sun, drifting
+clouds, sparkles, two trees, bushes, a flower bed, a path — after "this
+look is very basic and boaring" (the general complaint the screenshot
+was attached to). A first attempt at the bushes/flowers/path was placed
+too low and sat behind the opaque button row, invisible; caught via
+screenshot review and fixed by moving them up into the visible band
+above the buttons.
+
+Re-verified everything after these changes: all twelve pages load with
+zero unexpected console errors (only the same harmless missing-favicon
+request seen throughout this spike), flat 60fps confirmed on the home
+screen, Sprocket's Garden, and Bubble Pop with bubbles actively
+spawning, offline reload confirmed working with the new visuals
+(service worker cache version bumped to v10 across these four rounds of
+changes), and every new interactive flow exercised end-to-end:
+Sprocket's Garden's two-breath bud→bloom progression across all three
+flower slots plus the all-bloomed reset, Bubble Pop's jar filling past
+its goal and celebrating/resetting plus the done-screen jar-count
+summary, both story-shelf and game-shelf card links still navigating
+correctly, all nine pages of the (re-colored) Worried book paging
+through without error, and the diary's typed-note-save, skip, and
+mic-feature-detection paths.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -344,17 +423,20 @@ rather than guessing at a result I can't actually produce here.
 - `www/tts.js` — shared TTS wrapper (native plugin + browser fallback)
 - `www/sw.js`, `www/sw-register.js`, `www/manifest.webmanifest` — offline
   support, registered from every page
-- `www/stories.html` — book shelf
+- `www/stories.html`, `www/stories.css` — book shelf (real book-cover
+  cards on a shelf plank)
 - `www/story.html`, `www/story-frustrated.html`, `www/story-excited.html`
-  — the three books (Worried, Frustrated, Excited)
+  — the three books (Worried, Frustrated, Excited), each with its own
+  backdrop color grading
 - `www/story.css`, `www/story.js` — shared book-reader machinery (page
   flip, dots, read-aloud) used by all three books
 - `www/games.html` — game shelf
-- `www/game-breathe.html/.css/.js` — Breathing Buddy (also embedded in
-  `help.html`)
+- `www/game-breathe.html/.css/.js` — Sprocket's Garden, the breathing
+  tool (also embedded in `help.html`)
 - `www/game-match.html/.css/.js` — Bubble Pop
-- `www/diary.html/.css/.js` — feeling diary
-- `www/help.html/.css/.js` — Help Me (embeds Breathing Buddy)
+- `www/diary.html/.css/.js` — feeling diary, with optional typed/voice
+  reflection notes per entry
+- `www/help.html/.css/.js` — Help Me (embeds Sprocket's Garden)
 - `www/parent-gate.html/.css/.js` — the math gate
 - `www/parent-home.html/.css/.js` — the minimal post-gate area
 - `android/` — generated native project (build artifacts gitignored)

@@ -80,24 +80,29 @@ body/mind effect.
 
 **Two working prototypes exist** at `spike/www/games.html` (the shelf) —
 neither locked as final content/mechanic, both real, playable, and tested:
-- **Breathing Buddy** (`game-breathe.html`) — hold a bubble to grow it
-  (breathe in), release to let it shrink on a guided pace (breathe out);
-  counts breaths taken. This is the actual tool referenced in the story
-  books' "tool" pages and reused directly inside Help Me (§4.3) — practiced
-  here, then available there, per this section's own rule that Help Me only
-  surfaces already-practiced tools. (Caught via screenshot review, not
-  just "looks right at a glance": the bubble's grow animation initially
-  scaled up symmetrically in every direction, including upward, and
-  visually swallowed the small Sprocket character positioned right above
-  it — fixed by giving it enough clearance instead of a tight overlap.)
+- **Sprocket's Garden** (`game-breathe.html`, was "Breathing Buddy") —
+  hold a glowing orb to grow it (breathe in), release to let it shrink on
+  a guided pace (breathe out); the mechanic is unchanged from the earlier
+  bubble version, but each full breath now visibly grows a flower (bud →
+  bloom across two breaths, three flowers per garden, sparkle burst and a
+  running tally on each bloom), rebuilt after prototype feedback that the
+  plain bubble "looked boring." This is the actual tool referenced in the
+  story books' "tool" pages and reused directly inside Help Me (§4.3) —
+  practiced here, then available there, per this section's own rule that
+  Help Me only surfaces already-practiced tools.
 - **Bubble Pop** (`game-match.html`) — real-time gameplay, not a quiz: a
   target feeling is called out, and labeled bubbles continuously float up
   a play field; tap the ones matching the target before they drift past
   (target rotates every 3 catches). Went through two earlier versions
   (a multiple-choice list, then a static memory-card grid) that both read
   as content review rather than a game — this one has actual moving
-  parts and timing. No score or fail state either way (Principle 2): a
-  miss just pops the bubble too, an untapped bubble costs nothing.
+  parts and timing. Added a visible goal after feedback that it "looked
+  boring, no goal": a fill-as-you-catch jar meter (8 correct catches)
+  that celebrates and empties for the next fill, plus scenery (drifting
+  clouds, a hill) behind the play field instead of a flat gradient. No
+  score or fail state either way (Principle 2): a miss just pops the
+  bubble too, an untapped bubble costs nothing, and the jar goal is a
+  recurring milestone, never a required finish line.
 
 ### 4.3 "Help me" mode
 One-tap entry point for hard moments. Deliberately minimal-friction (one
@@ -107,7 +112,7 @@ new things during dysregulation doesn't work, so Help Me only surfaces
 tools the child has already practiced in calm-moment games.
 
 **A working prototype exists** at `spike/www/help.html`: tapping Help Me
-on the home screen opens straight into the Breathing Buddy tool (§4.2) —
+on the home screen opens straight into the Sprocket's Garden tool (§4.2) —
 no menu, no choice to make. Sprocket's greeting line is shown as on-screen
 text immediately, with an explicit tap-to-hear button, rather than
 autoplaying speech right after the navigation (unreliable across browsers
@@ -165,8 +170,17 @@ SVG (each page a distinct composition, not a reused background with a
 different caption) in the same warm palette/character design as the rest
 of the app, with in-scene animation on every page (not just the page-turn),
 a page-turn animation, and a read-aloud toggle (reusing the shared TTS
-module). Content-format and tone prototypes, not locked stories — see
-`spike/SPIKE_NOTES.md` for what they do and don't validate.
+module). Each book also now has its own color grading (sky/hill palette
+tied to its cover's color family — paler/duskier for Worried, hotter
+orange-red for Frustrated, brighter gold/green for Excited) after
+feedback that all three "looked the same," since the three books had
+started out sharing one byte-identical backdrop palette. The shelf
+(`stories.html`) presents them as real book covers — portrait shape,
+spine edge, cover title/author treatment, a themed color per feeling —
+standing on a wooden shelf plank, rather than flat icon cards, after
+feedback asking for "real books with real covers." Content-format and
+tone prototypes, not locked stories — see `spike/SPIKE_NOTES.md` for
+what they do and don't validate.
 
 ### 4.6 Feeling diary
 A child-owned, private place to record "I noticed ___ today" / "I felt
@@ -190,14 +204,22 @@ either way.
 
 **A working prototype exists** at `spike/www/diary.html`: tap a feeling
 chip (six options — the three story-book feelings plus Happy, Calm, Sad)
-to log it, stored in `localStorage` only, nothing sent anywhere. A
-deliberate scope choice for this prototype, not a missing feature: there's
-no typed note field — logging is a single tap, which keeps entries fast
-and low-friction, sidesteps needing a text-input UI, and avoids a child
-typing anything identifying. The list below the picker shows past entries
-(feeling + relative time), and the tally at the top counts entries, never
-which feelings were logged — process language throughout ("You've noticed
-N feelings so far. Nice noticing!").
+to log it immediately, stored in `localStorage` only, nothing sent
+anywhere. Logging itself stays a single tap — fast and low-friction — but
+an optional reflection panel now follows each tap, offering to say more
+by typing or by voice, always skippable in one tap since not every child
+types comfortably or wants to elaborate. Notes are stored on the entry
+and shown under it in the notebook. Voice input uses the Web Speech API,
+feature-detected and hidden entirely where unsupported — worth flagging
+explicitly: unlike everything else here, browser speech recognition
+typically streams audio to a cloud speech-to-text service rather than
+staying on-device, a real tension with Principle 1 that an eventual
+product decision should weigh deliberately (see `diary.js` for the
+in-code caveat) rather than something to treat as private by assumption.
+The list below the picker shows past entries (feeling + relative time +
+any note), and the tally at the top counts entries, never which feelings
+were logged — process language throughout ("You've noticed N feelings so
+far. Nice noticing!").
 
 ## 5. Parent Side
 
