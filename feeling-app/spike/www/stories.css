@@ -3,22 +3,23 @@
    covers (title treatment, spine edge, themed cover art) standing on
    an actual wooden shelf plank, instead of a plain card grid. */
 
+/* Multiple shelves of exactly 3 books each (see stories.html), rather
+   than one long horizontally-scrolling row — on a phone the old single
+   row only ever showed 3 books before the rest scrolled off-screen,
+   which read as "3 books" instead of a shelf of books. A 3-column grid
+   at a fluid (not fixed-px) width means it always fits 3 across, on
+   any phone, with no scrolling. */
 .book-shelf-row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding: 10px 4px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 12px;
+  padding: 14px 4px 0;
 }
-.book-shelf-row::-webkit-scrollbar { display: none; }
-.book-cover { flex-shrink: 0; }
 
 .book-cover {
   display: flex;
   flex-direction: column;
-  width: 118px;
+  width: auto;
   border: none;
   padding: 0;
   text-align: left;
@@ -117,7 +118,7 @@
 
 .shelf-plank {
   height: 16px;
-  margin: 16px 6px 0;
+  margin: 14px 6px 0;
   border-radius: 4px;
   background: linear-gradient(180deg, #d9a464, #b97f42);
   box-shadow: 0 8px 10px rgba(120, 70, 30, 0.28), inset 0 2px 0 rgba(255,255,255,0.25);

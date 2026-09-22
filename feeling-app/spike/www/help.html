@@ -28,10 +28,141 @@
     <span class="screen-header-spacer"></span>
   </header>
 
+  <!-- Shared defs, moved above every consumer so <use href="#sprocketMini">
+       and the tool-picker/tool-card (via academy-icons.js's own defs
+       injection) can all reference them regardless of DOM order. -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="gradHelmet" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+        <stop offset="0%" stop-color="#C7E8CB"/>
+        <stop offset="55%" stop-color="#97CFA2"/>
+        <stop offset="100%" stop-color="#6BAE79"/>
+      </linearGradient>
+      <linearGradient id="gradBody" x1="0.15" y1="0" x2="0.85" y2="1">
+        <stop offset="0%" stop-color="#BCE0C2"/>
+        <stop offset="55%" stop-color="#90CB9C"/>
+        <stop offset="100%" stop-color="#63A971"/>
+      </linearGradient>
+      <linearGradient id="gradFace" x1="0.2" y1="0.05" x2="0.8" y2="1">
+        <stop offset="0%" stop-color="#4E7AA3"/>
+        <stop offset="100%" stop-color="#1D2E42"/>
+      </linearGradient>
+      <linearGradient id="gradRed" x1="0.2" y1="0" x2="0.8" y2="1">
+        <stop offset="0%" stop-color="#C98FE0"/>
+        <stop offset="100%" stop-color="#8C4BB8"/>
+      </linearGradient>
+      <linearGradient id="gradOrange" x1="0.2" y1="0" x2="0.8" y2="1">
+        <stop offset="0%" stop-color="#E0AEF0"/>
+        <stop offset="100%" stop-color="#B268D6"/>
+      </linearGradient>
+      <linearGradient id="gradYellow" x1="0.2" y1="0" x2="0.8" y2="1">
+        <stop offset="0%" stop-color="#F2E0FA"/>
+        <stop offset="100%" stop-color="#DDB8EF"/>
+      </linearGradient>
+      <linearGradient id="gradDark" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3A2B44"/>
+        <stop offset="100%" stop-color="#1D1522"/>
+      </linearGradient>
+      <radialGradient id="gradIris" cx="0.35" cy="0.3" r="0.8">
+        <stop offset="0%" stop-color="#B4EFFF"/>
+        <stop offset="45%" stop-color="#4FC3F7"/>
+        <stop offset="100%" stop-color="#146FA8"/>
+      </radialGradient>
+      <radialGradient id="gCoreGrad" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+      </radialGradient>
+      <linearGradient id="gSkyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+      </linearGradient>
+      <radialGradient id="gGlowSoft" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.95" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
+      </radialGradient>
+      <symbol id="gCloud" viewBox="0 0 70 26">
+        <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+      </symbol>
+      <symbol id="gStar" viewBox="0 0 40 40">
+        <path d="M20,2 L25,16 L38,20 L25,24 L20,38 L15,24 L2,20 L15,16 Z" fill="#ffd35e" />
+      </symbol>
+      <!-- Sprocket, exact locked design (sprocket-2d.svg) — same
+           verbatim-copy-with-fit-transform technique as story.html's
+           sprocketMini, reused here for both the greeting avatar and
+           the garden scene's character. -->
+      <symbol id="sprocketMini" viewBox="0 0 120 150">
+        <g transform="translate(13.125,0) scale(0.234375)">
+          <g transform="translate(300,0)">
+            <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+            <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+          </g>
+          <g transform="translate(228,0)">
+            <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+            <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+            <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="4"/>
+          </g>
+          <g stroke="#5A9268" stroke-width="7" stroke-linecap="round">
+            <line x1="150" y1="70" x2="112" y2="22"/>
+            <line x1="250" y1="70" x2="288" y2="22"/>
+          </g>
+          <circle cx="112" cy="20" r="15" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="3"/>
+          <circle cx="288" cy="20" r="15" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="3"/>
+          <circle cx="200" cy="180" r="140" fill="url(#gradHelmet)" stroke="#3E7A4C" stroke-width="5"/>
+          <ellipse cx="160" cy="110" rx="55" ry="30" fill="#FFFFFF" opacity="0.16"/>
+          <rect x="182" y="28" width="36" height="54" rx="12" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+          <rect x="46" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+          <rect x="302" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+          <rect x="80" y="88" width="240" height="188" rx="44" fill="url(#gradDark)"/>
+          <rect x="92" y="100" width="216" height="164" rx="38" fill="url(#gradFace)" stroke="#6E90AC" stroke-width="3"/>
+          <g>
+            <circle cx="163" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+            <circle class="mini-eye" cx="163" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+            <circle cx="163" cy="168" r="11" fill="#0F3A5C"/>
+            <circle cx="154" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
+          </g>
+          <g>
+            <circle cx="237" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+            <circle class="mini-eye" cx="237" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+            <circle cx="237" cy="168" r="11" fill="#0F3A5C"/>
+            <circle cx="228" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
+          </g>
+          <path class="mini-mouth" d="M 172,224 Q 200,246 228,224" fill="none" stroke="#CDF3FF" stroke-width="5" stroke-linecap="round"/>
+          <rect x="106" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+          <rect x="106" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+          <rect x="266" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+          <rect x="266" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+          <g transform="translate(54,0)">
+            <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+            <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+          </g>
+          <rect x="163" y="292" width="74" height="46" rx="16" fill="url(#gradDark)"/>
+          <rect x="120" y="310" width="160" height="150" rx="58" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="5"/>
+          <ellipse cx="165" cy="345" rx="34" ry="18" fill="#FFFFFF" opacity="0.14"/>
+          <circle cx="128" cy="330" r="34" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+          <circle cx="272" cy="330" r="34" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+          <circle cx="170" cy="368" r="28" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+          <circle class="mini-core" cx="170" cy="368" r="15" fill="url(#gradDark)"/>
+          <circle cx="170" cy="404" r="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="2"/>
+          <rect x="100" y="424" width="200" height="34" rx="17" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+          <rect x="112" y="444" width="176" height="38" rx="19" fill="url(#gradRed)" stroke="#6B3690" stroke-width="3"/>
+          <g transform="translate(124,0)">
+            <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+            <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+            <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+            <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="4"/>
+          </g>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
   <div class="help-greeting">
-    <div class="bb-sprocket help-sprocket">
-      <div class="bb-antenna"><span class="bb-antenna-tip"></span></div>
-      <div class="bb-head"><div class="bb-eye left"></div><div class="bb-eye right"></div></div>
+    <div class="help-sprocket-avatar">
+      <svg viewBox="0 0 120 150"><use href="#sprocketMini"/></svg>
     </div>
     <div class="help-bubble">
       <p id="greeting-text">It's okay. I'm here. Let's breathe together.</p>
@@ -39,51 +170,17 @@
     </div>
   </div>
 
-  <div class="garden-wrap help-breathe-stage">
-    <svg width="0" height="0" style="position:absolute">
-      <defs>
-        <linearGradient id="gBodyGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
-        </linearGradient>
-        <radialGradient id="gCoreGrad" cx="35%" cy="30%" r="75%">
-          <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
-        </radialGradient>
-        <linearGradient id="gSkyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
-        </linearGradient>
-        <radialGradient id="gGlowSoft" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.95" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
-        </radialGradient>
-        <symbol id="gCloud" viewBox="0 0 70 26">
-          <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
-        </symbol>
-        <symbol id="gStar" viewBox="0 0 40 40">
-          <path d="M20,2 L25,16 L38,20 L25,24 L20,38 L15,24 L2,20 L15,16 Z" fill="#ffd35e" />
-        </symbol>
-        <symbol id="gSprocket" viewBox="0 0 120 150">
-          <ellipse cx="18" cy="52" rx="10" ry="12" fill="url(#gBodyGrad)" />
-          <ellipse cx="102" cy="52" rx="10" ry="12" fill="url(#gBodyGrad)" />
-          <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
-          <circle cx="5.5" cy="0" r="6" fill="#ffd35e" />
-          <circle cx="60" cy="46" r="44" fill="url(#gBodyGrad)" />
-          <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
-          <circle cx="45" cy="49" r="7" fill="#ffedc9" />
-          <circle cx="75" cy="49" r="7" fill="#ffedc9" />
-          <path d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
-          <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-          <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-          <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
-          <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#gBodyGrad)" />
-          <circle cx="60" cy="122" r="18" fill="#fff4e2" />
-          <circle cx="60" cy="122" r="13" fill="url(#gCoreGrad)" />
-          <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#gBodyGrad)" />
-          <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#gBodyGrad)" />
-          <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
-          <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
-        </symbol>
-      </defs>
-    </svg>
+  <!-- One-tap picker, shown only when more than one calm-moment tool
+       has been practiced (PLAN.md §4.3 — Help Me should never teach
+       something new, only offer what's already known). With 0 or 1
+       practiced tools it's skipped entirely and help.js opens straight
+       into the tool, preserving true one-tap access. -->
+  <div id="tool-picker" class="tool-picker" hidden>
+    <p class="tool-picker-label">Pick what helps:</p>
+    <div class="tool-picker-row" id="tool-picker-row"></div>
+  </div>
 
+  <div id="tool-breathe-stage" class="garden-wrap help-breathe-stage">
     <svg id="garden-scene" class="garden-scene" viewBox="0 0 400 300" aria-label="A garden where Sprocket grows flowers as you breathe">
       <rect width="400" height="300" fill="url(#gSkyGrad)" />
       <path d="M0,230 Q100,205 200,225 T400,220 V300 H0 Z" fill="#dcea97" />
@@ -94,7 +191,7 @@
       <use class="g-cloud-drift g-cloud-drift-b" href="#gCloud" x="150" y="24" width="46" height="16" />
 
       <circle id="sprocket-glow" cx="330" cy="190" r="60" fill="url(#gGlowSoft)" />
-      <use id="garden-sprocket" class="g-gentle-bob" href="#gSprocket" x="284" y="128" width="92" height="115" />
+      <use id="garden-sprocket" class="g-gentle-bob" href="#sprocketMini" x="284" y="128" width="92" height="115" />
 
       <g class="flower-slot" data-slot="0" data-stage="0" transform="translate(0,40)">
         <ellipse class="soil" cx="80" cy="200" rx="16" ry="6" fill="#c6a36a" opacity="0.5" />
@@ -146,9 +243,28 @@
     <p id="prompt" class="g-prompt">Press and hold the glowing light to breathe in.</p>
     <p class="g-count">🌼 Flowers grown: <span id="flower-count">0</span></p>
   </div>
+
+  <!-- Generic instructional card for any practiced Academy tool other
+       than breathing — icon, name, and the exact tool copy already
+       written for that feeling in academy-data.js (reused, not
+       rewritten), plus tap-to-hear and a big "done" button back home. -->
+  <div id="tool-card-stage" class="tool-card-stage" hidden>
+    <div class="tool-card">
+      <svg class="tool-card-sprocket g-gentle-bob" viewBox="0 0 120 150"><use href="#sprocketMini"/></svg>
+      <div class="tool-card-icon" id="tool-card-icon"></div>
+      <h2 id="tool-card-label"></h2>
+      <p id="tool-card-desc"></p>
+      <div class="tool-card-actions">
+        <button id="tool-card-hear" class="hear-btn" aria-label="Hear this">🔊</button>
+        <button id="tool-card-done" class="pill-btn help">I did it 💚</button>
+      </div>
+    </div>
+  </div>
 </main>
 <script src="sw-register.js"></script>
 <script src="tts.js"></script>
+<script src="academy-data.js"></script>
+<script src="academy-icons.js"></script>
 <script src="help.js"></script>
 <script src="game-breathe.js"></script>
 </body>

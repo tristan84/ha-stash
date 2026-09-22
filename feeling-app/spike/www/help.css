@@ -34,58 +34,89 @@
 
 .help-breathe-stage { flex: 1; }
 
+/* .garden-wrap and .tool-card-stage both set an explicit display:flex,
+   which (same specificity, but author stylesheet beats the UA
+   stylesheet) silently wins over the plain [hidden] attribute — so
+   hiding these two via .hidden = true from help.js needs its own,
+   higher-specificity override here. */
+#tool-breathe-stage[hidden],
+#tool-card-stage[hidden] {
+  display: none;
+}
+
 /* Small idle Sprocket avatar for the greeting bubble only — the garden
-   scene below has its own full-quality character (gSprocket symbol in
-   game-breathe.html/.js), this is just a simple head for "who's
-   talking" at the top of the screen. */
-.bb-sprocket {
-  width: 46px;
-  height: 46px;
-  position: relative;
+   scene below (and the tool card) has its own use of the same exact
+   sprocketMini symbol at full detail; this is just a simple "who's
+   talking" head at the top of the screen. */
+.help-sprocket-avatar {
+  width: 42px;
+  height: 52px;
+  margin-top: 4px;
+  flex-shrink: 0;
 }
-.bb-antenna {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  width: 3px;
-  height: 12px;
-  margin-left: -1.5px;
-  background: var(--sprocket-body-dark);
-  border-radius: 3px;
+.help-sprocket-avatar svg { width: 100%; height: 100%; display: block; }
+
+/* One-tap tool picker — only shown when more than one calm-moment tool
+   has been practiced (help.js). Big, icon-only, no reading required. */
+.tool-picker {
+  padding: 4px 20px 0;
+  text-align: center;
 }
-.bb-antenna-tip {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
-  background: var(--antenna-glow);
+.tool-picker-label {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  opacity: 0.85;
+}
+.tool-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.tool-picker-btn {
+  width: 60px;
+  height: 60px;
+  padding: 4px;
+  border: none;
   border-radius: 50%;
-  box-shadow: 0 0 7px 2px rgba(255,211,94,0.7);
+  background: #fffaf2;
+  box-shadow: 0 6px 14px rgba(190,110,40,0.18);
 }
-.bb-head {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark));
-  border-radius: 50%;
-  box-shadow: 0 6px 12px rgba(190,100,40,0.25);
+.tool-picker-btn:active { transform: scale(0.92); }
+.tool-picker-icon { width: 100%; height: 100%; display: block; }
+
+/* Generic instructional card for any practiced tool other than
+   breathing (which keeps its own full garden component below). */
+.tool-card-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px calc(20px + env(safe-area-inset-bottom));
 }
-.bb-eye {
-  position: absolute;
-  top: 19px;
-  width: 8px;
-  height: 8px;
-  background: #fffaf3;
-  border-radius: 50%;
+.tool-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #fffaf2;
+  border-radius: 26px;
+  padding: 26px 24px 24px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(190,110,40,0.2);
 }
-.bb-eye.left { left: 12px; }
-.bb-eye.right { right: 12px; }
-.bb-eye::after {
-  content: "";
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 4px; height: 4px;
-  background: var(--ink);
-  border-radius: 50%;
+.tool-card-sprocket { width: 60px; height: 75px; }
+.tool-card-icon { width: 84px; height: 84px; margin-top: 2px; }
+.tool-card-icon svg { width: 100%; height: 100%; display: block; }
+.tool-card h2 { margin: 2px 0 0; font-size: 19px; color: var(--ink); }
+.tool-card p { margin: 0; font-size: 15px; font-weight: 600; color: var(--ink); opacity: 0.9; line-height: 1.4; }
+.tool-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
 }
