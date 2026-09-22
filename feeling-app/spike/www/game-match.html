@@ -37,7 +37,23 @@
       <button id="hear-target" class="hear-btn" aria-label="Hear the target feeling">🔊</button>
     </div>
     <div id="catch-stage" class="catch-stage">
+      <div class="stage-bg" aria-hidden="true">
+        <div class="stage-cloud sc1"></div>
+        <div class="stage-cloud sc2"></div>
+        <div class="stage-hill"></div>
+      </div>
       <div id="pop-feedback" class="pop-feedback"></div>
+      <div id="goal-jar" class="goal-jar" aria-label="Jar fills as you catch the right bubbles">
+        <div class="jar-sprocket" id="jar-sprocket">
+          <div class="js-antenna"><span class="js-antenna-tip"></span></div>
+          <div class="js-head"><div class="js-eye left"></div><div class="js-eye right"></div></div>
+        </div>
+        <div class="jar-body">
+          <div class="jar-fill" id="jar-fill"></div>
+          <div class="jar-shine"></div>
+        </div>
+        <p class="jar-label"><span id="jar-count">0</span>/<span id="jar-goal">8</span></p>
+      </div>
     </div>
     <div class="catch-footer">
       <p class="catch-tally">Caught: <span id="tally">0</span></p>

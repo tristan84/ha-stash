@@ -17,10 +17,17 @@ const popFeedback = document.getElementById('pop-feedback');
 const playView = document.getElementById('play-view');
 const doneView = document.getElementById('done-view');
 const doneSummary = document.getElementById('done-summary');
+const goalJar = document.getElementById('goal-jar');
+const jarFill = document.getElementById('jar-fill');
+const jarCount = document.getElementById('jar-count');
+const jarSprocket = document.getElementById('jar-sprocket');
 
 let target = FEELINGS[Math.floor(Math.random() * FEELINGS.length)];
 let caughtSinceRotate = 0;
 let totalCaught = 0;
+let jarProgress = 0;
+let jarsFilled = 0;
+const JAR_GOAL = 8;
 let spawnTimer = null;
 let running = true;
 
@@ -81,6 +88,7 @@ function pop(el, feeling) {
     caughtSinceRotate += 1;
     tallyEl.textContent = totalCaught;
     showFeedback(`Yes! That's ${feeling.name.toLowerCase()}.`);
+    growJar();
     if (caughtSinceRotate >= 3) {
       caughtSinceRotate = 0;
       const others = FEELINGS.filter((f) => f.name !== target.name);
@@ -89,6 +97,29 @@ function pop(el, feeling) {
     }
   } else {
     showFeedback(`That one's ${feeling.name.toLowerCase()} — keep looking for ${target.name.toLowerCase()}.`);
+  }
+}
+
+function growJar() {
+  jarSprocket.classList.add('cheer');
+  window.setTimeout(() => jarSprocket.classList.remove('cheer'), 260);
+
+  jarProgress += 1;
+  if (jarProgress >= JAR_GOAL) {
+    jarFill.style.height = '100%';
+    jarCount.textContent = String(JAR_GOAL);
+    goalJar.classList.add('full');
+    jarsFilled += 1;
+    window.setTimeout(() => showFeedback('Jar full! Nicely caught.'), 300);
+    window.setTimeout(() => {
+      jarProgress = 0;
+      jarFill.style.height = '0%';
+      jarCount.textContent = '0';
+      goalJar.classList.remove('full');
+    }, 1100);
+  } else {
+    jarFill.style.height = `${(jarProgress / JAR_GOAL) * 100}%`;
+    jarCount.textContent = String(jarProgress);
   }
 }
 
@@ -102,9 +133,12 @@ function endSession() {
   stage.querySelectorAll('.catch-bubble').forEach((b) => b.remove());
   const total = Number(localStorage.getItem('sprocket-match-rounds') || 0) + totalCaught;
   localStorage.setItem('sprocket-match-rounds', String(total));
-  doneSummary.textContent = totalCaught === 0
-    ? "That's okay — want to try again?"
-    : `You caught ${totalCaught} feeling bubble${totalCaught === 1 ? '' : 's'} this time.`;
+  if (totalCaught === 0) {
+    doneSummary.textContent = "That's okay — want to try again?";
+  } else {
+    const jarNote = jarsFilled > 0 ? ` You filled the jar ${jarsFilled} time${jarsFilled === 1 ? '' : 's'}!` : '';
+    doneSummary.textContent = `You caught ${totalCaught} feeling bubble${totalCaught === 1 ? '' : 's'} this time.${jarNote}`;
+  }
   playView.style.display = 'none';
   doneView.style.display = 'flex';
 }
@@ -114,7 +148,12 @@ document.getElementById('btn-done').addEventListener('click', endSession);
 document.getElementById('btn-again').addEventListener('click', () => {
   totalCaught = 0;
   caughtSinceRotate = 0;
+  jarProgress = 0;
+  jarsFilled = 0;
   tallyEl.textContent = '0';
+  jarFill.style.height = '0%';
+  jarCount.textContent = '0';
+  goalJar.classList.remove('full');
   setTarget(FEELINGS[Math.floor(Math.random() * FEELINGS.length)]);
   running = true;
   doneView.style.display = 'none';
