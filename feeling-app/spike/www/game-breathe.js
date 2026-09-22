@@ -12,6 +12,15 @@ const sparkleLayer = document.getElementById('sparkle-burst');
 const prompt = document.getElementById('prompt');
 const countEl = document.getElementById('flower-count');
 const slots = Array.from(document.querySelectorAll('.flower-slot'));
+const gardenSprocket = document.getElementById('garden-sprocket');
+
+function cheer() {
+  gardenSprocket.classList.remove('g-cheer');
+  // Force reflow so re-adding the class restarts the animation.
+  void gardenSprocket.offsetWidth;
+  gardenSprocket.classList.add('g-cheer');
+  window.setTimeout(() => gardenSprocket.classList.remove('g-cheer'), 650);
+}
 
 // Slot centers, matching the coordinates baked into game-breathe.html's
 // <g class="flower-slot"> soil/stem/bloom positions.
@@ -69,6 +78,7 @@ function growActiveFlower() {
   // Bloomed.
   const pos = SLOT_POS[activeIndex] || SLOT_POS[0];
   spawnSparkles(pos.x, pos.y);
+  cheer();
   flowersGrown += 1;
   countEl.textContent = flowersGrown;
   localStorage.setItem('sprocket-garden-flowers', String(flowersGrown));

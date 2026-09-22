@@ -55,6 +55,18 @@
   50% { transform: translateY(-4px); }
 }
 
+/* Sprocket's little cheer on each bloom — swapped in briefly via JS,
+   replaces the idle bob animation rather than stacking with it. */
+.g-cheer {
+  animation: gCheer 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes gCheer {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-10px) scale(1.08); }
+}
+
 /* --- Flower slots: stage 0 (soil only) -> 1 (stem + leaves) ->
    2 (full bloom). transform-box: fill-box lets each shape scale from
    its own center/base without needing per-slot coordinates. --- */

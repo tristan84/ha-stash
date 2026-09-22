@@ -35,6 +35,16 @@
 }
 .hear-btn:active { transform: scale(0.94); }
 
+.target-why {
+  margin: 0 16px 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink);
+  opacity: 0.65;
+  text-align: center;
+  line-height: 1.35;
+}
+
 /* --- Play field ------------------------------------------------- */
 .catch-stage {
   position: relative;
@@ -111,7 +121,7 @@
   box-shadow: 0 6px 14px rgba(190,110,40,0.22), inset 0 -6px 10px rgba(0,0,0,0.08), inset 0 6px 10px rgba(255,255,255,0.35);
   animation: bubbleRise linear forwards;
 }
-.catch-bubble .bubble-emoji { font-size: 24px; }
+.catch-bubble .bubble-emoji { font-size: 34px; }
 .catch-bubble.feeling-Worried { background: radial-gradient(circle at 35% 28%, #ffcf9c, #f0873a 85%); }
 .catch-bubble.feeling-Frustrated { background: radial-gradient(circle at 35% 28%, #ffb199, #e8642f 85%); }
 .catch-bubble.feeling-Excited { background: radial-gradient(circle at 35% 28%, #ffe08a, #f0a800 85%); }

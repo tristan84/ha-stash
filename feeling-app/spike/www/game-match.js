@@ -68,7 +68,11 @@ function spawnBubble() {
   el.style.width = el.style.height = `${size}px`;
   el.style.setProperty('--rise', `${rise}px`);
   el.style.animationDuration = `${duration}s`;
-  el.innerHTML = `<span class="bubble-emoji">${feeling.emoji}</span><span>${feeling.name}</span>`;
+  // Face only, no text label — the point is spotting the feeling from
+  // its expression, the same way it shows up for real. Printing the
+  // word on the bubble would turn this into word-matching instead.
+  el.innerHTML = `<span class="bubble-emoji">${feeling.emoji}</span>`;
+  el.setAttribute('aria-label', feeling.name);
   el.dataset.feeling = feeling.name;
 
   el.addEventListener('animationend', () => el.remove());
@@ -87,7 +91,7 @@ function pop(el, feeling) {
     totalCaught += 1;
     caughtSinceRotate += 1;
     tallyEl.textContent = totalCaught;
-    showFeedback(`Yes! That's ${feeling.name.toLowerCase()}.`);
+    showFeedback(`Yes! That face is ${feeling.name.toLowerCase()}.`);
     growJar();
     if (caughtSinceRotate >= 3) {
       caughtSinceRotate = 0;

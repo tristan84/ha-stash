@@ -14,7 +14,46 @@
      then into whichever book (PLAN.md §4.5). Three books now exist,
      each a different feeling with its own body/mind signature and its
      own tool — see SPIKE_NOTES.md. Rebuilt as book covers on a shelf
-     after "the books need to look like real books with real covers." -->
+     after "the books need to look like real books with real covers,"
+     then given an actual illustrated scene (ground + Sprocket) on each
+     cover after a follow-up "the covers need to be story book covers"
+     — a flat color card with an emoji read as a color swatch, not a
+     book cover. -->
+
+<!-- Shared cover art pieces, reused via <use> across all three covers
+     — same character design/gradients as the books themselves. -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="coverBodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+    </linearGradient>
+    <radialGradient id="coverCoreGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+    </radialGradient>
+    <symbol id="coverSprocket" viewBox="0 0 120 150">
+      <ellipse cx="18" cy="52" rx="10" ry="12" fill="url(#coverBodyGrad)" />
+      <ellipse cx="102" cy="52" rx="10" ry="12" fill="url(#coverBodyGrad)" />
+      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
+      <circle cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <circle cx="60" cy="46" r="44" fill="url(#coverBodyGrad)" />
+      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+      <circle cx="45" cy="49" r="7" fill="#ffedc9" />
+      <circle cx="75" cy="49" r="7" fill="#ffedc9" />
+      <path d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#coverBodyGrad)" />
+      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
+      <circle cx="60" cy="122" r="13" fill="url(#coverCoreGrad)" />
+      <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#coverBodyGrad)" />
+      <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#coverBodyGrad)" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+    </symbol>
+  </defs>
+</svg>
+
 <main class="screen-main">
   <header class="screen-header">
     <a href="index.html" class="screen-back" aria-label="Back home">←</a>
@@ -27,6 +66,10 @@
     <div class="book-shelf-row">
       <a class="book-cover book-worried" href="story.html">
         <div class="book-face">
+          <svg class="book-scene" viewBox="0 0 160 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <path d="M0,196 Q80,178 160,193 V240 H0 Z" fill="rgba(74,46,28,0.16)" />
+            <use href="#coverSprocket" x="45" y="132" width="70" height="88" />
+          </svg>
           <div class="book-spine"></div>
           <p class="book-cover-title">Sprocket's Fluttery Day</p>
           <p class="book-cover-author">A Sprocket Story</p>
@@ -37,6 +80,10 @@
 
       <a class="book-cover book-frustrated" href="story-frustrated.html">
         <div class="book-face">
+          <svg class="book-scene" viewBox="0 0 160 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <path d="M0,196 Q80,178 160,193 V240 H0 Z" fill="rgba(74,46,28,0.16)" />
+            <use href="#coverSprocket" x="45" y="132" width="70" height="88" />
+          </svg>
           <div class="book-spine"></div>
           <p class="book-cover-title">Sprocket's Wobbly Tower</p>
           <p class="book-cover-author">A Sprocket Story</p>
@@ -47,6 +94,10 @@
 
       <a class="book-cover book-excited" href="story-excited.html">
         <div class="book-face">
+          <svg class="book-scene" viewBox="0 0 160 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+            <path d="M0,196 Q80,178 160,193 V240 H0 Z" fill="rgba(74,46,28,0.16)" />
+            <use href="#coverSprocket" x="45" y="132" width="70" height="88" />
+          </svg>
           <div class="book-spine"></div>
           <p class="book-cover-title">Sprocket's Bouncy Morning</p>
           <p class="book-cover-author">A Sprocket Story</p>
