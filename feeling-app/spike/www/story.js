@@ -71,7 +71,7 @@ function goTo(index) {
   window.setTimeout(() => {
     oldPage.classList.remove('leaving-to-left', 'leaving-to-right');
     newPage.classList.remove('entering-from-right', 'entering-from-left');
-  }, 440);
+  }, 460);
 
   current = index;
   updateChrome();

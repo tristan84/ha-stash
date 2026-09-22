@@ -29,12 +29,24 @@
      in-story sky, so the title stays legible over it. -->
 <svg width="0" height="0" style="position:absolute">
   <defs>
-    <linearGradient id="coverBodyGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+    <linearGradient id="coverBodyGrad" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#bce0c2" /><stop offset="55%" stop-color="#90cb9c" /><stop offset="100%" stop-color="#63a971" />
     </linearGradient>
-    <radialGradient id="coverCoreGrad" cx="35%" cy="30%" r="75%">
-      <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+    <linearGradient id="coverCoreGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#e0aef0" /><stop offset="100%" stop-color="#b268d6" />
+    </linearGradient>
+    <linearGradient id="coverLilacGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#f2e0fa" /><stop offset="100%" stop-color="#ddb8ef" />
+    </linearGradient>
+    <linearGradient id="coverScreenGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#4e7aa3" /><stop offset="100%" stop-color="#1d2e42" />
+    </linearGradient>
+    <radialGradient id="coverLensGrad" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0%" stop-color="#b4efff" /><stop offset="45%" stop-color="#4fc3f7" /><stop offset="100%" stop-color="#146fa8" />
     </radialGradient>
+    <linearGradient id="coverTrimGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2b44" /><stop offset="100%" stop-color="#1d1522" />
+    </linearGradient>
     <radialGradient id="coverGlowSoft" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
     </radialGradient>
@@ -86,25 +98,27 @@
     </symbol>
 
     <symbol id="coverSprocket" viewBox="0 0 120 150">
-      <ellipse cx="18" cy="52" rx="10" ry="12" fill="url(#coverBodyGrad)" />
-      <ellipse cx="102" cy="52" rx="10" ry="12" fill="url(#coverBodyGrad)" />
-      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
-      <circle cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <ellipse cx="14" cy="52" rx="9" ry="12" fill="url(#coverCoreGrad)" />
+      <ellipse cx="106" cy="52" rx="9" ry="12" fill="url(#coverCoreGrad)" />
+      <line x1="46" y1="10" x2="34" y2="-5" stroke="url(#coverBodyGrad)" stroke-width="3" stroke-linecap="round" />
+      <line x1="74" y1="10" x2="86" y2="-5" stroke="url(#coverBodyGrad)" stroke-width="3" stroke-linecap="round" />
+      <circle cx="34" cy="-5" r="5" fill="url(#coverLilacGrad)" />
+      <circle cx="86" cy="-5" r="5" fill="url(#coverLilacGrad)" />
       <circle cx="60" cy="46" r="44" fill="url(#coverBodyGrad)" />
-      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
-      <circle cx="45" cy="49" r="7" fill="#ffedc9" />
-      <circle cx="75" cy="49" r="7" fill="#ffedc9" />
-      <path d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
-      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="27" y="29" width="66" height="36" rx="16" fill="url(#coverScreenGrad)" />
+      <circle cx="45" cy="47" r="8" fill="url(#coverLensGrad)" />
+      <circle cx="75" cy="47" r="8" fill="url(#coverLensGrad)" />
+      <circle cx="42" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
+      <circle cx="72" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
+      <path d="M48,57 Q60,63 72,57" stroke="#bdeeff" stroke-width="3" fill="none" stroke-linecap="round" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="url(#coverTrimGrad)" />
       <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#coverBodyGrad)" />
-      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
-      <circle cx="60" cy="122" r="13" fill="url(#coverCoreGrad)" />
+      <circle cx="60" cy="122" r="17" fill="url(#coverCoreGrad)" />
+      <circle cx="60" cy="122" r="9" fill="url(#coverTrimGrad)" />
       <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#coverBodyGrad)" />
       <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#coverBodyGrad)" />
-      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
-      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="url(#coverLilacGrad)" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="url(#coverLilacGrad)" />
     </symbol>
   </defs>
 </svg>

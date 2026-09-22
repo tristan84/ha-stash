@@ -18,12 +18,56 @@
 
 <svg width="0" height="0" style="position:absolute">
   <defs>
-    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+    <linearGradient id="bodyGrad" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#bce0c2" />
+      <stop offset="55%" stop-color="#90cb9c" />
+      <stop offset="100%" stop-color="#63a971" />
     </linearGradient>
-    <radialGradient id="coreGrad" cx="35%" cy="30%" r="75%">
-      <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+    <linearGradient id="coreGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#e0aef0" />
+      <stop offset="100%" stop-color="#b268d6" />
+    </linearGradient>
+    <linearGradient id="lilacGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#f2e0fa" />
+      <stop offset="100%" stop-color="#ddb8ef" />
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#4e7aa3" />
+      <stop offset="100%" stop-color="#1d2e42" />
+    </linearGradient>
+    <radialGradient id="lensGrad" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0%" stop-color="#b4efff" />
+      <stop offset="45%" stop-color="#4fc3f7" />
+      <stop offset="100%" stop-color="#146fa8" />
     </radialGradient>
+    <linearGradient id="trimGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2b44" />
+      <stop offset="100%" stop-color="#1d1522" />
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f4eee0" />
+    </linearGradient>
+    <linearGradient id="trunkGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8a5a3a" />
+      <stop offset="100%" stop-color="#5f3d26" />
+    </linearGradient>
+    <radialGradient id="leafGradA" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#c9e69a" />
+      <stop offset="100%" stop-color="#8fbf5e" />
+    </radialGradient>
+    <radialGradient id="leafGradB" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#b8dd85" />
+      <stop offset="100%" stop-color="#7cad4d" />
+    </radialGradient>
+    <linearGradient id="starGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff2b0" />
+      <stop offset="100%" stop-color="#f0a800" />
+    </linearGradient>
+    <linearGradient id="leafBitGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffab8f" />
+      <stop offset="100%" stop-color="#ff7a56" />
+    </linearGradient>
     <!-- Angry book: the hottest, most saturated red-orange palette of
          any book — even more intense than Frustrated's, since Angry is
          a bigger, faster feeling. -->
@@ -44,7 +88,10 @@
     </symbol>
 
     <symbol id="cloud" viewBox="0 0 70 26">
-      <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+      <ellipse cx="16" cy="16" rx="16" ry="10" fill="url(#cloudGrad)" />
+      <ellipse cx="34" cy="9" rx="15" ry="12" fill="url(#cloudGrad)" />
+      <ellipse cx="52" cy="15" rx="12" ry="9" fill="url(#cloudGrad)" />
+      <ellipse cx="30" cy="7" rx="8" ry="5" fill="#ffffff" opacity="0.6" />
     </symbol>
 
     <symbol id="puzzleWhole" viewBox="0 0 100 70">
@@ -67,25 +114,27 @@
     </symbol>
 
     <symbol id="sprocketMini" viewBox="0 0 120 150">
-      <ellipse class="mini-ear" cx="18" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
-      <ellipse class="mini-ear" cx="102" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
-      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
-      <circle class="mini-antenna-tip" cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <ellipse class="mini-ear" cx="14" cy="52" rx="9" ry="12" fill="url(#coreGrad)" />
+      <ellipse class="mini-ear" cx="106" cy="52" rx="9" ry="12" fill="url(#coreGrad)" />
+      <line x1="46" y1="10" x2="34" y2="-5" stroke="url(#bodyGrad)" stroke-width="3" stroke-linecap="round" />
+      <line x1="74" y1="10" x2="86" y2="-5" stroke="url(#bodyGrad)" stroke-width="3" stroke-linecap="round" />
+      <circle class="mini-antenna-tip" cx="34" cy="-5" r="5" fill="url(#lilacGrad)" />
+      <circle class="mini-antenna-tip" cx="86" cy="-5" r="5" fill="url(#lilacGrad)" />
       <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" />
-      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
-      <circle class="mini-eye" cx="45" cy="49" r="7" fill="#ffedc9" />
-      <circle class="mini-eye" cx="75" cy="49" r="7" fill="#ffedc9" />
-      <path class="mini-mouth" d="M48,58 Q60,52 72,58" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
-      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
-      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="27" y="29" width="66" height="36" rx="16" fill="url(#screenGrad)" />
+      <circle class="mini-eye" cx="45" cy="47" r="8" fill="url(#lensGrad)" />
+      <circle class="mini-eye" cx="75" cy="47" r="8" fill="url(#lensGrad)" />
+      <circle cx="42" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
+      <circle cx="72" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
+      <path class="mini-mouth" d="M48,57 Q60,63 72,57" stroke="#bdeeff" stroke-width="3" fill="none" stroke-linecap="round" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="url(#trimGrad)" />
       <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" />
-      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
-      <circle class="mini-core" cx="60" cy="122" r="13" fill="url(#coreGrad)" />
+      <circle cx="60" cy="122" r="17" fill="url(#coreGrad)" />
+      <circle class="mini-core" cx="60" cy="122" r="9" fill="url(#trimGrad)" />
       <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
       <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
-      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
-      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="url(#lilacGrad)" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="url(#lilacGrad)" />
     </symbol>
 
     <symbol id="grownupMini" viewBox="0 0 90 130">
