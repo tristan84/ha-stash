@@ -319,6 +319,27 @@ way `academy-icons.js` already works, or bring this flat art into
 Godot as 2D sprite-based content) is an open question for the user,
 not assumed here.
 
+**Two quick follow-up passes, then locked:**
+1. Recolored the palette to green (base: helmet/body/limbs) and purple
+   (three tones — deep plum for ears/hands/hip/crest, mid orchid for
+   shoulders/dial/joint bands, pale lilac for boots/antenna tips) in
+   place of the reference's blue-grey/red/orange/yellow, keeping the
+   exact same shapes/gradient technique and light/dark contrast
+   structure so parts stayed readable.
+2. Reworked the face to read as a robot rather than a human child: the
+   peach skin/human-eye/eyebrow/nose/blush-cheek face became a dark
+   screen panel with glowing lens eyes (dark socket ring, bright blue
+   lens, deep-blue core instead of a black pupil, no eyebrows or
+   nose), vent slits where the cheeks were, and a glowing LED-style
+   smile. This is also where the requested "a little blue" lives,
+   contained to the face rather than spread across the green/purple
+   body.
+
+**Confirmed — this design is locked as of this commit**
+(`2d/sprocket-2d.svg` / `2d/sprocket-2d-proof.png`). Any further visual
+changes to Sprocket should branch from this file, not restart from an
+earlier round.
+
 ## What this doesn't answer yet
 
 This spike proves the *pipeline* — Blender asset authoring, Godot
