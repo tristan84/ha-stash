@@ -271,9 +271,9 @@ main {
   position: absolute;
   left: 50%;
   bottom: 82px;
-  width: 204px;
+  width: 168px;
   height: 268px;
-  margin-left: -102px;
+  margin-left: -84px;
   transform-origin: bottom center;
   animation: bob 1.8s cubic-bezier(.45,0,.55,1) infinite;
   will-change: transform;
@@ -286,71 +286,37 @@ main {
   55% { transform: translateY(-10px) scale(1.03, 0.97); }
 }
 
-/* Ears --------------------------------------------------------------- */
-.ear {
-  position: absolute;
-  top: 72px;
-  width: 24px;
-  height: 30px;
-  border-radius: 45% 55% 50% 50% / 50%;
-  background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  box-shadow: 0 4px 8px rgba(190, 100, 40, 0.2);
-  z-index: 1;
-}
-.ear.left { left: 20px; }
-.ear.right { left: 160px; }
-
-/* Head ------------------------------------------------------------ */
-.head {
-  position: absolute;
-  top: 14px;
-  left: 37px;
-  width: 130px;
-  height: 104px;
-  background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  border-radius: 50% 50% 44% 44% / 62% 62% 38% 38%;
-  box-shadow: 0 8px 16px rgba(190, 100, 40, 0.28);
-  z-index: 3;
-}
-.head::before {
-  /* soft glossy highlight, upper-left — reads warmer/toy-like rather
-     than flat-shaded */
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 18px;
-  width: 42px;
-  height: 26px;
-  background: rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
-  filter: blur(1px);
+/* Sprocket himself — the exact locked character (see index.html's
+   injected <symbol id="sprocketFull">), not a CSS-built approximation
+   of it. The SVG carries its own shading/outlines; this element just
+   needs to fill #sprocket's box and keep a couple of idle-animation
+   hooks (home-antenna*, home-eye) alive. */
+#sprocket-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 8px 14px rgba(60, 110, 70, 0.28));
 }
 
-.antenna {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  width: 4px;
-  height: 24px;
-  margin-left: -2px;
-  background: var(--sprocket-body-dark);
-  border-radius: 4px;
+.home-antenna, .home-antenna-tip {
+  transform-box: fill-box;
   transform-origin: bottom center;
   animation: wiggle 1.8s ease-in-out infinite;
-  z-index: 2;
 }
-.antenna-tip {
-  position: absolute;
-  top: -8px;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  margin-left: -7px;
-  background: var(--antenna-glow);
-  border-radius: 50%;
-  box-shadow: 0 0 12px 3px rgba(255, 211, 94, 0.75);
-  animation: glow 1.8s ease-in-out infinite;
+.home-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: homeEyeGlow 2.6s ease-in-out infinite;
 }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes homeEyeGlow {
+  0%, 100% { opacity: 0.9; filter: drop-shadow(0 0 2px rgba(79,195,247,0.6)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 7px rgba(79,195,247,0.95)); }
+}
+
 /* Cosmetic unlocked in Sprocket's Closet (Feelings Academy), mirrored
    here so the reward actually shows up on the character the child sees
    every time the app opens, not just inside the Academy. Purely
@@ -366,227 +332,6 @@ main {
 .home-cosmetic.show { display: block; }
 .home-cosmetic.cosmetic-cape { z-index: 0; }
 .home-cosmetic svg { width: 100%; height: 100%; overflow: visible; }
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-6deg); }
-  50% { transform: rotate(6deg); }
-}
-@keyframes glow {
-  0%, 100% { box-shadow: 0 0 10px 2px rgba(255, 211, 94, 0.6); }
-  50% { box-shadow: 0 0 16px 5px rgba(255, 211, 94, 0.95); }
-}
-
-/* Visor — a lit "screen" carries the face, instead of eyes sitting
-   directly on the shell. This one change does more than anything
-   else here to make the character read as a robot rather than a
-   generic rounded mascot. */
-.visor {
-  position: absolute;
-  top: 28px;
-  left: 19px;
-  width: 92px;
-  height: 46px;
-  background: linear-gradient(160deg, var(--visor) 0%, var(--visor-dark) 100%);
-  border-radius: 26px;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.12);
-  z-index: 2;
-}
-
-.eye {
-  position: absolute;
-  top: 13px;
-  width: 15px;
-  height: 15px;
-  background: var(--visor-glow);
-  border-radius: 50%;
-  box-shadow: 0 0 8px 2px rgba(255, 237, 201, 0.75);
-  animation: blink 4.5s infinite;
-}
-.eye.left { left: 16px; }
-.eye.right { right: 16px; }
-@keyframes blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  96% { transform: scaleY(0.15); }
-}
-
-.mouth {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  width: 26px;
-  height: 10px;
-  margin-left: -13px;
-  border-bottom: 3px solid var(--visor-glow);
-  border-radius: 0 0 16px 16px;
-  filter: drop-shadow(0 0 3px rgba(255, 237, 201, 0.6));
-}
-
-.cheek {
-  position: absolute;
-  top: 78px;
-  width: 16px;
-  height: 10px;
-  background: var(--cheek);
-  border-radius: 50%;
-  opacity: 0.8;
-  z-index: 1;
-}
-.cheek.left { left: 8px; }
-.cheek.right { right: 8px; }
-
-/* Collar — a small neck joint between head and body, so the figure
-   reads as articulated (a toy robot) rather than a head melting
-   straight into a body. */
-.collar {
-  position: absolute;
-  top: 110px;
-  left: 50%;
-  width: 44px;
-  height: 16px;
-  margin-left: -22px;
-  background: linear-gradient(180deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
-  border-radius: 8px;
-  z-index: 1;
-}
-
-/* Body -------------------------------------------------------------- */
-.body {
-  position: absolute;
-  top: 122px;
-  left: 28px;
-  width: 148px;
-  height: 112px;
-  background: linear-gradient(165deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  border-radius: 42% 42% 38% 38% / 44% 44% 36% 36%;
-  box-shadow: 0 10px 20px rgba(190, 100, 40, 0.3), inset 0 -12px 18px rgba(170, 85, 30, 0.2);
-  z-index: 2;
-}
-.body::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  width: 38px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  filter: blur(1px);
-}
-
-/* Chest core — a glowing "power" light echoing the antenna tip, so
-   the two lit details tie the design together instead of the belly
-   being a flat, unrelated patch. */
-.core-ring {
-  position: absolute;
-  left: 50%;
-  top: 40px;
-  width: 58px;
-  height: 58px;
-  margin-left: -29px;
-  background: var(--sprocket-belly);
-  border-radius: 50%;
-  box-shadow: inset 0 -4px 8px rgba(170, 85, 30, 0.15);
-}
-.core {
-  position: absolute;
-  top: 7px;
-  left: 7px;
-  width: 44px;
-  height: 44px;
-  background: radial-gradient(circle at 35% 32%, #fff8e8, var(--antenna-glow) 75%);
-  border-radius: 50%;
-  box-shadow: 0 0 14px 4px rgba(255, 211, 94, 0.55);
-  animation: glow 1.8s ease-in-out infinite;
-}
-
-/* Shoulder / knee joints — small mechanical details where the limbs
-   attach, rather than arms/legs floating flush against the body. */
-.shoulder {
-  position: absolute;
-  top: 132px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  box-shadow: 0 2px 4px rgba(190, 100, 40, 0.25);
-  z-index: 1;
-}
-.shoulder.left { left: 22px; }
-.shoulder.right { right: 22px; }
-
-.knee {
-  position: absolute;
-  bottom: 40px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
-  box-shadow: 0 2px 4px rgba(160, 80, 20, 0.25);
-  z-index: 1;
-}
-.knee.left { left: 46px; }
-.knee.right { right: 46px; }
-
-/* Arms --------------------------------------------------------------- */
-.arm {
-  position: absolute;
-  top: 140px;
-  width: 26px;
-  height: 58px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, var(--sprocket-body) 0%, var(--sprocket-body-dark) 100%);
-  box-shadow: 0 4px 8px rgba(190, 100, 40, 0.22);
-  z-index: 1;
-  animation: armSwing 1.8s ease-in-out infinite;
-}
-.arm::after {
-  /* little hand in the cream accent color, ties to the belly/core */
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin-left: -10px;
-  background: var(--sprocket-belly);
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(190, 100, 40, 0.2);
-}
-.arm.left { left: 8px; transform-origin: top center; }
-.arm.right { right: 8px; transform-origin: top center; animation-name: armSwingRight; }
-@keyframes armSwing {
-  0%, 100% { transform: rotate(-14deg); }
-  50% { transform: rotate(-24deg); }
-}
-@keyframes armSwingRight {
-  0%, 100% { transform: rotate(14deg); }
-  50% { transform: rotate(24deg); }
-}
-
-/* Legs --------------------------------------------------------------- */
-.leg {
-  position: absolute;
-  bottom: 0;
-  width: 38px;
-  height: 40px;
-  border-radius: 14px 14px 10px 10px;
-  background: linear-gradient(180deg, var(--sprocket-body-dark) 0%, var(--sprocket-foot) 100%);
-  box-shadow: 0 4px 8px rgba(160, 80, 20, 0.28);
-  z-index: 1;
-}
-.leg::after {
-  /* foot cap, small two-tone detail at the base */
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: -4px;
-  right: -4px;
-  height: 16px;
-  background: var(--sprocket-foot);
-  border-radius: 12px;
-}
-.leg.left { left: 36px; }
-.leg.right { right: 36px; }
 
 /* --- Tap-bubble game elements -------------------------------------- */
 .bubble {
