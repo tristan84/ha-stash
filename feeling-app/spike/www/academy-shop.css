@@ -26,8 +26,8 @@
   box-shadow: 0 0 0 3px var(--button-help), 0 6px 14px rgba(190,110,40,0.15);
 }
 
-.closet-icon { font-size: 34px; }
-.closet-icon.locked-icon { font-size: 26px; opacity: 0.5; }
+.closet-icon { width: 56px; height: 56px; }
+.closet-icon.locked-icon { font-size: 26px; opacity: 0.5; width: auto; height: auto; }
 .closet-name { font-size: 13px; font-weight: 700; color: var(--ink); }
 .closet-threshold {
   font-size: 11px;

@@ -358,18 +358,14 @@ main {
    anything else about the home screen. */
 .home-cosmetic {
   position: absolute;
+  inset: 0;
   z-index: 5;
-  font-size: 48px;
-  line-height: 1;
   display: none;
   pointer-events: none;
 }
 .home-cosmetic.show { display: block; }
-.home-cosmetic.cosmetic-bow { top: -6px; left: 50%; transform: translateX(-50%) rotate(-6deg); font-size: 36px; }
-.home-cosmetic.cosmetic-scarf { top: 118px; left: 50%; transform: translateX(-50%); font-size: 44px; }
-.home-cosmetic.cosmetic-crown { top: -32px; left: 50%; transform: translateX(-50%); font-size: 50px; }
-.home-cosmetic.cosmetic-cape { top: 100px; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 0; opacity: 0.92; }
-.home-cosmetic.cosmetic-star-badge { top: 150px; left: 50%; transform: translateX(-50%); font-size: 34px; }
+.home-cosmetic.cosmetic-cape { z-index: 0; }
+.home-cosmetic svg { width: 100%; height: 100%; overflow: visible; }
 
 @keyframes wiggle {
   0%, 100% { transform: rotate(-6deg); }

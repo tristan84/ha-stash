@@ -561,6 +561,65 @@ end-to-end with real simulated drag events (not `.click()`), and the
 Sprocket's Closet equip flow confirmed round-tripping through
 localStorage to the home screen.
 
+**2026-09-22 update 15 — custom-illustrated icons replace emoji
+throughout the Academy**: liked the clothing rewards from update 14, but
+after two rounds of guessing wrong at what "the games" meant, asked
+directly what was missing. The answer, once asked: not the lesson
+structure or mechanics — "better quility game. i want the graphics to be
+like full graphic rendering like the top end games on google play
+store," with Sprocket's own rendering called out too ("i think sprocket
+could lokk alot better with graphic rendering too"). Raw system emoji
+(😟🌬️✋💃🫂🦶🧭🤷🙌🤫😌) was the actual tell — it renders differently per
+platform and doesn't match this app's warm gradient/gloss-highlight
+style — not the underlying game design, which the user was satisfied
+with.
+
+Built `www/academy-icons.js`: a single injected `<defs>` block (10
+per-feeling radial-gradient "face" badges, 10 gradient "tool" badges, a
+full-detail Sprocket `<symbol>` built the same way as the story books'
+character art, and 5 cosmetic overlay symbols sharing Sprocket's
+coordinate space so they always align regardless of scale) plus small
+helpers (`academyIcon()`, `academySprocketSvg()`) used everywhere an
+emoji or a flattened CSS-shape Sprocket used to go — the level map, the
+level engine's four phases, Sprocket's Closet, and the home screen's
+equipped-cosmetic overlay.
+
+**Bug caught during verification, and how it was actually found:**
+cosmetics that sit above Sprocket's head (crown, bow) stopped appearing
+anywhere once switched over to the new symbol system, while ones fully
+inside the body silhouette (cape, scarf, star badge) kept working. Chased
+this past several dead ends before finding the real cause:
+- First suspected the `<use>` reference itself wasn't resolving —
+  `JSON.stringify(use.getBBox())` came back `{}`. False alarm:
+  `DOMRect`/`SVGRect` properties aren't JSON-enumerable, so `{}` is what
+  *any* valid rect stringifies to. Reading `.x`/`.y`/`.width`/`.height`
+  directly showed the crown's geometry was correct all along.
+- Then found a real but incomplete fix: an SVG `<symbol>` clips its own
+  content to its own viewBox by default — separately from the outer
+  `<svg>` element's `overflow` — and the crown/bow art sits at negative
+  y (above the symbol's `0 0 120 150` box) by design, since it has to
+  perch above the head. Added `overflow="visible"` to every
+  `cosmetic-*` symbol. This fixed an isolated test page but *not* the
+  app.
+- Root cause: the outer `<svg class="sprocket-render">` that
+  `academySprocketSvg()` generates (used on the map, in the shop, and in
+  the level engine's Tool phase) had no `overflow` rule of its own in
+  `academy.css`, so it fell back to the SVG spec's UA-default
+  `overflow: hidden` on nested `<svg>` elements — clipping the crown
+  regardless of the symbol-level fix. The home screen's separate,
+  simpler cosmetic path (`app.js`/`style.css`, not
+  `academySprocketSvg()`) already had an explicit `overflow: visible`
+  rule and was fine on its own. Fixed by adding `overflow: visible` to
+  `.sprocket-render` (`academy.css`) and to `.tp-sprocket`
+  (`academy-level.css`, which doesn't load `academy.css`). Re-verified
+  all 5 cosmetics on all 4 surfaces (home screen, level map, shop hero,
+  Tool-phase Sprocket) by screenshot after the fix, not just the crown
+  that surfaced it.
+
+Re-verified: 20-page app-wide sweep still zero console errors, service
+worker cache bumped to v16 with `academy-icons.js` added to the asset
+list.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -692,6 +751,9 @@ rather than guessing at a result I can't actually produce here.
   tool (also embedded in `help.html`)
 - `www/academy-data.js` — shared Feelings Academy data: all ten levels'
   body/mind/tool content, plus progress/Sparks/rewards state helpers
+- `www/academy-icons.js` — custom-illustrated SVG icon set (faces, tools,
+  the full-detail Sprocket character, cosmetic overlays) replacing raw
+  emoji throughout the Academy
 - `www/academy.html/.css/.js` — the level map
 - `www/academy-level.html/.css/.js` — the level engine (Teach → Spot →
   Tool → Recall → Complete), one template for all ten levels

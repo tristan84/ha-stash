@@ -100,7 +100,8 @@ sprocketEl.addEventListener('keydown', (e) => {
   const unlocked = academyUnlockedRewards(academyGetSparks());
   const reward = unlocked.find((r) => r.id === equipped);
   if (!reward) return;
-  cosmeticEl.textContent = reward.icon;
+  academyInjectIcons();
+  cosmeticEl.innerHTML = `<svg viewBox="0 0 120 150"><use href="#cosmetic-${reward.id}"></use></svg>`;
   cosmeticEl.classList.add('show', `cosmetic-${reward.id}`);
 })();
 

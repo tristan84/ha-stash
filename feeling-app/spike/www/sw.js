@@ -2,14 +2,14 @@
 // assets, so "offline behavior" is testable by disabling network and
 // reloading. Not a real offline strategy for the product — Phase 3
 // will need a proper cache-versioning/update strategy.
-const CACHE = 'sprocket-spike-v15';
+const CACHE = 'sprocket-spike-v16';
 const ASSETS = [
   './', 'index.html', 'style.css', 'app.js', 'tts.js', 'common.css', 'manifest.webmanifest',
   'stories.html', 'stories.css', 'story.html', 'story-frustrated.html', 'story-excited.html',
   'story-sad.html', 'story-angry.html', 'story-scared.html', 'story-embarrassed.html',
   'story-proud.html', 'story-overwhelmed.html', 'story-happy.html', 'story.css', 'story.js',
   'games.html', 'games.css', 'game-breathe.html', 'game-breathe.css', 'game-breathe.js',
-  'academy-data.js',
+  'academy-data.js', 'academy-icons.js',
   'academy.html', 'academy.css', 'academy.js',
   'academy-level.html', 'academy-level.css', 'academy-level.js',
   'academy-shop.html', 'academy-shop.css', 'academy-shop.js',

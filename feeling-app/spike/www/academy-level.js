@@ -9,11 +9,20 @@
 // Every level, regardless of which feeling it teaches, uses this exact
 // same formula.
 
+academyInjectIcons();
+
 const params = new URLSearchParams(window.location.search);
 const level = academyGetLevel(params.get('level'));
 if (!level) {
   document.getElementById('phase-stage').innerHTML = '<p style="padding:40px;text-align:center;">Level not found. <a href="academy.html">Back to map</a></p>';
   throw new Error('Unknown academy level');
+}
+
+function currentEquippedCosmetic() {
+  const equipped = localStorage.getItem(ACADEMY_EQUIPPED_KEY);
+  if (!equipped) return null;
+  const unlocked = academyUnlockedRewards(academyGetSparks());
+  return unlocked.some((r) => r.id === equipped) ? equipped : null;
 }
 
 const PHASES = ['teach', 'spot', 'tool', 'recall', 'complete'];
@@ -52,9 +61,9 @@ function goPhase(name) {
 // --- Teach ---------------------------------------------------------
 function teachSteps() {
   return [
-    { badge: '💓', bg: level.accentSoft, text: `Sprocket notices ${level.body}.` },
-    { badge: '💭', bg: level.accentSoft, text: `And thoughts like ${level.mind}.` },
-    { badge: level.emoji, bg: level.accentSoft, text: `That feeling has a name: <strong>${level.name.toUpperCase()}</strong>.`, sub: 'Let’s practice spotting it.' },
+    { badge: academyIcon('icon-heartbeat'), text: `Sprocket notices ${level.body}.` },
+    { badge: academyIcon('icon-thought'), text: `And thoughts like ${level.mind}.` },
+    { badge: academyIcon(level.faceIcon), text: `That feeling has a name: <strong>${level.name.toUpperCase()}</strong>.`, sub: 'Let’s practice spotting it.' },
   ];
 }
 
@@ -64,7 +73,7 @@ function renderTeach(step = 0) {
   const isLast = step === steps.length - 1;
   stageEl.innerHTML = `
     <div class="teach-card">
-      <div class="teach-badge" style="background:${s.bg}">${s.badge}</div>
+      <div class="teach-badge">${s.badge}</div>
       <p class="teach-text">${s.text}</p>
       ${s.sub ? `<p class="teach-sub">${s.sub}</p>` : ''}
       <div class="teach-nav">
@@ -99,7 +108,7 @@ function renderSpot() {
   options.forEach((opt) => {
     const btn = document.createElement('button');
     btn.className = 'signal-option';
-    btn.innerHTML = `<span class="opt-emoji">💓</span><span>${opt.body}</span>`;
+    btn.innerHTML = `${academyIcon('icon-heartbeat', 'opt-icon')}<span>${opt.body}</span>`;
     btn.addEventListener('click', () => {
       if (opt.id === level.id) {
         btn.classList.add('correct-flash');
@@ -121,16 +130,12 @@ function renderSpot() {
 // --- Tool Match (single round, reused drag mechanic) ------------------
 function renderTool() {
   stageEl.innerHTML = `
-    <p class="phase-heading">Sprocket feels ${level.emoji} <strong>${level.name.toUpperCase()}</strong>.</p>
+    <p class="phase-heading">Sprocket feels ${academyIcon(level.faceIcon, 'heading-icon')} <strong>${level.name.toUpperCase()}</strong>.</p>
     <p class="phase-sub">Drag the tool that helps onto Sprocket.</p>
     <div class="tool-phase-stage" id="tool-phase-stage">
       <div class="tp-hill"></div>
       <div class="tp-drop-zone" id="tp-drop-zone">
-        <div class="tp-sprocket" id="tp-sprocket">
-          <div class="tp-antenna"><span class="tp-antenna-tip"></span></div>
-          <div class="tp-head"><div class="tp-eye left"></div><div class="tp-eye right"></div></div>
-          <div class="tp-body"><div class="tp-core"></div></div>
-        </div>
+        <div class="tp-sprocket-slot" id="tp-sprocket-slot"></div>
         <div class="tp-reaction" id="tp-reaction"></div>
       </div>
     </div>
@@ -140,7 +145,9 @@ function renderTool() {
 
   const tray = document.getElementById('tp-tray');
   const dropZone = document.getElementById('tp-drop-zone');
-  const sprocketEl = document.getElementById('tp-sprocket');
+  const sprocketSlot = document.getElementById('tp-sprocket-slot');
+  sprocketSlot.innerHTML = academySprocketSvg(currentEquippedCosmetic(), 'tp-sprocket');
+  const sprocketEl = sprocketSlot.querySelector('.tp-sprocket');
   const reactionEl = document.getElementById('tp-reaction');
   const hint = document.getElementById('tool-hint');
 
@@ -150,7 +157,7 @@ function renderTool() {
   tiles.forEach((pair) => {
     const tile = document.createElement('div');
     tile.className = 'tp-tile';
-    tile.innerHTML = `<span class="tp-tile-emoji">${pair.tool.icon}</span><span class="tp-tile-label">${pair.tool.short}</span>`;
+    tile.innerHTML = `${academyIcon(pair.tool.icon, 'tp-tile-icon')}<span class="tp-tile-label">${pair.tool.short}</span>`;
     tray.appendChild(tile);
     wireToolDrag(tile, pair, dropZone, sprocketEl, reactionEl, hint);
   });
@@ -194,9 +201,9 @@ function wireToolDrag(tile, pair, dropZone, sprocketEl, reactionEl, hint) {
       sprocketEl.classList.remove('activated');
       void sprocketEl.offsetWidth;
       sprocketEl.classList.add('activated');
-      const icon = document.createElement('span');
+      const icon = document.createElement('div');
       icon.className = 'tp-reaction-icon';
-      icon.textContent = pair.tool.icon;
+      icon.innerHTML = academyIcon(pair.tool.icon);
       reactionEl.appendChild(icon);
       window.setTimeout(() => icon.remove(), 950);
       hint.textContent = '';
@@ -263,7 +270,7 @@ function renderRecallRound() {
   tiles.forEach((t) => {
     const btn = document.createElement('button');
     btn.className = 'recall-tile';
-    btn.textContent = t.emoji;
+    btn.innerHTML = academyIcon(t.faceIcon);
     btn.addEventListener('click', () => resolveRound(t.id === level.id, btn));
     grid.appendChild(btn);
   });
@@ -305,13 +312,13 @@ function renderComplete() {
       <div class="complete-sparks"><span aria-hidden="true">✨</span> +${sparksEarned} Sparks</div>
       ${unlockedNow ? `
         <div class="complete-unlock">
-          <span class="unlock-icon">${unlockedNow.icon}</span>
+          ${academyIcon('closet-' + unlockedNow.id, 'unlock-icon')}
           <span class="unlock-label">New in Sprocket's Closet: ${unlockedNow.name}!</span>
         </div>
       ` : ''}
       <div class="complete-nav">
         <a href="academy.html" class="pill-btn quiet">Back to map</a>
-        ${nextLevel ? `<a href="academy-level.html?level=${nextLevel.id}" class="pill-btn help">Next: ${nextLevel.name} ${nextLevel.emoji}</a>` : ''}
+        ${nextLevel ? `<a href="academy-level.html?level=${nextLevel.id}" class="pill-btn help">Next: ${nextLevel.name} ${academyIcon(nextLevel.faceIcon, 'next-level-icon')}</a>` : ''}
       </div>
     </div>
   `;

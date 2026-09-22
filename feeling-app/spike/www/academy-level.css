@@ -52,9 +52,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 46px;
   box-shadow: 0 8px 18px rgba(190,110,40,0.2);
 }
+.teach-badge .icon { width: 100%; height: 100%; }
 .teach-text {
   font-size: 18px;
   font-weight: 700;
@@ -84,6 +84,8 @@
   color: var(--ink);
   text-align: center;
 }
+.phase-heading .heading-icon { width: 22px; height: 22px; vertical-align: -5px; }
+.next-level-icon { width: 20px; height: 20px; vertical-align: -5px; margin-left: 2px; }
 .phase-sub {
   margin: 0 0 12px;
   font-size: 12px;
@@ -118,7 +120,7 @@
   text-align: left;
 }
 .signal-option:active { transform: translateY(2px); }
-.signal-option .opt-emoji { font-size: 22px; flex-shrink: 0; }
+.signal-option .opt-icon { width: 34px; height: 34px; flex-shrink: 0; }
 .signal-option.correct-flash {
   background: #eaf5d6;
   box-shadow: 0 0 0 3px #b6d98a;
@@ -172,26 +174,24 @@
   width: 130px; height: 130px;
   display: flex; align-items: center; justify-content: center;
 }
+.tp-sprocket-slot {
+  width: 84px; height: 104px;
+  filter: drop-shadow(0 6px 8px rgba(190,100,40,0.22));
+}
 .tp-sprocket {
-  width: 84px; height: 94px;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
   animation: tpBob 2.6s ease-in-out infinite;
 }
 @keyframes tpBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 .tp-sprocket.activated { animation: tpCheer 0.7s cubic-bezier(0.34,1.56,0.64,1); }
 @keyframes tpCheer { 0%,100% { transform: translateY(0) scale(1); } 40% { transform: translateY(-12px) scale(1.1); } }
-.tp-antenna { position: absolute; top: -12px; left: 50%; width: 3px; height: 14px; margin-left: -1.5px; background: var(--sprocket-body-dark); border-radius: 3px; }
-.tp-antenna-tip { position: absolute; top: -6px; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; background: var(--antenna-glow); border-radius: 50%; box-shadow: 0 0 8px 2px rgba(255,211,94,0.7); }
-.tp-head { position: absolute; top: 0; left: 6px; right: 6px; height: 52px; background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark)); border-radius: 50%; box-shadow: 0 5px 10px rgba(190,100,40,0.25); }
-.tp-eye { position: absolute; top: 22px; width: 9px; height: 9px; background: #fffaf3; border-radius: 50%; }
-.tp-eye.left { left: 18px; } .tp-eye.right { right: 18px; }
-.tp-eye::after { content: ""; position: absolute; top: 2.5px; left: 2.5px; width: 4px; height: 4px; background: var(--ink); border-radius: 50%; }
-.tp-body { position: absolute; bottom: 0; left: 0; right: 0; height: 48px; background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark)); border-radius: 26px; }
-.tp-core { position: absolute; top: 10px; left: 50%; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff8e8, var(--antenna-glow) 75%); }
 
 .tp-reaction { position: absolute; inset: 0; pointer-events: none; }
 .tp-reaction-icon {
-  position: absolute; left: 50%; top: 42%; font-size: 28px;
+  position: absolute; left: 50%; top: 42%; width: 44px; height: 44px;
   transform: translate(-50%, -50%) scale(0);
   animation: tpReactionPop 0.9s cubic-bezier(0.34,1.56,0.64,1) forwards;
 }
@@ -224,7 +224,7 @@
   -webkit-user-select: none;
   will-change: transform;
 }
-.tp-tile-emoji { font-size: 26px; }
+.tp-tile-icon { width: 44px; height: 44px; }
 .tp-tile-label { font-size: 10px; font-weight: 700; color: var(--ink); text-align: center; }
 .tp-tile.dragging { cursor: grabbing; z-index: 10; box-shadow: 0 12px 22px rgba(190,110,40,0.3); transition: none; }
 .tp-tile.returning { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
@@ -259,8 +259,11 @@
   padding: 20px 10px;
   background: #fffaf2;
   box-shadow: 0 6px 14px rgba(190,110,40,0.16);
-  font-size: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.recall-tile .icon { width: 60px; height: 60px; }
 .recall-tile:active { transform: translateY(2px); }
 .recall-tile.correct-flash { background: #eaf5d6; box-shadow: 0 0 0 3px #b6d98a; }
 .recall-tile.wrong-flash { animation: signalShake 0.4s ease; }
@@ -319,7 +322,7 @@
   background: #fff4e2;
   animation: unlockPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
 }
-.complete-unlock .unlock-icon { font-size: 34px; }
+.complete-unlock .unlock-icon { width: 52px; height: 52px; }
 .complete-unlock .unlock-label { font-size: 12px; font-weight: 700; color: var(--button-help-dark); }
 @keyframes unlockPop {
   0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); }

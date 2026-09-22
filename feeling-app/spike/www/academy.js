@@ -2,9 +2,11 @@
 // previous level is completed. Stars and Sparks are read from shared
 // localStorage state (academy-data.js) written by academy-level.js.
 
+academyInjectIcons();
+
 const pathEl = document.getElementById('level-path');
 const sparksTotalEl = document.getElementById('sparks-total');
-const heroCosmeticEl = document.getElementById('hs-cosmetic');
+const heroSlotEl = document.getElementById('hero-sprocket-slot');
 const heroLineEl = document.getElementById('hero-line');
 
 function renderHero() {
@@ -13,16 +15,12 @@ function renderHero() {
 
   const equipped = localStorage.getItem(ACADEMY_EQUIPPED_KEY);
   const unlocked = academyUnlockedRewards(sparks);
-  heroCosmeticEl.className = 'hs-cosmetic';
-  if (equipped && unlocked.some((r) => r.id === equipped)) {
-    const reward = unlocked.find((r) => r.id === equipped);
-    heroCosmeticEl.textContent = reward.icon;
-    heroCosmeticEl.classList.add('show', `cosmetic-${reward.id}`);
-  }
+  const equippedValid = equipped && unlocked.some((r) => r.id === equipped) ? equipped : null;
+  heroSlotEl.innerHTML = academySprocketSvg(equippedValid);
 
   const next = academyNextReward(sparks);
   if (next) {
-    heroLineEl.textContent = `${next.threshold - sparks} more Sparks unlocks the ${next.name} ${next.icon}`;
+    heroLineEl.textContent = `${next.threshold - sparks} more Sparks unlocks the ${next.name}`;
   } else {
     heroLineEl.textContent = "You've unlocked everything in Sprocket's Closet!";
   }
@@ -56,7 +54,7 @@ function renderPath() {
 
     node.innerHTML = `
       <div class="node-circle" style="${unlocked ? `background:${level.accentSoft};` : ''}">
-        ${unlocked ? level.emoji : '<span class="node-lock-icon">🔒</span>'}
+        ${unlocked ? academyIcon(level.faceIcon) : '<span class="node-lock-icon">🔒</span>'}
       </div>
       <span class="node-label">${level.name}</span>
       <span class="node-stars">${starsHtml}</span>

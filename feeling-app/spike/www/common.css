@@ -4,6 +4,16 @@
    Keeps games/diary/help/parent-gate visually consistent without
    duplicating the same header markup styling five times. */
 
+/* Base for the custom-illustrated icon set (academy-icons.js) — every
+   page that injects it sets its own explicit width/height per context,
+   this just keeps a bare <svg class="icon"> predictable (SVG's default
+   inline display has baseline-alignment quirks) until that happens. */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
 .screen-body {
   background: var(--sky-top);
 }
