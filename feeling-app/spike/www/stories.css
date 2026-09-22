@@ -1,0 +1,102 @@
+/* Story Time shelf: "the books need to look like real books with real
+   covers" — replaced the generic flat icon cards with portrait book
+   covers (title treatment, spine edge, themed cover art) standing on
+   an actual wooden shelf plank, instead of a plain card grid. */
+
+.book-shelf-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 10px 4px 0;
+}
+.book-shelf-row::-webkit-scrollbar { display: none; }
+.book-cover { flex-shrink: 0; }
+
+.book-cover {
+  display: flex;
+  flex-direction: column;
+  width: 118px;
+  border: none;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+.book-cover:active .book-face { transform: translateY(2px); }
+
+.book-face {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 5px 12px 12px 5px;
+  overflow: hidden;
+  box-shadow: 0 10px 16px rgba(120, 70, 30, 0.32), 0 2px 0 rgba(255,255,255,0.25) inset;
+  transition: transform 0.15s ease;
+}
+
+.book-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  background: rgba(0,0,0,0.16);
+  box-shadow: 1px 0 0 rgba(255,255,255,0.15) inset;
+}
+
+.book-cover-title {
+  position: relative;
+  z-index: 1;
+  margin: 14px 10px 0 16px;
+  font-weight: 800;
+  font-size: 13.5px;
+  line-height: 1.15;
+  color: #fffaf2;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+.book-cover-author {
+  position: relative;
+  z-index: 1;
+  margin: 3px 0 0 16px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: rgba(255,250,242,0.85);
+  text-transform: uppercase;
+}
+
+.book-cover-emblem {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 76px;
+  height: 76px;
+}
+
+.book-shelf-sub {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--ink);
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* Theme per feeling — each book's cover is a distinct color family so
+   they read as different books at a glance, not the same template. */
+.book-worried .book-face { background: linear-gradient(160deg, #ffb98a, #f0873a 78%); }
+.book-frustrated .book-face { background: linear-gradient(160deg, #ff9b85, #e05a3c 78%); }
+.book-excited .book-face { background: linear-gradient(160deg, #ffd97a, #f0a800 78%); }
+
+.shelf-plank {
+  height: 16px;
+  margin: 16px 6px 0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #d9a464, #b97f42);
+  box-shadow: 0 8px 10px rgba(120, 70, 30, 0.28), inset 0 2px 0 rgba(255,255,255,0.25);
+}

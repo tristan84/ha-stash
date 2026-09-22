@@ -69,6 +69,7 @@
 .shelf-card {
   display: flex;
   flex-direction: column;
+  position: relative;
   border: none;
   border-radius: 20px;
   padding: 0;
@@ -79,8 +80,9 @@
   text-decoration: none;
   color: var(--ink);
   font-family: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.shelf-card:active { transform: translateY(2px); }
+.shelf-card:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(190, 110, 40, 0.18); }
 
 .shelf-card-art {
   width: 100%;
@@ -101,6 +103,23 @@
   font-size: 12px;
   color: var(--button-help-dark);
   font-weight: 600;
+}
+
+/* --- Play badge: a little "go" cue in the art corner, used by the
+   games shelf so cards read as launchable play, not static tiles. --- */
+.shelf-card-play {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  box-shadow: 0 3px 8px rgba(190,110,40,0.25);
 }
 
 .screen-intro {

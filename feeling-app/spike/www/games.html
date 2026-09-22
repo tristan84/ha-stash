@@ -23,25 +23,49 @@
 
       <a class="shelf-card" href="game-breathe.html">
         <svg class="shelf-card-art" viewBox="0 0 200 150">
-          <rect width="200" height="150" fill="#fff2d9" />
-          <circle cx="100" cy="75" r="42" fill="#ffedc9" opacity="0.6" />
-          <circle cx="100" cy="75" r="28" fill="#ffd35e" />
+          <defs>
+            <linearGradient id="cardSky1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+            </linearGradient>
+          </defs>
+          <rect width="200" height="150" fill="url(#cardSky1)" />
+          <circle cx="168" cy="26" r="14" fill="#ffd35e" />
+          <ellipse cx="30" cy="24" rx="20" ry="8" fill="#fffaf2" opacity="0.9" />
+          <path d="M0,118 Q100,98 200,114 V150 H0 Z" fill="#dcea97" />
+          <rect x="97" y="80" width="6" height="38" rx="3" fill="#8fbf5a" />
+          <ellipse cx="88" cy="102" rx="10" ry="6" fill="#a3cc72" />
+          <ellipse cx="112" cy="96" rx="10" ry="6" fill="#a3cc72" />
+          <g transform="translate(100,80)">
+            <ellipse rx="10" ry="15" transform="rotate(0)" fill="#ff9b7a" /><ellipse rx="10" ry="15" transform="rotate(72)" fill="#ff9b7a" /><ellipse rx="10" ry="15" transform="rotate(144)" fill="#ff9b7a" /><ellipse rx="10" ry="15" transform="rotate(216)" fill="#ff9b7a" /><ellipse rx="10" ry="15" transform="rotate(288)" fill="#ff9b7a" />
+            <circle r="9" fill="#ffd35e" />
+          </g>
+          <circle cx="150" cy="90" r="30" fill="#ffedc9" opacity="0.55" />
+          <circle cx="150" cy="90" r="16" fill="#fff4e2" />
         </svg>
+        <span class="shelf-card-play" aria-hidden="true">🌬️</span>
         <div class="shelf-card-body">
-          <p class="shelf-card-title">Breathing Buddy</p>
-          <p class="shelf-card-sub">practice a calming breath</p>
+          <p class="shelf-card-title">Sprocket's Garden</p>
+          <p class="shelf-card-sub">breathe to grow flowers</p>
         </div>
       </a>
 
       <a class="shelf-card" href="game-match.html">
         <svg class="shelf-card-art" viewBox="0 0 200 150">
-          <rect width="200" height="150" fill="#fff2d9" />
-          <circle cx="60" cy="100" r="22" fill="#ffb15e" opacity="0.95" />
-          <circle cx="105" cy="60" r="26" fill="#ff9b7a" opacity="0.95" />
-          <circle cx="150" cy="105" r="19" fill="#ffd35e" opacity="0.95" />
-          <circle cx="60" cy="100" r="8" fill="#fff4e2" opacity="0.7" />
-          <circle cx="105" cy="60" r="9" fill="#fff4e2" opacity="0.7" />
+          <defs>
+            <linearGradient id="cardSky2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+            </linearGradient>
+          </defs>
+          <rect width="200" height="150" fill="url(#cardSky2)" />
+          <ellipse cx="164" cy="22" rx="18" ry="7" fill="#fffaf2" opacity="0.9" />
+          <path d="M0,122 Q100,104 200,118 V150 H0 Z" fill="#dcea97" opacity="0.7" />
+          <circle cx="52" cy="88" r="19" fill="#ffcf9c" /><text x="52" y="94" font-size="18" text-anchor="middle">😟</text>
+          <circle cx="104" cy="52" r="22" fill="#ffb199" /><text x="104" y="59" font-size="20" text-anchor="middle">😤</text>
+          <circle cx="150" cy="98" r="16" fill="#ffe08a" /><text x="150" y="104" font-size="15" text-anchor="middle">🤩</text>
+          <rect x="168" y="112" width="18" height="26" rx="4" fill="#fffaf2" opacity="0.7" />
+          <rect x="168" y="122" width="18" height="16" rx="3" fill="#ffb15e" />
         </svg>
+        <span class="shelf-card-play" aria-hidden="true">🎯</span>
         <div class="shelf-card-body">
           <p class="shelf-card-title">Bubble Pop</p>
           <p class="shelf-card-sub">catch the right feeling</p>
