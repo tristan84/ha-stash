@@ -317,6 +317,96 @@ main {
   50% { opacity: 1; filter: drop-shadow(0 0 7px rgba(79,195,247,0.95)); }
 }
 
+/* --- Tap reactions: "make Sprocket do things when clicked" ---------
+   A handful of distinct, silly reactions app.js picks between at
+   random on every tap, applied to #sprocket-svg (a real element, not
+   a <use> clone) so they layer on top of the permanent idle bob on
+   #sprocket rather than fighting it. An arm-wave reaction targeting
+   .home-arm-front (inside the <use>-referenced <symbol>) was tried and
+   dropped — a plain class selector reaches cloned <use> content (see
+   .home-eye/.home-antenna above, which do animate), but an ancestor-
+   scoped one like "#sprocket.react-wave .home-arm-front" does not: it
+   silently never matched, verified with Playwright before shipping. */
+@keyframes reactBounce {
+  0% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+  25% { transform: translateY(-32px) scale(0.94, 1.1) rotate(-3deg); }
+  50% { transform: translateY(2px) scale(1.1, 0.88) rotate(2deg); }
+  70% { transform: translateY(-10px) scale(0.98, 1.04) rotate(-1deg); }
+  100% { transform: translateY(0) scale(1, 1) rotate(0deg); }
+}
+@keyframes reactSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  60% { transform: rotate(360deg) scale(1.08); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+@keyframes reactWiggle {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  15% { transform: translateX(-7px) rotate(-6deg); }
+  35% { transform: translateX(7px) rotate(6deg); }
+  55% { transform: translateX(-5px) rotate(-4deg); }
+  75% { transform: translateX(4px) rotate(3deg); }
+}
+#sprocket.react-bounce #sprocket-svg { animation: reactBounce 0.8s cubic-bezier(.34,1.56,.64,1); }
+#sprocket.react-spin #sprocket-svg { animation: reactSpin 0.9s ease-in-out; }
+#sprocket.react-wiggle #sprocket-svg { animation: reactWiggle 0.7s ease-in-out; }
+
+/* Small celebratory particles (stars/hearts) that pop out of Sprocket
+   on tap — spawned into the existing #bubbles layer alongside the
+   dev-panel stress-test bubbles, just a different element class. */
+.reaction-particle {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+  animation: particlePop 0.9s ease-out forwards;
+  will-change: transform, opacity;
+}
+@keyframes particlePop {
+  0% { transform: translate(0, 0) scale(0.4); opacity: 1; }
+  65% { opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)) scale(1); opacity: 0; }
+}
+
+/* Speech bubble showing what Sprocket just said (spoken via TTS too) —
+   makes the tap-to-greet interaction readable, not just audible. */
+#sprocket-speech {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%) translateY(6px) scale(0.9);
+  min-width: 140px;
+  max-width: 230px;
+  padding: 10px 14px;
+  background: #fffaf2;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(190, 110, 40, 0.22);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 6;
+}
+#sprocket-speech::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  background: #fffaf2;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+#sprocket-speech.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
 /* Cosmetic unlocked in Sprocket's Closet (Feelings Academy), mirrored
    here so the reward actually shows up on the character the child sees
    every time the app opens, not just inside the Academy. Purely

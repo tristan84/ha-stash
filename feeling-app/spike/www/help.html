@@ -248,13 +248,23 @@
   <!-- Generic instructional card for any practiced Academy tool other
        than breathing — icon, name, and the exact tool copy already
        written for that feeling in academy-data.js (reused, not
-       rewritten), plus tap-to-hear and a big "done" button back home. -->
+       rewritten). Tapping Sprocket plays a random reaction + particle
+       burst and fills a progress dot, same reaction system as the home
+       screen (app.js) — turns "read text, tap done" into something a
+       child actually keeps tapping. "I did it" stays a plain, always-
+       available way out regardless of progress — never gate leaving
+       Help Me behind finishing a mini-interaction. -->
   <div id="tool-card-stage" class="tool-card-stage" hidden>
     <div class="tool-card">
-      <svg class="tool-card-sprocket g-gentle-bob" viewBox="0 0 120 150"><use href="#sprocketMini"/></svg>
+      <button id="tool-card-sprocket-btn" class="tool-card-sprocket-btn" aria-label="Tap Sprocket to try it together">
+        <svg class="tool-card-sprocket g-gentle-bob" viewBox="0 0 120 150"><use href="#sprocketMini"/></svg>
+      </button>
+      <div id="tool-card-particles" class="tool-card-particles"></div>
       <div class="tool-card-icon" id="tool-card-icon"></div>
       <h2 id="tool-card-label"></h2>
       <p id="tool-card-desc"></p>
+      <div class="tool-card-dots" id="tool-card-dots"></div>
+      <p class="tool-card-hint" id="tool-card-hint">Tap Sprocket to try it together!</p>
       <div class="tool-card-actions">
         <button id="tool-card-hear" class="hear-btn" aria-label="Hear this">🔊</button>
         <button id="tool-card-done" class="pill-btn help">I did it 💚</button>

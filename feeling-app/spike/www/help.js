@@ -64,6 +64,11 @@ const cardStage = document.getElementById('tool-card-stage');
 const cardIcon = document.getElementById('tool-card-icon');
 const cardLabel = document.getElementById('tool-card-label');
 const cardDesc = document.getElementById('tool-card-desc');
+const cardSprocketBtn = document.getElementById('tool-card-sprocket-btn');
+const cardSprocket = document.querySelector('.tool-card-sprocket');
+const cardParticles = document.getElementById('tool-card-particles');
+const cardDots = document.getElementById('tool-card-dots');
+const cardHint = document.getElementById('tool-card-hint');
 
 function showBreathe() {
   pickerEl.hidden = true;
@@ -71,6 +76,71 @@ function showBreathe() {
   cardStage.hidden = true;
   greetingEl.textContent = HELP_BREATHE_TOOL.greeting;
 }
+
+// Tap-along interaction on the generic tool card: tapping Sprocket
+// plays a random reaction + particle burst (same system as the home
+// screen, app.js) and fills a dot; filling all of them celebrates,
+// then quietly resets so a child can keep tapping for as long as it
+// helps. Purely additive — "I did it" always works regardless of
+// tap progress, since leaving Help Me should never be gated.
+const TAP_TARGET = 4;
+const REACTIONS = ['react-bounce', 'react-spin', 'react-wiggle'];
+const PARTICLE_EMOJI = ['✨', '💚', '⭐', '💫'];
+const CELEBRATE_HINTS = ["Woo! Nicely done! 🎉", "Great job together! ✨", "You did it! Keep going if you like."];
+let tapCount = 0;
+let lastReaction = -1;
+let celebrateTimer = null;
+
+function renderDots() {
+  cardDots.innerHTML = '';
+  for (let i = 0; i < TAP_TARGET; i++) {
+    const dot = document.createElement('span');
+    dot.className = 'tool-card-dot' + (i < tapCount ? ' filled' : '');
+    cardDots.appendChild(dot);
+  }
+}
+
+function spawnCardParticles() {
+  for (let i = 0; i < 5; i++) {
+    const p = document.createElement('span');
+    p.className = 'reaction-particle';
+    p.textContent = PARTICLE_EMOJI[Math.floor(Math.random() * PARTICLE_EMOJI.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 30 + Math.random() * 34;
+    p.style.setProperty('--px', `${Math.cos(angle) * dist}px`);
+    p.style.setProperty('--py', `${-Math.abs(Math.sin(angle) * dist) - 14}px`);
+    p.style.animationDelay = `${i * 30}ms`;
+    p.addEventListener('animationend', () => p.remove());
+    cardParticles.appendChild(p);
+  }
+}
+
+function tapSprocket() {
+  let i = Math.floor(Math.random() * REACTIONS.length);
+  if (i === lastReaction) i = (i + 1) % REACTIONS.length;
+  lastReaction = i;
+  const cls = REACTIONS[i];
+  cardSprocket.classList.remove(...REACTIONS);
+  void cardSprocket.offsetWidth;
+  cardSprocket.classList.add(cls);
+  window.setTimeout(() => cardSprocket.classList.remove(cls), 1000);
+  spawnCardParticles();
+
+  window.clearTimeout(celebrateTimer);
+  tapCount += 1;
+  if (tapCount >= TAP_TARGET) {
+    renderDots();
+    cardHint.textContent = CELEBRATE_HINTS[Math.floor(Math.random() * CELEBRATE_HINTS.length)];
+    celebrateTimer = window.setTimeout(() => {
+      tapCount = 0;
+      renderDots();
+      cardHint.textContent = 'Tap Sprocket to try it together!';
+    }, 1800);
+  } else {
+    renderDots();
+  }
+}
+cardSprocketBtn.addEventListener('click', tapSprocket);
 
 function showToolCard(tool) {
   pickerEl.hidden = true;
@@ -80,6 +150,10 @@ function showToolCard(tool) {
   cardIcon.innerHTML = academyIcon(tool.icon);
   cardLabel.textContent = tool.label;
   cardDesc.textContent = tool.desc;
+  window.clearTimeout(celebrateTimer);
+  tapCount = 0;
+  cardHint.textContent = 'Tap Sprocket to try it together!';
+  renderDots();
 }
 
 function selectTool(tool) {

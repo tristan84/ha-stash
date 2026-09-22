@@ -76,14 +76,79 @@ function sprocketSpeak(text) {
   });
 }
 
-// Tapping Sprocket itself is the greeting interaction — a dedicated
+// Tapping Sprocket is the greeting interaction — a dedicated
 // "make Sprocket talk" button isn't a real planned function, so this
 // exercises the same TTS path more naturally (tap the character to
-// hear it) than a standalone button would.
-function greet() {
-  sprocketSpeak("Hi, I'm Sprocket. I noticed my hands feel a little shaky today.");
+// hear it) than a standalone button would. Each tap now also plays a
+// random silly reaction animation, a burst of particles, and a speech
+// bubble showing the line as well as speaking it — "make Sprocket do
+// things when clicked" was previously just a static tap-to-speak with
+// no visible reaction at all.
+const GREETINGS = [
+  "Hi, I'm Sprocket. I noticed my hands feel a little shaky today.",
+  "Hello! Tap me again — I love saying hi.",
+  "I'm doing okay today. How about you?",
+  "Ready when you are — tap Help Me if you need me.",
+  "Wheee! That tickles.",
+  "You found me! I'm always here.",
+];
+let lastGreeting = -1;
+function nextGreeting() {
+  let i = Math.floor(Math.random() * GREETINGS.length);
+  if (GREETINGS.length > 1 && i === lastGreeting) i = (i + 1) % GREETINGS.length;
+  lastGreeting = i;
+  return GREETINGS[i];
 }
+
+const REACTIONS = ['react-bounce', 'react-spin', 'react-wiggle'];
+let lastReaction = -1;
 const sprocketEl = document.getElementById('sprocket');
+function playReaction() {
+  let i = Math.floor(Math.random() * REACTIONS.length);
+  if (i === lastReaction) i = (i + 1) % REACTIONS.length;
+  lastReaction = i;
+  const cls = REACTIONS[i];
+  sprocketEl.classList.remove(...REACTIONS);
+  void sprocketEl.offsetWidth;
+  sprocketEl.classList.add(cls);
+  window.setTimeout(() => sprocketEl.classList.remove(cls), 1100);
+}
+
+const PARTICLE_EMOJI = ['✨', '💚', '⭐', '💫'];
+function spawnReactionParticles() {
+  const stage = document.getElementById('bubbles');
+  for (let i = 0; i < 6; i++) {
+    const p = document.createElement('span');
+    p.className = 'reaction-particle';
+    p.textContent = PARTICLE_EMOJI[Math.floor(Math.random() * PARTICLE_EMOJI.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 40 + Math.random() * 50;
+    p.style.left = '50%';
+    p.style.bottom = '210px';
+    p.style.setProperty('--px', `${Math.cos(angle) * dist}px`);
+    p.style.setProperty('--py', `${-Math.abs(Math.sin(angle) * dist) - 20}px`);
+    p.style.animationDelay = `${i * 30}ms`;
+    p.addEventListener('animationend', () => p.remove());
+    stage.appendChild(p);
+  }
+}
+
+let speechTimer = null;
+function showSpeech(text) {
+  const bubble = document.getElementById('sprocket-speech');
+  window.clearTimeout(speechTimer);
+  bubble.textContent = text;
+  bubble.classList.add('show');
+  speechTimer = window.setTimeout(() => bubble.classList.remove('show'), 4200);
+}
+
+function greet() {
+  const line = nextGreeting();
+  playReaction();
+  spawnReactionParticles();
+  showSpeech(line);
+  sprocketSpeak(line);
+}
 sprocketEl.addEventListener('click', greet);
 sprocketEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); greet(); }
