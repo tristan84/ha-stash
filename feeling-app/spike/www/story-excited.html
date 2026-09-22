@@ -27,6 +27,41 @@
       <stop offset="0%" stop-color="#e0aef0" />
       <stop offset="100%" stop-color="#b268d6" />
     </linearGradient>
+    <linearGradient id="gradHelmet" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
+      <stop offset="0%" stop-color="#C7E8CB"/>
+      <stop offset="55%" stop-color="#97CFA2"/>
+      <stop offset="100%" stop-color="#6BAE79"/>
+    </linearGradient>
+    <linearGradient id="gradBody" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#BCE0C2"/>
+      <stop offset="55%" stop-color="#90CB9C"/>
+      <stop offset="100%" stop-color="#63A971"/>
+    </linearGradient>
+    <linearGradient id="gradFace" x1="0.2" y1="0.05" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#4E7AA3"/>
+      <stop offset="100%" stop-color="#1D2E42"/>
+    </linearGradient>
+    <linearGradient id="gradRed" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#C98FE0"/>
+      <stop offset="100%" stop-color="#8C4BB8"/>
+    </linearGradient>
+    <linearGradient id="gradOrange" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#E0AEF0"/>
+      <stop offset="100%" stop-color="#B268D6"/>
+    </linearGradient>
+    <linearGradient id="gradYellow" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="#F2E0FA"/>
+      <stop offset="100%" stop-color="#DDB8EF"/>
+    </linearGradient>
+    <linearGradient id="gradDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3A2B44"/>
+      <stop offset="100%" stop-color="#1D1522"/>
+    </linearGradient>
+    <radialGradient id="gradIris" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#B4EFFF"/>
+      <stop offset="45%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#146FA8"/>
+    </radialGradient>
     <linearGradient id="lilacGrad" x1="0.2" y1="0" x2="0.8" y2="1">
       <stop offset="0%" stop-color="#f2e0fa" />
       <stop offset="100%" stop-color="#ddb8ef" />
@@ -105,33 +140,74 @@
     </symbol>
 
     <symbol id="sprocketMini" viewBox="0 0 120 150">
-      <ellipse class="mini-ear" cx="14" cy="52" rx="9" ry="12" fill="url(#coreGrad)" />
-      <ellipse class="mini-ear" cx="106" cy="52" rx="9" ry="12" fill="url(#coreGrad)" />
-      <line x1="46" y1="10" x2="34" y2="-5" stroke="url(#bodyGrad)" stroke-width="3" stroke-linecap="round" />
-      <line x1="74" y1="10" x2="86" y2="-5" stroke="url(#bodyGrad)" stroke-width="3" stroke-linecap="round" />
-      <circle class="mini-antenna-tip" cx="34" cy="-5" r="5" fill="url(#lilacGrad)" />
-      <circle class="mini-antenna-tip" cx="86" cy="-5" r="5" fill="url(#lilacGrad)" />
-      <rect x="53" y="2" width="14" height="15" rx="5" fill="url(#coreGrad)" />
-      <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" />
-      <rect x="27" y="29" width="66" height="36" rx="16" fill="url(#screenGrad)" />
-      <circle class="mini-eye" cx="45" cy="47" r="8" fill="url(#lensGrad)" />
-      <circle class="mini-eye" cx="75" cy="47" r="8" fill="url(#lensGrad)" />
-      <circle cx="42" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
-      <circle cx="72" cy="44" r="1.8" fill="#ffffff" opacity="0.9" />
-      <path class="mini-mouth" d="M48,57 Q60,63 72,57" stroke="#bdeeff" stroke-width="3" fill="none" stroke-linecap="round" />
-      <rect x="45" y="88" width="30" height="12" rx="6" fill="url(#trimGrad)" />
-      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" />
-      <rect x="20" y="131" width="80" height="11" fill="url(#coreGrad)" />
-      <rect x="4" y="108" width="16" height="30" rx="8" fill="url(#bodyGrad)" />
-      <rect x="100" y="108" width="16" height="30" rx="8" fill="url(#bodyGrad)" />
-      <circle cx="12" cy="112" r="10" fill="url(#coreGrad)" />
-      <circle cx="108" cy="112" r="10" fill="url(#coreGrad)" />
-      <circle cx="12" cy="138" r="9" fill="url(#coreGrad)" />
-      <circle cx="108" cy="138" r="9" fill="url(#coreGrad)" />
-      <circle cx="60" cy="122" r="17" fill="url(#coreGrad)" />
-      <circle class="mini-core" cx="60" cy="122" r="9" fill="url(#trimGrad)" />
-      <rect x="34" y="146" width="20" height="4" rx="2" fill="url(#lilacGrad)" />
-      <rect x="66" y="146" width="20" height="4" rx="2" fill="url(#lilacGrad)" />
+      <g transform="translate(13.125,0) scale(0.234375)">
+        <g transform="translate(300,0)">
+          <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+          <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+        </g>
+        <g transform="translate(228,0)">
+          <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+          <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+          <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="4"/>
+        </g>
+        <g stroke="#5A9268" stroke-width="7" stroke-linecap="round">
+          <line x1="150" y1="70" x2="112" y2="22"/>
+          <line x1="250" y1="70" x2="288" y2="22"/>
+        </g>
+        <circle class="mini-antenna-tip" cx="112" cy="20" r="15" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="3"/>
+        <circle class="mini-antenna-tip" cx="288" cy="20" r="15" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="3"/>
+        <circle cx="200" cy="180" r="140" fill="url(#gradHelmet)" stroke="#3E7A4C" stroke-width="5"/>
+        <ellipse cx="160" cy="110" rx="55" ry="30" fill="#FFFFFF" opacity="0.16"/>
+        <rect x="182" y="28" width="36" height="54" rx="12" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+        <rect class="mini-ear" x="46" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+        <rect class="mini-ear" x="302" y="150" width="52" height="82" rx="22" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+        <rect x="80" y="88" width="240" height="188" rx="44" fill="url(#gradDark)"/>
+        <rect x="92" y="100" width="216" height="164" rx="38" fill="url(#gradFace)" stroke="#6E90AC" stroke-width="3"/>
+        <g>
+          <circle cx="163" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+          <circle class="mini-eye" cx="163" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+          <circle cx="163" cy="168" r="11" fill="#0F3A5C"/>
+          <circle cx="154" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
+        </g>
+        <g>
+          <circle cx="237" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+          <circle class="mini-eye" cx="237" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+          <circle cx="237" cy="168" r="11" fill="#0F3A5C"/>
+          <circle cx="228" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
+        </g>
+        <path class="mini-mouth" d="M 172,224 Q 200,246 228,224" fill="none" stroke="#CDF3FF" stroke-width="5" stroke-linecap="round"/>
+        <rect x="106" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+        <rect x="106" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+        <rect x="266" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+        <rect x="266" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+        <g transform="translate(54,0)">
+          <rect x="0" y="330" width="46" height="92" rx="23" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="1" y="412" width="44" height="20" rx="9" fill="url(#gradDark)"/>
+          <rect x="4" y="426" width="38" height="66" rx="18" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <circle cx="23" cy="502" r="27" fill="url(#gradRed)" stroke="#6B3690" stroke-width="4"/>
+        </g>
+        <rect x="163" y="292" width="74" height="46" rx="16" fill="url(#gradDark)"/>
+        <rect x="120" y="310" width="160" height="150" rx="58" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="5"/>
+        <ellipse cx="165" cy="345" rx="34" ry="18" fill="#FFFFFF" opacity="0.14"/>
+        <circle cx="128" cy="330" r="34" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+        <circle cx="272" cy="330" r="34" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+        <circle cx="170" cy="368" r="28" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+        <circle class="mini-core" cx="170" cy="368" r="15" fill="url(#gradDark)"/>
+        <circle cx="170" cy="404" r="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="2"/>
+        <rect x="100" y="424" width="200" height="34" rx="17" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="4"/>
+        <rect x="112" y="444" width="176" height="38" rx="19" fill="url(#gradRed)" stroke="#6B3690" stroke-width="3"/>
+        <g transform="translate(124,0)">
+          <rect x="0" y="470" width="48" height="76" rx="20" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="-1" y="538" width="50" height="18" rx="8" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+          <rect x="3" y="552" width="42" height="58" rx="16" fill="url(#gradBody)" stroke="#3E7A4C" stroke-width="4"/>
+          <rect x="0" y="606" width="48" height="16" rx="7" fill="url(#gradOrange)" stroke="#8A45B0" stroke-width="3"/>
+          <rect x="-8" y="618" width="66" height="38" rx="16" fill="url(#gradYellow)" stroke="#A87CC7" stroke-width="4"/>
+        </g>
+      </g>
     </symbol>
 
     <symbol id="friendMini" viewBox="0 0 120 150">
