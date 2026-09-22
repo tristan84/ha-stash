@@ -10,6 +10,7 @@ academyInjectIcons();
 const HELP_BREATHE_TOOL = {
   id: 'breathe',
   icon: 'tool-breathe',
+  short: 'Breathe',
   label: 'Three Slow Breaths',
   desc: 'Breathe in slow, and out even slower.',
   greeting: "It's okay. I'm here. Let's breathe together.",
@@ -26,6 +27,7 @@ function practicedAcademyTools() {
     .map((l) => ({
       id: l.id,
       icon: l.tool.icon,
+      short: l.tool.short,
       label: l.tool.label,
       desc: l.tool.desc,
       greeting: `It's okay. I'm here. Let's try ${l.tool.short.toLowerCase()} together.`,
@@ -33,12 +35,24 @@ function practicedAcademyTools() {
 }
 
 function practicedTools() {
-  const tools = practicedAcademyTools();
-  // Breathing counts as practiced once the garden's been played for
-  // real; if nothing at all has been practiced yet, still offer it —
-  // it's simple enough to use correctly the first time, so Help Me is
-  // never an empty screen for a brand-new child.
-  if (breathePracticed() || tools.length === 0) tools.unshift(HELP_BREATHE_TOOL);
+  const academyTools = practicedAcademyTools();
+  const tools = [];
+  const seenIcons = new Set();
+  // Worried's own Academy tool IS three slow breaths — same icon as
+  // the standalone breathing option — so without deduping by icon, a
+  // child who'd completed Worried saw "breathe" twice in the picker.
+  // Breathing counts as practiced either via the garden or via that
+  // overlap; if nothing at all has been practiced yet, still offer it
+  // so Help Me is never an empty screen for a brand-new child.
+  if (breathePracticed() || academyTools.some((t) => t.icon === HELP_BREATHE_TOOL.icon) || academyTools.length === 0) {
+    tools.push(HELP_BREATHE_TOOL);
+    seenIcons.add(HELP_BREATHE_TOOL.icon);
+  }
+  academyTools.forEach((t) => {
+    if (seenIcons.has(t.icon)) return;
+    seenIcons.add(t.icon);
+    tools.push(t);
+  });
   return tools;
 }
 
@@ -84,7 +98,7 @@ if (tools.length <= 1) {
   tools.forEach((tool) => {
     const btn = document.createElement('button');
     btn.className = 'tool-picker-btn';
-    btn.innerHTML = academyIcon(tool.icon, 'tool-picker-icon');
+    btn.innerHTML = `<span class="tool-picker-icon-circle">${academyIcon(tool.icon)}</span><span class="tool-picker-caption">${tool.short}</span>`;
     btn.setAttribute('aria-label', tool.label);
     btn.addEventListener('click', () => selectTool(tool));
     pickerRow.appendChild(btn);

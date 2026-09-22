@@ -40,7 +40,8 @@
    hiding these two via .hidden = true from help.js needs its own,
    higher-specificity override here. */
 #tool-breathe-stage[hidden],
-#tool-card-stage[hidden] {
+#tool-card-stage[hidden],
+#tool-picker[hidden] {
   display: none;
 }
 
@@ -57,14 +58,25 @@
 .help-sprocket-avatar svg { width: 100%; height: 100%; display: block; }
 
 /* One-tap tool picker — only shown when more than one calm-moment tool
-   has been practiced (help.js). Big, icon-only, no reading required. */
+   has been practiced (help.js). Fills the remaining screen height
+   (flex: 1, centered) rather than leaving the rest of the page blank
+   under a small top-aligned row — a mostly-empty screen read as
+   broken, especially somewhere a child already in a hard moment lands.
+   Big buttons with a plain-word label under each icon, not icon-only,
+   since two tools' icons alone can look similar at a glance. */
 .tool-picker {
-  padding: 4px 20px 0;
-  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 10px 20px calc(20px + env(safe-area-inset-bottom));
 }
+.tool-picker-sprocket { width: 76px; height: 95px; }
 .tool-picker-label {
-  margin: 0 0 10px;
-  font-size: 14px;
+  margin: 0;
+  font-size: 16px;
   font-weight: 700;
   color: var(--ink);
   opacity: 0.85;
@@ -73,19 +85,31 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 18px;
 }
 .tool-picker-btn {
-  width: 60px;
-  height: 60px;
-  padding: 4px;
+  width: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   border: none;
+  background: none;
+  padding: 0;
+}
+.tool-picker-icon-circle {
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: #fffaf2;
   box-shadow: 0 6px 14px rgba(190,110,40,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.tool-picker-btn:active { transform: scale(0.92); }
-.tool-picker-icon { width: 100%; height: 100%; display: block; }
+.tool-picker-icon-circle svg { width: 100%; height: 100%; display: block; }
+.tool-picker-btn:active .tool-picker-icon-circle { transform: scale(0.92); }
+.tool-picker-caption { font-size: 13px; font-weight: 700; color: var(--ink); }
 
 /* Generic instructional card for any practiced tool other than
    breathing (which keeps its own full garden component below). */
