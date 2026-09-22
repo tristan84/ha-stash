@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Feeling Sort</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="game-sort.css" />
+</head>
+<body class="screen-body">
+<!-- Calm-moment game #3 (PLAN.md §4.2). Real drag-and-drop, not
+     tap-to-pop like Bubble Pop — faces drift down and the child picks
+     each one up and drags it into the basket with the matching
+     feeling before it reaches the bottom. A picked-up face pauses
+     where it's held (no fighting the drift while dragging) and, if
+     dropped anywhere but the right basket, simply resumes drifting —
+     never a penalty, never a fail state (Principle 2). Baskets rotate
+     through the app's ten book feelings every 6 sorts, announced with
+     a banner + read-aloud so the round change is never silent. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="games.html" class="screen-back" aria-label="Back to games">←</a>
+    <span class="screen-title-chip">Feeling Sort</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+
+  <div id="play-view" class="sort-wrap">
+    <p class="sort-intro">Pick up each face and drag it into its basket.</p>
+    <div id="sort-stage" class="sort-stage">
+      <div class="stage-bg" aria-hidden="true">
+        <div class="stage-cloud ssc1"></div>
+        <div class="stage-cloud ssc2"></div>
+      </div>
+      <div id="round-banner" class="round-banner"></div>
+      <div id="card-layer" class="card-layer"></div>
+      <div id="basket-row" class="basket-row"></div>
+      <div id="goal-jar" class="goal-jar" aria-label="Jar fills as you sort correctly">
+        <div class="jar-sprocket" id="jar-sprocket">
+          <div class="js-antenna"><span class="js-antenna-tip"></span></div>
+          <div class="js-head"><div class="js-eye left"></div><div class="js-eye right"></div></div>
+        </div>
+        <div class="jar-body">
+          <div class="jar-fill" id="jar-fill"></div>
+          <div class="jar-shine"></div>
+        </div>
+        <p class="jar-label"><span id="jar-count">0</span>/<span id="jar-goal">8</span></p>
+      </div>
+    </div>
+    <div class="sort-footer">
+      <p class="sort-tally">Sorted: <span id="tally">0</span></p>
+      <button id="btn-done" class="pill-btn quiet">I'm done</button>
+    </div>
+  </div>
+
+  <div id="done-view" class="done-view" hidden>
+    <div class="done-glow"></div>
+    <h2>Nice sorting!</h2>
+    <p id="done-summary">You sorted 0 faces.</p>
+    <button id="btn-again" class="pill-btn help">Play again</button>
+    <a href="games.html" class="pill-btn quiet">Back to games</a>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="game-sort.js"></script>
+</body>
+</html>

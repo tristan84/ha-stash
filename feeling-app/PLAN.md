@@ -78,8 +78,8 @@ vocabulary and recognition skill before it's needed in a hard moment
 see research note 01). Game content is organized by feeling and by
 body/mind effect.
 
-**Two working prototypes exist** at `spike/www/games.html` (the shelf) —
-neither locked as final content/mechanic, both real, playable, and tested:
+**Four working prototypes exist** at `spike/www/games.html` (the shelf) —
+none locked as final content/mechanic, all real, playable, and tested:
 - **Sprocket's Garden** (`game-breathe.html`, was "Breathing Buddy") —
   hold a glowing orb to grow it (breathe in), release to let it shrink on
   a guided pace (breathe out); the mechanic is unchanged from the earlier
@@ -109,6 +109,29 @@ neither locked as final content/mechanic, both real, playable, and tested:
   score or fail state either way (Principle 2): a miss just pops the
   bubble too, an untapped bubble costs nothing, and the jar goal is a
   recurring milestone, never a required finish line.
+- **Feeling Sort** (`game-sort.html`) — real drag-and-drop: faces drift
+  slowly down the play field and the child picks one up and drags it
+  into the basket labeled with the matching feeling before it reaches
+  the bottom (baskets rotate through the app's ten book feelings every
+  6 correct sorts). A picked-up face pauses exactly where it's held —
+  no fighting a moving target mid-drag — and a drop anywhere but the
+  right basket just lets it resume drifting, never a penalty. Requested
+  directly ("make more game, make them very interactive") as a genuinely
+  different interaction shape from tap-to-pop.
+- **Tool Match** (`game-tool.html`) — also drag-and-drop, but a still
+  tray instead of a falling field: a feeling is shown and the child
+  drags the matching tool onto Sprocket from four tray tiles (one
+  correct, three decoys). Uses the exact same feeling→tool pairings the
+  ten story books teach (§4.5) — Worried→breathe, Frustrated→shake,
+  Excited→wiggle, Sad→hug, Angry→stomp, Proud→pose — so this is direct
+  practice for the books' "try a tool" step, not an invented mapping. A
+  wrong drop springs the tile back to the tray with a small bounce; no
+  penalty either way.
+
+Both new games share the goal-jar pattern from Bubble Pop (fill,
+celebrate, empty, repeat) rather than a single terminal score, and were
+verified with simulated pointer-drag sequences (not just clicks) for
+both the correct-drop and wrong-drop paths before being called done.
 
 ### 4.3 "Help me" mode
 One-tap entry point for hard moments. Deliberately minimal-friction (one

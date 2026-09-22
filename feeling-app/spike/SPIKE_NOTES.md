@@ -423,6 +423,59 @@ confirmed working for a new book via the service worker (cache bumped
 to v13), and two new-book shelf links confirmed navigating to the right
 file.
 
+**2026-09-22 update 13 — two more games, real drag-and-drop**: asked to
+"make more game, make them very interactive." Both existing games
+(Sprocket's Garden, Bubble Pop) are hold or tap interactions; picked
+real drag-and-drop for both new ones since that's a meaningfully
+different, more physical interaction than either.
+
+- **Feeling Sort** (`game-sort.html/.css/.js`) — feeling-face cards
+  drift slowly down a play field (a lightweight `requestAnimationFrame`
+  loop, not a CSS keyframe animation, specifically so a card can be
+  picked up mid-drift and pause exactly where it's grabbed rather than
+  fighting a running CSS animation) and the child drags each one into
+  the basket labeled with the matching feeling. Baskets show 3 of the
+  app's ten book feelings at a time, rotating to a new random 3 every 6
+  correct sorts with a banner + read-aloud announcement. A card dropped
+  in open space just keeps drifting; dropped on the wrong basket, it
+  bounces back with a "try a different basket!" hint — never a penalty
+  (Principle 2). Shares Bubble Pop's fill-a-jar goal pattern.
+  - Bug caught before shipping, via screenshot not just "loads fine":
+    the round-rotation banner and the goal jar were both anchored
+    top-of-stage and overlapped whenever the banner's text was long
+    (a 3-feeling-name list can run long — "Sort into: Scared,
+    Embarrassed, Happy" wraps a 390px-wide banner). Fixed by moving the
+    jar down below the banner's row and giving the banner an explicit
+    right-margin reserved for the jar, rather than letting it grow
+    however wide its text needed.
+- **Tool Match** (`game-tool.html/.css/.js`) — a feeling is shown and
+  four tool tiles sit in a still tray at the bottom (one correct tool,
+  three decoys); drag the matching one onto Sprocket. Uses the same
+  six feeling→tool pairings the story books teach (Worried→breathe,
+  Frustrated→shake, Excited→wiggle, Sad→hug, Angry→stomp, Proud→pose),
+  so this is direct retrieval practice for the books' "try a tool"
+  step rather than a separate invented mapping. A correct drop pops a
+  reaction icon up from Sprocket and he does a cheer-bounce; a wrong
+  drop (or a drop that misses him entirely) springs the tile back to
+  its tray slot, no penalty either way. Also shares the fill-a-jar goal
+  pattern.
+
+Both games' core interaction is genuinely drag-based, not tap-styled-as-
+drag: pointerdown picks the element up and switches it to following the
+pointer via a live `transform: translate()`, pointerup checks overlap
+against the real drop target's current `getBoundingClientRect()`, and
+only a true release-over-target counts. Verified this with simulated
+mouse-down → mouse-move(steps) → mouse-up sequences for both the
+correct-drop and wrong-drop path in each game (not just `.click()`,
+which wouldn't exercise the drag logic at all), plus a 9-round run of
+Tool Match and a 6-sort run of Feeling Sort to confirm jar-fill/reset
+and basket-rotation over a longer session.
+
+Added matching shelf cards to `games.html` (four games now on the
+shelf) and re-ran the full app-wide sweep: 21 pages, zero console
+errors, 60fps on both new games (idle and mid-interaction), offline
+reload confirmed for both via the service worker (cache bumped to v14).
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -552,6 +605,9 @@ rather than guessing at a result I can't actually produce here.
 - `www/game-breathe.html/.css/.js` — Sprocket's Garden, the breathing
   tool (also embedded in `help.html`)
 - `www/game-match.html/.css/.js` — Bubble Pop
+- `www/game-sort.html/.css/.js` — Feeling Sort (drag faces into baskets)
+- `www/game-tool.html/.css/.js` — Tool Match (drag the right tool onto
+  Sprocket)
 - `www/diary.html/.css/.js` — feeling diary, with optional typed/voice
   reflection notes per entry
 - `www/help.html/.css/.js` — Help Me (embeds Sprocket's Garden)

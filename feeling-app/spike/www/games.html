@@ -10,7 +10,7 @@
 </head>
 <body class="screen-body">
 <!-- Game shelf: the home screen's "Play a game" button (PLAN.md §4.2)
-     lands here. Two real games now exist — see SPIKE_NOTES.md. -->
+     lands here. Four real games now exist — see SPIKE_NOTES.md. -->
 <main class="screen-main">
   <header class="screen-header">
     <a href="index.html" class="screen-back" aria-label="Back home">←</a>
@@ -69,6 +69,50 @@
         <div class="shelf-card-body">
           <p class="shelf-card-title">Bubble Pop</p>
           <p class="shelf-card-sub">catch the right feeling</p>
+        </div>
+      </a>
+
+      <a class="shelf-card" href="game-sort.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <defs>
+            <linearGradient id="cardSky3" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+            </linearGradient>
+          </defs>
+          <rect width="200" height="150" fill="url(#cardSky3)" />
+          <ellipse cx="170" cy="20" rx="16" ry="6" fill="#fffaf2" opacity="0.9" />
+          <text x="60" y="60" font-size="20" text-anchor="middle">😢</text>
+          <text x="110" y="40" font-size="18" text-anchor="middle">🙌</text>
+          <rect x="30" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
+          <rect x="79" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
+          <rect x="128" y="112" width="42" height="30" rx="6" fill="#e6c9a0" />
+        </svg>
+        <span class="shelf-card-play" aria-hidden="true">🧺</span>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Feeling Sort</p>
+          <p class="shelf-card-sub">drag each face to its basket</p>
+        </div>
+      </a>
+
+      <a class="shelf-card" href="game-tool.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <defs>
+            <linearGradient id="cardSky4" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+            </linearGradient>
+          </defs>
+          <rect width="200" height="150" fill="url(#cardSky4)" />
+          <path d="M0,120 Q100,102 200,116 V150 H0 Z" fill="#dcea97" opacity="0.6" />
+          <circle cx="100" cy="78" r="30" fill="#ffb15e" />
+          <rect x="84" y="66" width="32" height="16" rx="8" fill="#4a2e1c" />
+          <circle cx="92" cy="74" r="4" fill="#ffedc9" /><circle cx="108" cy="74" r="4" fill="#ffedc9" />
+          <text x="150" y="45" font-size="22" text-anchor="middle">🌬️</text>
+          <text x="45" y="110" font-size="18" text-anchor="middle">🫂</text>
+        </svg>
+        <span class="shelf-card-play" aria-hidden="true">🧰</span>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Tool Match</p>
+          <p class="shelf-card-sub">drag the right tool to Sprocket</p>
         </div>
       </a>
 
