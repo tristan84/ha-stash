@@ -7,7 +7,7 @@
 shader_type spatial;
 render_mode cull_front, unshaded;
 
-uniform float outline_width : hint_range(0.0, 0.05) = 0.012;
+uniform float outline_width : hint_range(0.0, 0.05) = 0.007;
 uniform vec4 outline_color : source_color = vec4(0.16, 0.09, 0.05, 1.0);
 
 void vertex() {

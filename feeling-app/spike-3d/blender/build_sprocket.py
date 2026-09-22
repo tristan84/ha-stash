@@ -2,18 +2,30 @@
 
 Run via: blender --background --python build_sprocket.py
 
-Keeps the same silhouette as the 2D character (academy-icons.js /
-style.css): a big rounded head with a dark lit visor, two ear pods, a
-top antenna with a glowing tip, a rounded body with a glowing core, and
-stubby arms/legs. Built from simple primitives deliberately — low
-polygon counts and clean shapes are what a real-time toon/cel shader
-needs to read well, and it's what a mobile GPU on a lower-end Android
-tablet (the actual target hardware per research/05) can afford at 60fps
-with several of these on screen at once.
+Round 3: full redesign matching a specific reference image the user
+picked out and said to work from directly — a "kid astronaut" style
+robot: a helmet (not a bare robot head) with an actual peach-toned face
+visible through the opening, twin antennae with gold tips, red ear
+pods, a red crest on the helmet crown, a blue-grey body with orange
+shoulder pauldrons and a chest dial, a red hip panel, and jointed limbs
+with alternating orange bands at the elbow/knee and a matching
+color-blocked hand/boot. Previous rounds kept Sprocket's existing
+orange-monochrome 2D silhouette and iterated color/eye-size on top of
+it; this round replaces that silhouette with the reference's, since the
+user's feedback ("not kiddie/colourful"/"rough sketch") was about the
+whole design, not a detail on top of it.
+
+Built from simple primitives deliberately — low polygon counts are what
+a real-time toon/cel shader needs to read well, and what a mobile GPU on
+a lower-end Android tablet (the actual target hardware per research/05)
+can afford at 60fps with several of these on screen. Every limb segment
+is deliberately sized to overlap its neighbor (documented inline at each
+join) — floating disconnected parts with visible gaps between them was
+the single biggest "looks like an unassembled sketch" complaint on the
+previous round.
 
 Geometry is modeled in Blender units == the app's existing CSS pixel
-scale / 100 (so 1 Blender unit == roughly the character's own head
-radius), and exported to glTF for Godot to import directly — glTF
+scale / 100, and exported to glTF for Godot to import directly — glTF
 because it's Godot's best-supported interchange format (PBR material
 round-trip, no importer plugin needed).
 """
@@ -35,10 +47,9 @@ def clear_scene():
 
 def srgb_to_linear(c):
     """Node socket `default_value` colors are linear when set from
-    Python (unlike the color-managed sRGB the UI picker shows), so the
-    app's existing hex palette has to be converted or every material
-    renders washed out / too pale — this was the actual cause of the
-    first two preview renders looking bleached rather than vivid."""
+    Python (unlike the color-managed sRGB the UI picker shows), so a
+    hex-derived palette has to be converted or every material renders
+    washed out / too pale."""
     def ch(v):
         return v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4
     return tuple(ch(v) for v in c)
@@ -62,54 +73,46 @@ def shade_smooth(obj):
         poly.use_smooth = True
 
 
-# --- Palette v2: redesigned after the first 3D pass read as a flat
-# monochrome-orange blob rather than a "kiddie/colourful" cartoon
-# robot. Reference pulled from Baymax (soft huggable roundness — kept,
-# see geometry below), WALL-E (giant expressive eyes carry all the
-# character's emotion — the single biggest fix here, eyes roughly 45%
-# bigger and the visor built around them rather than the other way
-# round) and the general "2-3 contrasting bright colors, not one hue"
-# color-blocking every actual kids' robot toy/character uses (Rescue
-# Bots, Rosie the Robot, BMO): body stays warm orange for brand
-# continuity with the 2D app, but the visor is now a bright glowing
-# teal "screen" instead of a near-black camera lens, the core/antenna
-# match that teal as a genuine second hue rather than a same-family
-# gold, and hands/feet/cheeks get their own distinct pops instead of
-# every part being a shade of the same orange. -----------------------
-BODY_COLOR = (1.0, 0.46, 0.16)       # #ff752a — punchier, more saturated orange
-VISOR_COLOR = (0.11, 0.87, 0.80)     # #1ddece — bright teal "lit screen", not a dark lens
-EYE_COLOR = (1.0, 1.0, 1.0)          # pure white, max contrast against the teal visor
-PUPIL_COLOR = (0.09, 0.1, 0.13)      # near-black pupil dot for life/focus
-CHEEK_COLOR = (1.0, 0.29, 0.55)      # #ff4a8c — vivid hot pink, not muted salmon
-CORE_COLOR = (0.15, 0.92, 0.85)      # teal, matches the visor — a real second hue, not gold-on-orange
-ANTENNA_TIP = (1.0, 0.82, 0.15)      # #ffd126 — bright yellow pop, third accent color
-FOOT_COLOR = (1.0, 0.82, 0.15)       # matches antenna tip — yellow hands/feet color-block
+# --- Palette v3: matches the reference image directly — a soft
+# blue-grey "spacesuit" base, dark navy trim/joint bands, and two warm
+# accents (red, orange) plus yellow boots, with an actual peach face
+# instead of a screen/visor. -----------------------------------------
+BASE_BLUE = (0.54, 0.67, 0.70)        # darker/more saturated than the reference's flat hex — a pale color like #A8C2C7 clips to near-white under any real lighting, so it needs headroom baked in
+TRIM_DARK = (0.14, 0.18, 0.23)        # collar, elbow/ankle-adjacent trim
+ACCENT_RED = (0.85, 0.33, 0.27)       # #D95445 — ear pods, hands, hip panel, crest
+ACCENT_ORANGE = (0.95, 0.62, 0.12)    # #F29E1F — shoulders, chest dial, knee/ankle bands
+ACCENT_YELLOW = (0.97, 0.80, 0.12)    # #F7CC1F — boots, antenna tips
+FACE_SKIN = (0.95, 0.80, 0.64)        # peach face visible through the helmet
+EYE_WHITE = (1.0, 1.0, 1.0)
+EYE_BLUE = (0.20, 0.55, 0.82)
+PUPIL_COLOR = (0.08, 0.09, 0.11)
+CHEEK_COLOR = (0.98, 0.55, 0.52)      # soft coral-pink
 
-mat_body = None
-mat_visor = None
-mat_eye = None
+mat_base = None
+mat_trim = None
+mat_red = None
+mat_orange = None
+mat_yellow = None
+mat_skin = None
+mat_eye_white = None
+mat_eye_blue = None
 mat_pupil = None
 mat_cheek = None
-mat_core = None
-mat_core_ring = None
-mat_antenna_tip = None
-mat_foot = None
 
 
 def build_materials():
-    global mat_body, mat_visor, mat_eye, mat_pupil, mat_cheek, mat_core, mat_core_ring, mat_antenna_tip, mat_foot
-    mat_body = make_material('SprocketBody', BODY_COLOR, roughness=0.4)
-    mat_visor = make_material('SprocketVisor', VISOR_COLOR, emission_color=VISOR_COLOR, emission_strength=0.35, roughness=0.2)
-    mat_eye = make_material('SprocketEye', EYE_COLOR, emission_color=EYE_COLOR, emission_strength=0.5, roughness=0.15)
-    mat_pupil = make_material('SprocketPupil', PUPIL_COLOR, roughness=0.3)
-    mat_cheek = make_material('SprocketCheek', CHEEK_COLOR, roughness=0.6)
-    mat_core = make_material('SprocketCore', (1.0, 0.97, 0.89), emission_color=(1.0, 0.97, 0.89), emission_strength=1.6, roughness=0.15)
-    # Outer ring teal, inner disc bright cream — same white-hot-center-
-    # fading-to-accent-color arrangement as the 2D app's acadCoreGrad,
-    # just with the accent swapped from gold to the new teal hue.
-    mat_core_ring = make_material('SprocketCoreRing', CORE_COLOR, emission_color=CORE_COLOR, emission_strength=0.9, roughness=0.3)
-    mat_antenna_tip = make_material('SprocketAntennaTip', ANTENNA_TIP, emission_color=ANTENNA_TIP, emission_strength=2.2, roughness=0.2)
-    mat_foot = make_material('SprocketFoot', FOOT_COLOR, roughness=0.5)
+    global mat_base, mat_trim, mat_red, mat_orange, mat_yellow, mat_skin
+    global mat_eye_white, mat_eye_blue, mat_pupil, mat_cheek
+    mat_base = make_material('MatBase', BASE_BLUE, roughness=0.4)
+    mat_trim = make_material('MatTrim', TRIM_DARK, roughness=0.35)
+    mat_red = make_material('MatRed', ACCENT_RED, roughness=0.4)
+    mat_orange = make_material('MatOrange', ACCENT_ORANGE, roughness=0.35)
+    mat_yellow = make_material('MatYellow', ACCENT_YELLOW, roughness=0.35)
+    mat_skin = make_material('MatSkin', FACE_SKIN, roughness=0.5)
+    mat_eye_white = make_material('MatEyeWhite', EYE_WHITE, roughness=0.2)
+    mat_eye_blue = make_material('MatEyeBlue', EYE_BLUE, emission_color=EYE_BLUE, emission_strength=0.25, roughness=0.15)
+    mat_pupil = make_material('MatPupil', PUPIL_COLOR, roughness=0.3)
+    mat_cheek = make_material('MatCheek', CHEEK_COLOR, roughness=0.6)
 
 
 def add_uv_sphere(name, radius, loc, mat, segments=24, rings=16, scale=(1, 1, 1)):
@@ -133,21 +136,9 @@ def add_cylinder(name, radius, depth, loc, mat, rot=(0, 0, 0), vertices=20, scal
     return obj
 
 
-def add_cube(name, size, loc, mat, rot=(0, 0, 0)):
-    bpy.ops.mesh.primitive_cube_add(size=size, location=loc)
-    obj = C.active_object
-    obj.name = name
-    obj.rotation_euler = rot
-    obj.data.materials.append(mat)
-    bpy.ops.object.shade_smooth()
-    for poly in obj.data.polygons:
-        poly.use_smooth = False
-    return obj
-
-
 def add_rounded_box(name, size, loc, mat, bevel=0.15, segments=3, rot=(0, 0, 0)):
-    """Cube with a bevel modifier applied (destructively) for the soft
-    rounded-rect look the 2D character's body/collar/feet already use."""
+    """Cube with a bevel modifier applied (destructively) for a soft
+    rounded-rect look."""
     bpy.ops.mesh.primitive_cube_add(size=1, location=loc)
     obj = C.active_object
     obj.name = name
@@ -165,48 +156,124 @@ def add_rounded_box(name, size, loc, mat, bevel=0.15, segments=3, rot=(0, 0, 0))
     return obj
 
 
+def add_antenna(root, x_sign):
+    """Angled rod + gold tip, symmetric left/right — the reference has
+    two antennae, not one central one."""
+    bx, by, bz = x_sign * 0.5, 0.02, 2.36
+    tx, ty, tz = x_sign * 0.74, 0.02, 2.76
+    mx, my, mz = (bx + tx) / 2, (by + ty) / 2, (bz + tz) / 2
+    dx, dz = tx - bx, tz - bz
+    length = math.sqrt(dx * dx + dz * dz)
+    angle = math.atan2(dx, dz)
+    side = 'L' if x_sign < 0 else 'R'
+    rod = add_cylinder(f'AntennaRod{side}', 0.026, length, (mx, my, mz), mat_base, rot=(0, angle, 0), vertices=8)
+    rod.parent = root
+    tip = add_uv_sphere(f'AntennaTip{side}', 0.09, (tx, ty, tz), mat_yellow, segments=12, rings=8)
+    tip.parent = root
+
+
+def add_arm(root, x_sign):
+    """Shoulder pauldron -> upper arm -> elbow band -> forearm -> hand,
+    each segment sized to overlap the next (see module docstring) so
+    the limb reads as one continuous connected form instead of floating
+    separate blobs."""
+    side = 'L' if x_sign < 0 else 'R'
+    ax = x_sign * 0.78
+
+    pauldron = add_uv_sphere(f'Pauldron{side}', 0.24, (x_sign * 0.75, -0.1, 0.38), mat_orange,
+                              segments=14, rings=10, scale=(1, 1, 0.8))
+    pauldron.parent = root
+
+    upper = add_uv_sphere(f'UpperArm{side}', 0.24, (ax, 0, 0.28), mat_base,
+                           segments=14, rings=10, scale=(0.85, 0.85, 1.3))
+    upper.parent = root
+
+    elbow = add_cylinder(f'Elbow{side}', 0.19, 0.12, (ax, 0, -0.06), mat_trim, rot=(math.radians(90), 0, 0), vertices=14)
+    elbow.parent = root
+
+    forearm = add_uv_sphere(f'Forearm{side}', 0.20, (ax * 1.02, 0, -0.32), mat_base,
+                             segments=14, rings=10, scale=(0.8, 0.8, 1.2))
+    forearm.parent = root
+
+    hand = add_uv_sphere(f'Hand{side}', 0.17, (ax * 1.02, -0.02, -0.58), mat_red, segments=14, rings=10)
+    hand.parent = root
+
+
+def add_leg(root, x_sign):
+    """Thigh -> knee band -> shin -> ankle band -> boot, same
+    overlap-by-construction approach as the arms."""
+    side = 'L' if x_sign < 0 else 'R'
+    lx = x_sign * 0.4
+
+    thigh = add_rounded_box(f'Thigh{side}', (0.32, 0.32, 0.34), (lx, 0, -0.55), mat_base, bevel=0.12, segments=3)
+    thigh.parent = root
+
+    knee = add_rounded_box(f'Knee{side}', (0.34, 0.34, 0.1), (lx, 0, -0.74), mat_orange, bevel=0.04, segments=3)
+    knee.parent = root
+
+    shin = add_rounded_box(f'Shin{side}', (0.30, 0.30, 0.30), (lx, 0, -0.93), mat_base, bevel=0.1, segments=3)
+    shin.parent = root
+
+    ankle = add_rounded_box(f'Ankle{side}', (0.32, 0.34, 0.08), (lx, 0, -1.07), mat_orange, bevel=0.03, segments=3)
+    ankle.parent = root
+
+    boot = add_rounded_box(f'Boot{side}', (0.4, 0.55, 0.18), (lx, -0.08, -1.18), mat_yellow, bevel=0.07, segments=3)
+    boot.parent = root
+
+
 def build_sprocket():
     build_materials()
 
     root = D.objects.new('Sprocket', None)
     C.collection.objects.link(root)
 
-    # Head — big rounded sphere, flattened very slightly front-to-back
-    # to leave room for the visor to read as inset rather than painted on.
-    head = add_uv_sphere('Head', 1.0, (0, 0, 1.55), mat_body, scale=(1.0, 0.94, 1.0))
-    head.parent = root
+    # Helmet — same big rounded-sphere silhouette as previous rounds,
+    # now read as a literal astronaut-style helmet (base-blue shell)
+    # rather than the character's bare head.
+    helmet = add_uv_sphere('Helmet', 1.0, (0, 0, 1.55), mat_base, scale=(1.0, 0.92, 1.0))
+    helmet.parent = root
 
-    # Visor — bright glowing teal "screen" (not a dark camera lens),
-    # sized around the bigger eyes below rather than the other way
-    # round: WALL-E's giant expressive eyes are the single biggest
-    # "reads as friendly" lever of any reference pulled for this pass,
-    # so the eyes drive the layout here.
-    visor = add_rounded_box('Visor', (0.88, 0.3, 0.56), (0, -0.86, 1.56), mat_visor, bevel=0.2, segments=4)
-    visor.parent = root
+    # Dark trim frame around the face opening, sitting just behind the
+    # face plate so a thin dark border shows at its edge (matches the
+    # reference's helmet-opening ring) — bigger than the face plate and
+    # placed slightly further back (less negative Y).
+    trim_frame = add_rounded_box('FaceTrim', (0.96, 0.26, 0.64), (0, -0.78, 1.56), mat_trim, bevel=0.26, segments=6)
+    trim_frame.parent = root
 
-    eye_l = add_uv_sphere('EyeLeft', 0.185, (-0.29, -1.02, 1.62), mat_eye, segments=16, rings=12)
-    eye_l.parent = root
-    eye_r = add_uv_sphere('EyeRight', 0.185, (0.29, -1.02, 1.62), mat_eye, segments=16, rings=12)
-    eye_r.parent = root
+    # Face plate — peach skin, not a screen: the single biggest change
+    # from the last two rounds, matching the reference's "kid wearing a
+    # space helmet" concept instead of "the head is a dark-visored robot
+    # face."
+    face = add_rounded_box('Face', (0.86, 0.3, 0.56), (0, -0.84, 1.56), mat_skin, bevel=0.24, segments=6)
+    face.parent = root
 
-    # Small dark pupils, offset slightly down-and-forward on each eye —
-    # gives the big white eyes a focal point/gaze instead of reading as
-    # blank glowing balls (also matches Baymax's simple two-dot face).
-    pupil_l = add_uv_sphere('PupilLeft', 0.075, (-0.285, -1.14, 1.6), mat_pupil, segments=12, rings=8)
-    pupil_l.parent = root
-    pupil_r = add_uv_sphere('PupilRight', 0.075, (0.285, -1.14, 1.6), mat_pupil, segments=12, rings=8)
-    pupil_r.parent = root
+    # Eyes — layered white/iris/pupil/highlight spheres, each poking
+    # slightly further forward than the last so they don't z-fight.
+    for x_sign in (-1, 1):
+        side = 'L' if x_sign < 0 else 'R'
+        ex = x_sign * 0.27
+        white = add_uv_sphere(f'EyeWhite{side}', 0.20, (ex, -1.05, 1.66), mat_eye_white, segments=16, rings=12)
+        white.parent = root
+        iris = add_uv_sphere(f'EyeIris{side}', 0.125, (ex, -1.16, 1.66), mat_eye_blue, segments=14, rings=10)
+        iris.parent = root
+        pupil = add_uv_sphere(f'Pupil{side}', 0.06, (ex, -1.24, 1.66), mat_pupil, segments=12, rings=8)
+        pupil.parent = root
+        highlight = add_uv_sphere(f'EyeHighlight{side}', 0.028, (ex - 0.04, -1.27, 1.71), mat_eye_white, segments=8, rings=6)
+        highlight.parent = root
+
+    # Tiny nose highlight, centered below the eyes.
+    nose = add_uv_sphere('Nose', 0.026, (0, -1.10, 1.44), mat_eye_white, segments=8, rings=6)
+    nose.parent = root
 
     # Smile — a beveled Bezier arc (same idea as the 2D app's
-    # `stroke-linecap="round"` smile path), not a full torus ring: a
-    # full ring reads as a shocked "O", not a smile.
+    # `stroke-linecap="round"` smile path).
     curve = D.curves.new('MouthCurve', type='CURVE')
     curve.dimensions = '3D'
-    curve.bevel_depth = 0.032
+    curve.bevel_depth = 0.03
     curve.bevel_resolution = 4
     spline = curve.splines.new('BEZIER')
     spline.bezier_points.add(2)
-    pts = [(-0.2, -0.96, 1.3), (0, -1.02, 1.22), (0.2, -0.96, 1.3)]
+    pts = [(-0.18, -1.0, 1.30), (0, -1.06, 1.23), (0.18, -1.0, 1.30)]
     for i, p in enumerate(pts):
         bp = spline.bezier_points[i]
         bp.co = p
@@ -219,53 +286,64 @@ def build_sprocket():
     C.view_layer.objects.active = mouth_obj
     bpy.ops.object.convert(target='MESH')
     mouth = C.active_object
-    mouth.data.materials.append(mat_eye)
+    mouth.data.materials.append(mat_trim)
     mouth.parent = root
 
-    cheek_l = add_uv_sphere('CheekLeft', 0.14, (-0.66, -0.74, 1.2), mat_cheek, segments=12, rings=8, scale=(1, 0.6, 0.7))
+    cheek_l = add_uv_sphere('CheekLeft', 0.11, (-0.38, -1.0, 1.16), mat_cheek, segments=12, rings=8, scale=(1, 0.55, 0.75))
     cheek_l.parent = root
-    cheek_r = add_uv_sphere('CheekRight', 0.14, (0.66, -0.74, 1.2), mat_cheek, segments=12, rings=8, scale=(1, 0.6, 0.7))
+    cheek_r = add_uv_sphere('CheekRight', 0.11, (0.38, -1.0, 1.16), mat_cheek, segments=12, rings=8, scale=(1, 0.55, 0.75))
     cheek_r.parent = root
 
-    ear_l = add_uv_sphere('EarLeft', 0.24, (-1.05, 0, 1.5), mat_body, segments=16, rings=12, scale=(0.7, 1, 1.3))
+    # Ear pods — red rounded "pods" on the helmet sides (matches the
+    # reference's larger red ear modules; previous rounds used small
+    # body-colored ovals here).
+    ear_l = add_rounded_box('EarPodLeft', (0.22, 0.22, 0.36), (-1.02, 0, 1.5), mat_red, bevel=0.09, segments=4)
     ear_l.parent = root
-    ear_r = add_uv_sphere('EarRight', 0.24, (1.05, 0, 1.5), mat_body, segments=16, rings=12, scale=(0.7, 1, 1.3))
+    ear_r = add_rounded_box('EarPodRight', (0.22, 0.22, 0.36), (1.02, 0, 1.5), mat_red, bevel=0.09, segments=4)
     ear_r.parent = root
 
-    antenna = add_cylinder('Antenna', 0.035, 0.5, (0, 0, 2.55), mat_body, vertices=10)
-    antenna.parent = root
-    antenna_tip = add_uv_sphere('AntennaTip', 0.11, (0, 0, 2.85), mat_antenna_tip, segments=14, rings=10)
-    antenna_tip.parent = root
+    # Red crest on the helmet crown.
+    crest = add_rounded_box('Crest', (0.16, 0.17, 0.26), (0, 0, 2.56), mat_red, bevel=0.06, segments=3)
+    crest.parent = root
 
-    collar = add_rounded_box('Collar', (0.55, 0.32, 0.16), (0, 0, 0.72), mat_foot, bevel=0.06, segments=3)
-    collar.parent = root
+    add_antenna(root, -1)
+    add_antenna(root, 1)
 
-    body = add_rounded_box('Body', (1.35, 0.95, 0.85), (0, 0, 0.02), mat_body, bevel=0.35, segments=4)
+    # Neck — a sphere's cross-section shrinks to a literal point at its
+    # pole, so the helmet (a sphere) tapers to zero width right where
+    # it meets the body; the original small flat collar block sat above
+    # that taper and didn't reach down far enough, leaving a visible gap
+    # between helmet and shoulders. A wider, taller cylinder spanning
+    # well into both the helmet's lower curve and the body's top
+    # closes it solidly (also reads as the reference's dark collar
+    # ring, just doing double duty as the structural connector).
+    neck = add_cylinder('Neck', 0.42, 0.42, (0, 0, 0.58), mat_trim, vertices=20)
+    neck.parent = root
+
+    body = add_rounded_box('Body', (1.35, 0.95, 0.85), (0, 0, 0.02), mat_base, bevel=0.35, segments=4)
     body.parent = root
 
-    core_ring = add_uv_sphere('CoreRing', 0.42, (0, -0.62, 0.06), mat_core_ring, segments=20, rings=14, scale=(1, 0.35, 1))
-    core_ring.parent = root
-    core = add_uv_sphere('Core', 0.3, (0, -0.7, 0.06), mat_core, segments=20, rings=14, scale=(1, 0.35, 1))
-    core.parent = root
+    # Chest dial — a small flat control-panel detail instead of the
+    # previous rounds' big glowing core, matching the reference's
+    # concentric-circle chest button.
+    dial_outer = add_uv_sphere('DialOuter', 0.22, (0, -0.60, 0.16), mat_orange, segments=18, rings=12, scale=(1, 0.3, 1))
+    dial_outer.parent = root
+    dial_inner = add_uv_sphere('DialInner', 0.12, (0, -0.66, 0.16), mat_trim, segments=16, rings=10, scale=(1, 0.3, 1))
+    dial_inner.parent = root
+    dial_button = add_uv_sphere('DialButton', 0.075, (0, -0.62, -0.14), mat_orange, segments=14, rings=8, scale=(1, 0.3, 1))
+    dial_button.parent = root
 
-    # Hands share the yellow accent with the feet/collar/antenna tip —
-    # matching the classic toy-robot color-blocking (2-3 contrasting
-    # colors, hands and feet usually the same accent) rather than
-    # every limb being the same shade as the body.
-    arm_l = add_uv_sphere('ArmLeft', 0.26, (-1.45, 0, 0.15), mat_foot, segments=14, rings=10, scale=(0.8, 0.9, 1.6))
-    arm_l.parent = root
-    arm_r = add_uv_sphere('ArmRight', 0.26, (1.45, 0, 0.15), mat_foot, segments=14, rings=10, scale=(0.8, 0.9, 1.6))
-    arm_r.parent = root
+    # Waist stripe and hip panel — the reference's two-tone lower torso
+    # (orange band, then a red panel below it before the legs begin).
+    waist = add_rounded_box('WaistStripe', (1.4, 1.0, 0.22), (0, 0, -0.22), mat_orange, bevel=0.1, segments=3)
+    waist.parent = root
+    hip = add_rounded_box('HipPanel', (1.05, 0.9, 0.28), (0, 0, -0.30), mat_red, bevel=0.14, segments=3)
+    hip.parent = root
 
-    leg_l = add_rounded_box('LegLeft', (0.34, 0.34, 0.55), (-0.42, 0, -0.7), mat_body, bevel=0.12, segments=3)
-    leg_l.parent = root
-    leg_r = add_rounded_box('LegRight', (0.34, 0.34, 0.55), (0.42, 0, -0.7), mat_body, bevel=0.12, segments=3)
-    leg_r.parent = root
-
-    foot_l = add_rounded_box('FootLeft', (0.4, 0.55, 0.16), (-0.42, -0.08, -1.02), mat_foot, bevel=0.06, segments=3)
-    foot_l.parent = root
-    foot_r = add_rounded_box('FootRight', (0.4, 0.55, 0.16), (0.42, -0.08, -1.02), mat_foot, bevel=0.06, segments=3)
-    foot_r.parent = root
+    add_arm(root, -1)
+    add_arm(root, 1)
+    add_leg(root, -1)
+    add_leg(root, 1)
 
     return root
 
@@ -275,7 +353,7 @@ if __name__ == '__main__':
     build_sprocket()
 
     # Ground plane for a preview render's shadow catcher.
-    bpy.ops.mesh.primitive_plane_add(size=20, location=(0, 0, -1.02))
+    bpy.ops.mesh.primitive_plane_add(size=20, location=(0, 0, -1.27))
     ground = C.active_object
     ground.name = 'Ground'
     ground_mat = make_material('Ground', (0.98, 0.88, 0.75), roughness=0.9)

@@ -9,6 +9,7 @@ func _ready() -> void:
 	_build_environment()
 	_build_lights()
 	_build_camera()
+	_build_ground()
 	var model := _load_model()
 	add_child(model)
 	_apply_toon_materials(model)
@@ -37,7 +38,7 @@ func _build_environment() -> void:
 	env.background_color = Color(0.996, 0.851, 0.71).srgb_to_linear()
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color(0.996, 0.851, 0.71).srgb_to_linear()
-	env.ambient_light_energy = 0.12
+	env.ambient_light_energy = 0.08
 	# Glow/bloom kept off for now: even heavily constrained (2 mip
 	# levels, high threshold) it still washed the whole canvas toward
 	# white rather than a tight halo around emissive parts — needs
@@ -60,7 +61,7 @@ func _build_environment() -> void:
 func _build_lights() -> void:
 	var key := DirectionalLight3D.new()
 	key.rotation_degrees = Vector3(-48, -40, 0)
-	key.light_energy = 0.5
+	key.light_energy = 0.34
 	key.light_color = Color(1.0, 0.97, 0.9).srgb_to_linear()
 	key.shadow_enabled = true
 	add_child(key)
@@ -70,14 +71,14 @@ func _build_lights() -> void:
 	# highlight streaks across the face instead of one clean one.
 	var fill := DirectionalLight3D.new()
 	fill.rotation_degrees = Vector3(-62, 132, 0)
-	fill.light_energy = 0.18
+	fill.light_energy = 0.12
 	fill.light_color = Color(0.85, 0.88, 1.0).srgb_to_linear()
 	fill.light_specular = 0.0
 	add_child(fill)
 
 	var rim := DirectionalLight3D.new()
 	rim.rotation_degrees = Vector3(-115, 180, 0)
-	rim.light_energy = 0.32
+	rim.light_energy = 0.22
 	rim.light_color = Color(1.0, 0.85, 0.65).srgb_to_linear()
 	rim.light_specular = 0.0
 	add_child(rim)
@@ -92,9 +93,33 @@ func _build_camera() -> void:
 	cam.current = true
 
 
+func _build_ground() -> void:
+	# The first two renders had the character floating in pure void
+	# against a flat background with no contact shadow — part of why
+	# they read as an unfinished test render rather than a scene. A
+	# simple ground plane catching the key light's shadow grounds it.
+	var mesh_inst := MeshInstance3D.new()
+	var plane := PlaneMesh.new()
+	plane.size = Vector2(12, 12)
+	mesh_inst.mesh = plane
+	mesh_inst.position = Vector3(0, -1.28, 0)
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.99, 0.90, 0.79).srgb_to_linear()
+	mat.roughness = 0.9
+	mesh_inst.set_surface_override_material(0, mat)
+	add_child(mesh_inst)
+
+
 func _load_model() -> Node3D:
 	var packed: PackedScene = load("res://models/sprocket.glb")
 	return packed.instantiate()
+
+
+# Tiny detail parts (pupils, eye sparkle, nose dot) get their own
+# outline pass skipped — at their scale a same-width outline as the
+# major forms reads as a thick scribbled border rather than a clean
+# accent, which was contributing to the "rough sketch" look.
+const NO_OUTLINE_PARTS = ["Pupil", "EyeHighlight", "Nose"]
 
 
 func _apply_toon_materials(node: Node) -> void:
@@ -102,6 +127,10 @@ func _apply_toon_materials(node: Node) -> void:
 		var mesh_inst := node as MeshInstance3D
 		var mesh := mesh_inst.mesh
 		if mesh:
+			var skip_outline := false
+			for part_name in NO_OUTLINE_PARTS:
+				if mesh_inst.name.begins_with(part_name):
+					skip_outline = true
 			for i in mesh.get_surface_count():
 				var orig := mesh_inst.get_active_material(i)
 				var shader_mat := ShaderMaterial.new()
@@ -126,9 +155,10 @@ func _apply_toon_materials(node: Node) -> void:
 				shader_mat.set_shader_parameter("emission_strength", emission_energy * 0.3)
 				shader_mat.set_shader_parameter("roughness_value", max(rough, 0.45))
 
-				var outline_mat := ShaderMaterial.new()
-				outline_mat.shader = load("res://shaders/outline.gdshader")
-				shader_mat.next_pass = outline_mat
+				if not skip_outline:
+					var outline_mat := ShaderMaterial.new()
+					outline_mat.shader = load("res://shaders/outline.gdshader")
+					shader_mat.next_pass = outline_mat
 
 				mesh_inst.set_surface_override_material(i, shader_mat)
 	for child in node.get_children():

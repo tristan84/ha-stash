@@ -170,6 +170,84 @@ re-tuning). New result: `godot/sprocket_3d_proof.png` (overwrites the
 round-1 image — round 1's version is still in git history if needed
 for comparison).
 
+## Round 3 — full redesign from a user-picked reference image
+
+Round 2 still wasn't right: "not good quality... looks like a rough
+sketch." Asked to look at cartoon robots on Google Images for
+reference — round 1's text-only search results turned out to be close
+to useless for a visual question, so this time downloaded and actually
+viewed reference images (Baymax, WALL-E via their Wikipedia infoboxes)
+before touching the model. That got round 2's color/eye-size fixes but
+didn't fix the "rough sketch" complaint, because the real problem
+wasn't color or eye size — three floating disconnected arm-blobs with
+a visible ~0.57-unit gap to the body, a flat sticker-like visor, and
+zero anti-aliasing on the outline pass. Diagnosed each by re-viewing
+the rendered image closely rather than guessing.
+
+Then the user supplied their own reference image directly and said
+"work from this" — a specific vector-style "kid astronaut" robot
+design (peach face visible through an open helmet, twin antennae with
+gold tips, red ear pods, a blue-grey body/limb base with orange
+shoulder pauldrons and a chest dial, a red hip panel, jointed
+limbs with alternating orange bands, red hands, yellow boots). This
+replaced round 1/2's approach of keeping Sprocket's existing orange
+2D silhouette and iterating on top of it — the feedback was about the
+whole design, not a detail, so `blender/build_sprocket.py` was rebuilt
+close to 1:1 against that reference rather than patched again:
+- **Helmet + face instead of head + visor.** The previous rounds' dark
+  or glowing "screen" is gone; there's now an actual peach face plate
+  (with a dark trim frame around its edge, matching the reference's
+  helmet-opening ring) behind a big blue-grey helmet shell.
+- **Layered eyes** (white sclera sphere → blue iris → black pupil →
+  small white highlight, each poking slightly further forward than the
+  last) instead of a flat white sphere with a black dot painted near
+  its surface.
+- **Twin antennae**, not one central antenna, each an angled rod with
+  a gold ball tip.
+- **Jointed limbs.** Arms and legs are now built as explicit chains —
+  shoulder pauldron → upper arm → elbow band → forearm → hand; thigh →
+  knee band → shin → ankle band → boot — with each segment's extent
+  computed to overlap the next by construction (documented inline in
+  `add_arm()`/`add_leg()`), rather than single blob shapes.
+- **Real four-color-block palette**: blue-grey base, dark navy
+  trim/joints, red accent (ears, hands, hip panel, crest), orange
+  accent (shoulders, chest dial, knee/ankle bands), yellow (boots,
+  antenna tips) — matching the reference exactly rather than
+  inventing a new scheme.
+
+**The actual root cause of "rough sketch," found by inspecting the
+render pixel-by-pixel instead of re-guessing at color theory:** the
+arms were positioned with a large gap to the body (`x=1.45` against a
+body half-width of `0.675` — a 0.57-unit floating gap), which reads as
+an unassembled paper-doll sketch far more than any color or shading
+choice does. Fixed by pulling every limb segment's position in until
+it provably overlaps its neighbor (checked by computing each part's
+bounding range by hand before touching the render, not just eyeballing
+it after). A second, subtler version of the same mistake appeared
+after the redesign: the helmet (a sphere) tapers to a literal zero-
+width point at its bottom pole, and the original small flat collar
+block sat entirely above that taper — geometrically "touching" by the
+numbers, but visually a gap, because there was nothing but a
+vanishing point bridging helmet and shoulders. Fixed with a wider,
+taller neck cylinder reaching well into both the helmet's lower curve
+(where it's actually wide) and the body's top.
+
+Also fixed for overall polish: enabled MSAA + screen-space AA in
+`project.godot` (the previous renders' jagged, aliased outline edges
+were themselves part of what read as "sketch"-y), skipped the outline
+pass entirely on tiny detail parts (pupils, eye highlights, nose —
+a same-width outline on something that small reads as a scribble, not
+an accent), thinned the outline itself, added a ground plane with a
+real contact shadow in the Godot scene (the model was rendering in
+pure void before), and re-tuned light energy down for the new palette
+(the reference's pale blue-grey clips to white much faster under the
+same lighting that suited round 1/2's darker, more saturated orange —
+also darkened the base blue-grey itself slightly at the source for
+the same reason).
+
+Result: `godot/sprocket_3d_proof.png` (overwrites round 2's image;
+prior rounds' versions are in git history for comparison).
+
 ## What this doesn't answer yet
 
 This spike proves the *pipeline* — Blender asset authoring, Godot
