@@ -33,3 +33,59 @@
 .hear-btn:active { transform: scale(0.94); }
 
 .help-breathe-stage { flex: 1; }
+
+/* Small idle Sprocket avatar for the greeting bubble only — the garden
+   scene below has its own full-quality character (gSprocket symbol in
+   game-breathe.html/.js), this is just a simple head for "who's
+   talking" at the top of the screen. */
+.bb-sprocket {
+  width: 46px;
+  height: 46px;
+  position: relative;
+}
+.bb-antenna {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 3px;
+  height: 12px;
+  margin-left: -1.5px;
+  background: var(--sprocket-body-dark);
+  border-radius: 3px;
+}
+.bb-antenna-tip {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  background: var(--antenna-glow);
+  border-radius: 50%;
+  box-shadow: 0 0 7px 2px rgba(255,211,94,0.7);
+}
+.bb-head {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark));
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(190,100,40,0.25);
+}
+.bb-eye {
+  position: absolute;
+  top: 19px;
+  width: 8px;
+  height: 8px;
+  background: #fffaf3;
+  border-radius: 50%;
+}
+.bb-eye.left { left: 12px; }
+.bb-eye.right { right: 12px; }
+.bb-eye::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 4px; height: 4px;
+  background: var(--ink);
+  border-radius: 50%;
+}

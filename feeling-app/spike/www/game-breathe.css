@@ -1,104 +1,161 @@
-.breathe-stage {
+/* Sprocket's Garden — rebuild of Breathing Buddy after "as crap, dont
+   like it at all" feedback on the plain-grow-a-circle version. Same
+   underlying interaction (hold to breathe in, release for a slow guided
+   breathe-out) but every breath now visibly grows a flower: two full
+   breaths per flower (bud -> full bloom), three flowers per garden,
+   sparkle burst + a running "flowers grown" tally on each bloom. */
+
+.garden-wrap {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  padding: 0 24px calc(24px + env(safe-area-inset-bottom));
-  position: relative;
+  gap: 14px;
+  padding: 4px 20px calc(20px + env(safe-area-inset-bottom));
 }
 
-/* Small idle Sprocket watching over the exercise, built directly
-   (not via the story-book SVG symbol) since this is plain HTML/CSS
-   like the home screen's character, just simplified. Extra margin
-   below it: the bubble's grow animation scales up symmetrically in
-   every direction (including upward), so it needs enough clearance
-   above it or it visually swallows Sprocket's head at full grow. */
-.bb-sprocket {
-  width: 70px;
-  height: 70px;
-  position: relative;
-  margin-bottom: 48px;
-  animation: bbBob 2.4s ease-in-out infinite;
-}
-@keyframes bbBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-.bb-antenna {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  width: 3px;
-  height: 14px;
-  margin-left: -1.5px;
-  background: var(--sprocket-body-dark);
-  border-radius: 3px;
-}
-.bb-antenna-tip {
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  width: 9px;
-  height: 9px;
-  margin-left: -4.5px;
-  background: var(--antenna-glow);
-  border-radius: 50%;
-  box-shadow: 0 0 8px 2px rgba(255,211,94,0.7);
-}
-.bb-head {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark));
-  border-radius: 50%;
-  box-shadow: 0 6px 12px rgba(190,100,40,0.25);
-}
-.bb-eye {
-  position: absolute;
-  top: 30px;
-  width: 12px;
-  height: 12px;
-  background: #fffaf3;
-  border-radius: 50%;
-}
-.bb-eye.left { left: 18px; }
-.bb-eye.right { right: 18px; }
-.bb-eye::after {
-  content: "";
-  position: absolute;
-  top: 3px; left: 3px;
-  width: 6px; height: 6px;
-  background: var(--ink);
-  border-radius: 50%;
-}
-
-.bubble {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: none;
-  background: radial-gradient(circle at 35% 30%, #fff8e8, var(--antenna-glow) 75%);
-  box-shadow: 0 0 0 10px rgba(255, 211, 94, 0.18), 0 10px 24px rgba(190, 110, 40, 0.25);
-  color: #5a3822;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 16px;
-  transform: scale(1);
-  transition: transform 4s ease-in-out, box-shadow 4s ease-in-out;
+.garden-scene {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 22px;
+  box-shadow: 0 10px 24px rgba(190, 110, 40, 0.22);
   touch-action: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.bubble.growing {
-  transform: scale(1.55);
-  box-shadow: 0 0 0 16px rgba(255, 211, 94, 0.28), 0 14px 30px rgba(190, 110, 40, 0.3);
-}
-.bubble.shrinking {
-  transform: scale(1);
-  box-shadow: 0 0 0 10px rgba(255, 211, 94, 0.18), 0 10px 24px rgba(190, 110, 40, 0.25);
 }
 
-.bb-prompt {
+.g-sun-glow {
+  animation: gSunPulse 3.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes gSunPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.18); opacity: 1; }
+}
+
+.g-cloud-drift {
+  animation: gCloudDrift 26s ease-in-out infinite;
+}
+.g-cloud-drift-b {
+  animation-duration: 32s;
+  animation-direction: reverse;
+}
+@keyframes gCloudDrift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(18px); }
+}
+
+.g-gentle-bob {
+  animation: gBob 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+@keyframes gBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* --- Flower slots: stage 0 (soil only) -> 1 (stem + leaves) ->
+   2 (full bloom). transform-box: fill-box lets each shape scale from
+   its own center/base without needing per-slot coordinates. --- */
+.flower-slot .stem,
+.flower-slot .leaf,
+.flower-slot .bloom {
+  transform-box: fill-box;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+}
+.flower-slot .stem {
+  transform-origin: 50% 100%;
+  transform: scaleY(0.12);
+}
+.flower-slot .leaf {
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transform: scale(0.3);
+}
+.flower-slot .bloom {
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.flower-slot[data-stage="1"] .stem {
+  transform: scaleY(0.65);
+}
+.flower-slot[data-stage="1"] .leaf {
+  opacity: 0.95;
+  transform: scale(1);
+}
+
+.flower-slot[data-stage="2"] .stem {
+  transform: scaleY(1);
+}
+.flower-slot[data-stage="2"] .leaf {
+  opacity: 1;
+  transform: scale(1);
+}
+.flower-slot[data-stage="2"] .bloom {
+  opacity: 1;
+  transform: scale(1);
+  animation: gBloomPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), gBloomSway 3.4s ease-in-out 0.6s infinite;
+}
+@keyframes gBloomPop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+@keyframes gBloomSway {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1) rotate(4deg); }
+}
+
+/* --- Sparkle burst: short-lived stars spawned by JS on each bloom --- */
+.g-sparkle {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: gSparkleBurst 0.9s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes gSparkleBurst {
+  0% { transform: scale(0) translateY(0); opacity: 1; }
+  60% { transform: scale(1) translateY(-14px); opacity: 1; }
+  100% { transform: scale(0.4) translateY(-26px); opacity: 0; }
+}
+
+/* --- Growth orb: the hold target. Position (translate) is set on the
+   #growth-orb group via JS/inline attribute so it can move between
+   flower slots; the grow/shrink scale animation is applied to the
+   child circles instead so it never fights that positional transform. --- */
+.growth-orb {
+  cursor: pointer;
+}
+.orb-halo,
+.orb-core {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 4s ease-in-out, opacity 4s ease-in-out;
+}
+.growth-orb.growing .orb-halo {
+  transform: scale(1.5);
+  opacity: 0.85;
+}
+.growth-orb.growing .orb-core {
+  transform: scale(1.5);
+}
+.growth-orb.shrinking .orb-halo,
+.growth-orb.shrinking .orb-core {
+  transform: scale(1);
+  opacity: 1;
+}
+.growth-orb.idle-pulse .orb-halo {
+  animation: gOrbIdlePulse 2.4s ease-in-out infinite;
+}
+@keyframes gOrbIdlePulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.g-prompt {
   min-height: 22px;
   margin: 0;
   font-size: 16px;
@@ -107,7 +164,7 @@
   text-align: center;
 }
 
-.bb-count {
+.g-count {
   margin: 0;
   font-size: 13px;
   color: var(--button-help-dark);

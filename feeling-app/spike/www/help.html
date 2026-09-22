@@ -14,9 +14,10 @@
 <!-- Help Me (PLAN.md §4.3): the one-tap, low-friction entry point for
      hard moments. Deliberately opens straight into the tool — no menu,
      no choices to make while dysregulated — and reuses the exact same
-     Breathing Buddy component from game-breathe.html/.css/.js rather
-     than a separate implementation, because §4.3's rule is that Help
-     Me only surfaces tools already practiced in calm moments. The
+     Sprocket's Garden breathing component (markup/CSS/JS) from
+     game-breathe.html/.css/.js rather than a separate implementation,
+     because §4.3's rule is that Help Me only surfaces tools already
+     practiced in calm moments. The
      greeting line is shown as on-screen text immediately (not
      autoplayed — autoplaying speech right after a page navigation is
      unreliable across browsers) with an explicit tap-to-hear button. -->
@@ -38,12 +39,106 @@
     </div>
   </div>
 
-  <div class="breathe-stage help-breathe-stage">
-    <button id="bubble" class="bubble" aria-label="Hold to breathe in, let go to breathe out">
-      <span id="bubble-label">Hold me</span>
-    </button>
-    <p id="prompt" class="bb-prompt">Press and hold the bubble to breathe in.</p>
-    <p class="bb-count">Breaths taken: <span id="breath-count">0</span></p>
+  <div class="garden-wrap help-breathe-stage">
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="gBodyGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+        </linearGradient>
+        <radialGradient id="gCoreGrad" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+        </radialGradient>
+        <linearGradient id="gSkyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+        </linearGradient>
+        <radialGradient id="gGlowSoft" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.95" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
+        </radialGradient>
+        <symbol id="gCloud" viewBox="0 0 70 26">
+          <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+        </symbol>
+        <symbol id="gStar" viewBox="0 0 40 40">
+          <path d="M20,2 L25,16 L38,20 L25,24 L20,38 L15,24 L2,20 L15,16 Z" fill="#ffd35e" />
+        </symbol>
+        <symbol id="gSprocket" viewBox="0 0 120 150">
+          <ellipse cx="18" cy="52" rx="10" ry="12" fill="url(#gBodyGrad)" />
+          <ellipse cx="102" cy="52" rx="10" ry="12" fill="url(#gBodyGrad)" />
+          <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
+          <circle cx="5.5" cy="0" r="6" fill="#ffd35e" />
+          <circle cx="60" cy="46" r="44" fill="url(#gBodyGrad)" />
+          <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+          <circle cx="45" cy="49" r="7" fill="#ffedc9" />
+          <circle cx="75" cy="49" r="7" fill="#ffedc9" />
+          <path d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+          <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+          <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+          <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+          <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#gBodyGrad)" />
+          <circle cx="60" cy="122" r="18" fill="#fff4e2" />
+          <circle cx="60" cy="122" r="13" fill="url(#gCoreGrad)" />
+          <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#gBodyGrad)" />
+          <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#gBodyGrad)" />
+          <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+          <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <svg id="garden-scene" class="garden-scene" viewBox="0 0 400 300" aria-label="A garden where Sprocket grows flowers as you breathe">
+      <rect width="400" height="300" fill="url(#gSkyGrad)" />
+      <path d="M0,230 Q100,205 200,225 T400,220 V300 H0 Z" fill="#dcea97" />
+      <path d="M0,245 Q100,225 200,243 T400,238 V300 H0 Z" fill="#c6db76" />
+      <circle cx="352" cy="34" r="22" fill="url(#gGlowSoft)" class="g-sun-glow" />
+      <circle cx="352" cy="34" r="14" fill="#ffd35e" />
+      <use class="g-cloud-drift" href="#gCloud" x="24" y="14" width="58" height="20" />
+      <use class="g-cloud-drift g-cloud-drift-b" href="#gCloud" x="150" y="24" width="46" height="16" />
+
+      <circle id="sprocket-glow" cx="330" cy="190" r="60" fill="url(#gGlowSoft)" />
+      <use id="garden-sprocket" class="g-gentle-bob" href="#gSprocket" x="284" y="128" width="92" height="115" />
+
+      <g class="flower-slot" data-slot="0" data-stage="0" transform="translate(0,40)">
+        <ellipse class="soil" cx="80" cy="200" rx="16" ry="6" fill="#c6a36a" opacity="0.5" />
+        <rect class="stem" x="77" y="140" width="6" height="60" rx="3" fill="#8fbf5a" />
+        <ellipse class="leaf leaf-l" cx="66" cy="176" rx="12" ry="7" fill="#a3cc72" />
+        <ellipse class="leaf leaf-r" cx="94" cy="168" rx="12" ry="7" fill="#a3cc72" />
+        <g class="bloom" transform="translate(80,140)">
+          <ellipse rx="11" ry="16" transform="rotate(0)" fill="#ff9b7a" /><ellipse rx="11" ry="16" transform="rotate(72)" fill="#ff9b7a" /><ellipse rx="11" ry="16" transform="rotate(144)" fill="#ff9b7a" /><ellipse rx="11" ry="16" transform="rotate(216)" fill="#ff9b7a" /><ellipse rx="11" ry="16" transform="rotate(288)" fill="#ff9b7a" />
+          <circle r="10" fill="#ffd35e" />
+        </g>
+      </g>
+
+      <g class="flower-slot" data-slot="1" data-stage="0" transform="translate(0,40)">
+        <ellipse class="soil" cx="170" cy="200" rx="16" ry="6" fill="#c6a36a" opacity="0.5" />
+        <rect class="stem" x="167" y="140" width="6" height="60" rx="3" fill="#8fbf5a" />
+        <ellipse class="leaf leaf-l" cx="156" cy="176" rx="12" ry="7" fill="#a3cc72" />
+        <ellipse class="leaf leaf-r" cx="184" cy="168" rx="12" ry="7" fill="#a3cc72" />
+        <g class="bloom" transform="translate(170,140)">
+          <ellipse rx="11" ry="16" transform="rotate(0)" fill="#ff8a65" /><ellipse rx="11" ry="16" transform="rotate(72)" fill="#ff8a65" /><ellipse rx="11" ry="16" transform="rotate(144)" fill="#ff8a65" /><ellipse rx="11" ry="16" transform="rotate(216)" fill="#ff8a65" /><ellipse rx="11" ry="16" transform="rotate(288)" fill="#ff8a65" />
+          <circle r="10" fill="#ffedc9" />
+        </g>
+      </g>
+
+      <g class="flower-slot" data-slot="2" data-stage="0" transform="translate(0,40)">
+        <ellipse class="soil" cx="260" cy="200" rx="16" ry="6" fill="#c6a36a" opacity="0.5" />
+        <rect class="stem" x="257" y="140" width="6" height="60" rx="3" fill="#8fbf5a" />
+        <ellipse class="leaf leaf-l" cx="246" cy="176" rx="12" ry="7" fill="#a3cc72" />
+        <ellipse class="leaf leaf-r" cx="274" cy="168" rx="12" ry="7" fill="#a3cc72" />
+        <g class="bloom" transform="translate(260,140)">
+          <ellipse rx="11" ry="16" transform="rotate(0)" fill="#ffd35e" /><ellipse rx="11" ry="16" transform="rotate(72)" fill="#ffd35e" /><ellipse rx="11" ry="16" transform="rotate(144)" fill="#ffd35e" /><ellipse rx="11" ry="16" transform="rotate(216)" fill="#ffd35e" /><ellipse rx="11" ry="16" transform="rotate(288)" fill="#ffd35e" />
+          <circle r="10" fill="#ff8a65" />
+        </g>
+      </g>
+
+      <g id="sparkle-burst"></g>
+
+      <g id="growth-orb" class="growth-orb">
+        <circle class="orb-halo" r="30" fill="url(#gGlowSoft)" />
+        <circle class="orb-core" r="18" fill="url(#gCoreGrad)" />
+      </g>
+    </svg>
+
+    <p id="prompt" class="g-prompt">Press and hold the glowing light to breathe in.</p>
+    <p class="g-count">🌼 Flowers grown: <span id="flower-count">0</span></p>
   </div>
 </main>
 <script src="sw-register.js"></script>

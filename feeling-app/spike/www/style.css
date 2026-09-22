@@ -100,10 +100,154 @@ main {
 .c3 { width: 76px; height: 30px; top: 4%; left: -40%; animation-duration: 52s; animation-delay: -30s; }
 .c3::before { width: 42px; height: 42px; top: -18px; left: 10px; }
 .c3::after { width: 30px; height: 30px; top: -12px; left: 42px; }
+.c4 { width: 56px; height: 22px; top: 13%; left: -55%; animation-duration: 38s; animation-delay: -20s; }
+.c4::before { width: 30px; height: 30px; top: -14px; left: 8px; }
+.c4::after { width: 22px; height: 22px; top: -8px; left: 28px; }
 
 @keyframes drift {
   from { transform: translateX(0); }
   to { transform: translateX(160vw); }
+}
+
+/* Sun, a warm glowing focal point instead of an empty upper sky. */
+.sun {
+  position: absolute;
+  top: 6%;
+  right: 8%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff8e2, var(--antenna-glow) 80%);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+.sun-glow {
+  position: absolute;
+  top: calc(6% - 30px);
+  right: calc(8% - 30px);
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,211,94,0.45), rgba(255,211,94,0) 70%);
+  animation: sunPulse 4s ease-in-out infinite;
+}
+@keyframes sunPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+/* Ambient sparkle particles drifting up through the sky, ties into the
+   same "warm light" motif as the sun and Sprocket's own antenna/core
+   glow rather than being decoration for its own sake. */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffedc9;
+  box-shadow: 0 0 6px 2px rgba(255, 211, 94, 0.6);
+  animation: sparkleRise 6s ease-in infinite;
+}
+.sp1 { left: 12%; top: 55%; animation-delay: 0s; }
+.sp2 { left: 78%; top: 42%; width: 4px; height: 4px; animation-delay: 2s; }
+.sp3 { left: 32%; top: 30%; width: 5px; height: 5px; animation-delay: 4s; }
+.sp4 { left: 62%; top: 60%; animation-delay: 1s; }
+@keyframes sparkleRise {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-90px); opacity: 0; }
+}
+
+/* Trees, bushes, and flowers along the grass so the ground isn't an
+   empty field — reuses the same CSS-shape technique as Sprocket
+   itself (rounded divs, no images) rather than switching to SVG here. */
+.tree { position: absolute; bottom: 4%; width: 46px; height: 70px; }
+.tree .trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 9px;
+  height: 34px;
+  margin-left: -4.5px;
+  background: #c6603a;
+  border-radius: 3px;
+}
+.tree .foliage {
+  position: absolute;
+  border-radius: 50%;
+  background: #a3cc72;
+}
+.tree .f1 { width: 40px; height: 40px; top: 0; left: 3px; background: #b6d98a; }
+.tree .f2 { width: 30px; height: 30px; top: 10px; left: -8px; }
+.tree .f3 { width: 30px; height: 30px; top: 10px; left: 24px; }
+.t1 { left: 4%; bottom: 25%; transform: scale(0.85); }
+.t2 { right: 6%; bottom: 23%; transform: scale(1.05) scaleX(-1); }
+
+.bush {
+  position: absolute;
+  bottom: 3%;
+  width: 54px;
+  height: 26px;
+  border-radius: 50% 50% 40% 40%;
+  background: #b6d98a;
+}
+.bush::before, .bush::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 34px;
+  height: 30px;
+  border-radius: 50%;
+  background: #c6db76;
+}
+.bush::before { left: -12px; }
+.bush::after { right: -12px; }
+.b1 { left: 16%; bottom: 26%; transform: scale(0.7); }
+.b2 { right: 22%; bottom: 24%; transform: scale(0.55); }
+.b3 { left: 46%; bottom: 23%; transform: scale(0.5); opacity: 0.9; }
+
+.flower {
+  position: absolute;
+  bottom: 4%;
+  width: 14px;
+  height: 14px;
+}
+.flower::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff4e2, var(--flower-color, #ff8a72) 75%);
+  box-shadow: 0 0 0 0 transparent;
+}
+.flower::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--antenna-glow);
+}
+.fl1 { left: 8%; bottom: 25%; --flower-color: #ff8a72; }
+.fl2 { left: 27%; bottom: 28%; --flower-color: #ffd35e; transform: scale(0.8); }
+.fl3 { left: 38%; bottom: 24%; --flower-color: #ff9b7a; transform: scale(0.7); }
+.fl4 { right: 33%; bottom: 27%; --flower-color: #ffd35e; transform: scale(0.75); }
+.fl5 { right: 15%; bottom: 25%; --flower-color: #ff8a72; }
+.fl6 { right: 8%; bottom: 29%; --flower-color: #ff9b7a; transform: scale(0.65); }
+
+/* A soft winding path leading to where Sprocket stands, giving the
+   ground some structure instead of a flat color field. */
+.path {
+  position: absolute;
+  left: 50%;
+  bottom: 22%;
+  width: 120px;
+  height: 12%;
+  margin-left: -60px;
+  background: #e7edb0;
+  clip-path: polygon(38% 0%, 62% 0%, 100% 100%, 0% 100%);
+  opacity: 0.8;
 }
 
 /* --- Stage & Sprocket -------------------------------------------- */
