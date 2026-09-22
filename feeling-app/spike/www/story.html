@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="story.css" />
 </head>
-<body class="story-body">
+<body class="story-body" style="background:#fdeee2">
 <!-- Phase 1 spike prototype for PLAN.md §4.5 (Story books). Picked
      "Worried" as the first feeling: universally relatable, has clear
      body effects (fluttery tummy, fast heart) and mind effects (racing
@@ -29,13 +29,18 @@
       <stop offset="0%" stop-color="#fff8e8" />
       <stop offset="100%" stop-color="#ffd35e" />
     </radialGradient>
+    <!-- Worried book: paler, slightly duskier warm tones than the
+         other two books (an uncertain, fluttery morning), so it reads
+         as a different place even before you spot Sprocket's pose —
+         each book had this exact palette before, which was the "all
+         the books look the same" problem. -->
     <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fff2d9" />
-      <stop offset="100%" stop-color="#ffdcb3" />
+      <stop offset="0%" stop-color="#fdeee2" />
+      <stop offset="100%" stop-color="#f6c9ad" />
     </linearGradient>
     <linearGradient id="skyGradDusk" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffe6c2" />
-      <stop offset="100%" stop-color="#ffcfa0" />
+      <stop offset="0%" stop-color="#f6ded0" />
+      <stop offset="100%" stop-color="#e8bd9c" />
     </linearGradient>
     <radialGradient id="glowSoft" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.9" />
@@ -44,8 +49,8 @@
 
     <symbol id="bookBg" viewBox="0 0 400 260">
       <rect width="400" height="260" fill="url(#skyGrad)" />
-      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dcea97" />
-      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c6db76" />
+      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dccf9a" />
+      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c2b378" />
     </symbol>
 
     <!-- Calmer, closer variant for the "quiet moment" tool page — no
@@ -53,7 +58,7 @@
          differently in mood, not just content. -->
     <symbol id="bookBgQuiet" viewBox="0 0 400 260">
       <rect width="400" height="260" fill="url(#skyGradDusk)" />
-      <path d="M0,215 Q200,195 400,215 V260 H0 Z" fill="#e7edb0" />
+      <path d="M0,215 Q200,195 400,215 V260 H0 Z" fill="#dccb9e" />
     </symbol>
 
     <symbol id="cloud" viewBox="0 0 70 26">

@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="story.css" />
 </head>
-<body class="story-body">
+<body class="story-body" style="background:#ffe0d2">
 <!-- Second story prototype for PLAN.md §4.5. Picked Frustrated: a
      different body signature (hot face, tight hands) and mind signature
      (loud "I can't do this" thoughts) from Worried, and a different
@@ -24,8 +24,11 @@
     <radialGradient id="coreGrad" cx="35%" cy="30%" r="75%">
       <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
     </radialGradient>
+    <!-- Frustrated book: hotter, more saturated orange-red than the
+         other two books, so the heat of the feeling shows in the
+         backdrop itself, not just the character's pose. -->
     <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+      <stop offset="0%" stop-color="#ffe0d2" /><stop offset="100%" stop-color="#ffb199" />
     </linearGradient>
     <radialGradient id="glowSoft" cx="50%" cy="50%" r="50%">
       <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
@@ -36,8 +39,8 @@
 
     <symbol id="bookBg" viewBox="0 0 400 260">
       <rect width="400" height="260" fill="url(#skyGrad)" />
-      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dcea97" />
-      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c6db76" />
+      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#c9d97a" />
+      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#a8c25c" />
     </symbol>
 
     <symbol id="cloud" viewBox="0 0 70 26">
