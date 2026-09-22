@@ -1,0 +1,5 @@
+godot/.godot/
+godot/build/
+*.log
+godot/preview_godot.png
+godot/preview_godot.png.import
