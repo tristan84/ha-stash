@@ -236,44 +236,50 @@ def build_sprocket():
     # Dark trim frame around the face opening, sitting just behind the
     # face plate so a thin dark border shows at its edge (matches the
     # reference's helmet-opening ring) — bigger than the face plate and
-    # placed slightly further back (less negative Y).
-    trim_frame = add_rounded_box('FaceTrim', (0.96, 0.26, 0.64), (0, -0.78, 1.56), mat_trim, bevel=0.26, segments=6)
+    # placed slightly further back (less negative Y). Sized much larger
+    # than round 3's first pass: that version left most of the helmet a
+    # bald dome with a small face tucked to one side, which combined
+    # with bulging eyes read as an alien/insect head rather than a kid
+    # in a helmet. The face opening now takes up most of the helmet's
+    # front, matching the reference's proportions.
+    trim_frame = add_rounded_box('FaceTrim', (1.42, 0.26, 1.0), (0, -0.78, 1.58), mat_trim, bevel=0.32, segments=6)
     trim_frame.parent = root
 
-    # Face plate — peach skin, not a screen: the single biggest change
-    # from the last two rounds, matching the reference's "kid wearing a
-    # space helmet" concept instead of "the head is a dark-visored robot
-    # face."
-    face = add_rounded_box('Face', (0.86, 0.3, 0.56), (0, -0.84, 1.56), mat_skin, bevel=0.24, segments=6)
+    # Face plate — peach skin, not a screen.
+    face = add_rounded_box('Face', (1.3, 0.3, 0.9), (0, -0.84, 1.58), mat_skin, bevel=0.28, segments=6)
     face.parent = root
 
-    # Eyes — layered white/iris/pupil/highlight spheres, each poking
-    # slightly further forward than the last so they don't z-fight.
+    # Eyes — flat layered discs (a cylinder rotated to face the camera,
+    # not a sphere) so they read as big round eyes drawn on the face
+    # instead of eyeballs bulging out on stalks, which is what full
+    # spheres protruding progressively further forward looked like.
+    # Each disc is only slightly proud of the one behind it.
     for x_sign in (-1, 1):
         side = 'L' if x_sign < 0 else 'R'
-        ex = x_sign * 0.27
-        white = add_uv_sphere(f'EyeWhite{side}', 0.20, (ex, -1.05, 1.66), mat_eye_white, segments=16, rings=12)
+        ex = x_sign * 0.34
+        disc_rot = (math.radians(90), 0, 0)
+        white = add_cylinder(f'EyeWhite{side}', 0.20, 0.05, (ex, -1.0, 1.76), mat_eye_white, rot=disc_rot, vertices=24)
         white.parent = root
-        iris = add_uv_sphere(f'EyeIris{side}', 0.125, (ex, -1.16, 1.66), mat_eye_blue, segments=14, rings=10)
+        iris = add_cylinder(f'EyeIris{side}', 0.13, 0.045, (ex, -1.035, 1.76), mat_eye_blue, rot=disc_rot, vertices=20)
         iris.parent = root
-        pupil = add_uv_sphere(f'Pupil{side}', 0.06, (ex, -1.24, 1.66), mat_pupil, segments=12, rings=8)
+        pupil = add_cylinder(f'Pupil{side}', 0.065, 0.035, (ex, -1.065, 1.76), mat_pupil, rot=disc_rot, vertices=16)
         pupil.parent = root
-        highlight = add_uv_sphere(f'EyeHighlight{side}', 0.028, (ex - 0.04, -1.27, 1.71), mat_eye_white, segments=8, rings=6)
+        highlight = add_uv_sphere(f'EyeHighlight{side}', 0.022, (ex - 0.045, -1.09, 1.81), mat_eye_white, segments=8, rings=6)
         highlight.parent = root
 
     # Tiny nose highlight, centered below the eyes.
-    nose = add_uv_sphere('Nose', 0.026, (0, -1.10, 1.44), mat_eye_white, segments=8, rings=6)
+    nose = add_uv_sphere('Nose', 0.024, (0, -1.0, 1.52), mat_eye_white, segments=8, rings=6)
     nose.parent = root
 
     # Smile — a beveled Bezier arc (same idea as the 2D app's
     # `stroke-linecap="round"` smile path).
     curve = D.curves.new('MouthCurve', type='CURVE')
     curve.dimensions = '3D'
-    curve.bevel_depth = 0.03
+    curve.bevel_depth = 0.032
     curve.bevel_resolution = 4
     spline = curve.splines.new('BEZIER')
     spline.bezier_points.add(2)
-    pts = [(-0.18, -1.0, 1.30), (0, -1.06, 1.23), (0.18, -1.0, 1.30)]
+    pts = [(-0.22, -0.97, 1.38), (0, -1.03, 1.29), (0.22, -0.97, 1.38)]
     for i, p in enumerate(pts):
         bp = spline.bezier_points[i]
         bp.co = p
@@ -289,9 +295,9 @@ def build_sprocket():
     mouth.data.materials.append(mat_trim)
     mouth.parent = root
 
-    cheek_l = add_uv_sphere('CheekLeft', 0.11, (-0.38, -1.0, 1.16), mat_cheek, segments=12, rings=8, scale=(1, 0.55, 0.75))
+    cheek_l = add_uv_sphere('CheekLeft', 0.13, (-0.46, -0.98, 1.40), mat_cheek, segments=12, rings=8, scale=(1, 0.5, 0.75))
     cheek_l.parent = root
-    cheek_r = add_uv_sphere('CheekRight', 0.11, (0.38, -1.0, 1.16), mat_cheek, segments=12, rings=8, scale=(1, 0.55, 0.75))
+    cheek_r = add_uv_sphere('CheekRight', 0.13, (0.46, -0.98, 1.40), mat_cheek, segments=12, rings=8, scale=(1, 0.5, 0.75))
     cheek_r.parent = root
 
     # Ear pods — red rounded "pods" on the helmet sides (matches the

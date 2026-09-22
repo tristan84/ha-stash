@@ -248,6 +248,38 @@ the same reason).
 Result: `godot/sprocket_3d_proof.png` (overwrites round 2's image;
 prior rounds' versions are in git history for comparison).
 
+## Round 3b — "that looks scary, the head is horrible"
+
+The round-3 redesign kept two things from the earlier "screen face"
+rounds that turned out to be the wrong call for a peach-skin face: a
+face plate sized relatively small against the helmet (leaving a big
+bald blue-grey dome above and beside it), and eyes built the same way
+as round 2's — layered spheres, each poking progressively further
+forward than the last for depth. On a flat "screen" that read as a
+lit display; on an actual face, full spheres bulging out of their
+sockets read as eyeballs on stalks — closer to an insect or a
+deep-sea creature than a kid's face, especially combined with how
+little of the helmet the small face plate covered.
+
+Fixed both proportions, not just the color/shading tuned in round 3a:
+- **Face plate and its trim frame roughly 50% bigger**, now covering
+  most of the helmet's front (matching the reference's proportions,
+  where the face opening reads as most of the helmet rather than a
+  small window on one side).
+- **Eyes rebuilt as flat layered discs** (`add_cylinder` rotated to
+  face the camera, not `add_uv_sphere`) instead of full spheres — each
+  disc only ~0.03 units proud of the one behind it, so they read as
+  big round eyes drawn on a flat face rather than bulging orbs. Nose,
+  mouth, and cheeks repositioned/enlarged to match the bigger face.
+
+This is the same underlying lesson as round 3's arm-gap and neck-taper
+fixes, from the opposite direction: round 3 was "parts don't visually
+connect because they don't overlap enough," this was "parts read as
+grotesque because a construction technique that worked for a flat
+glowing screen (round 2) doesn't automatically work for an anatomical
+face (round 3)" — the fix in both cases came from looking hard at what
+the render actually shows instead of reasoning from the code.
+
 ## What this doesn't answer yet
 
 This spike proves the *pipeline* — Blender asset authoring, Godot
