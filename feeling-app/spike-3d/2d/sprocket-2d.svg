@@ -11,8 +11,8 @@
       <stop offset="100%" stop-color="#63A971"/>
     </linearGradient>
     <linearGradient id="gradFace" x1="0.2" y1="0.05" x2="0.8" y2="1">
-      <stop offset="0%" stop-color="#FFE7C9"/>
-      <stop offset="100%" stop-color="#F0C79C"/>
+      <stop offset="0%" stop-color="#4E7AA3"/>
+      <stop offset="100%" stop-color="#1D2E42"/>
     </linearGradient>
     <linearGradient id="gradRed" x1="0.2" y1="0" x2="0.8" y2="1">
       <stop offset="0%" stop-color="#C98FE0"/>
@@ -31,12 +31,15 @@
       <stop offset="100%" stop-color="#1D1522"/>
     </linearGradient>
     <radialGradient id="gradIris" cx="0.35" cy="0.3" r="0.8">
-      <stop offset="0%" stop-color="#6FC2F0"/>
-      <stop offset="60%" stop-color="#2E8FCB"/>
-      <stop offset="100%" stop-color="#1B6699"/>
+      <stop offset="0%" stop-color="#B4EFFF"/>
+      <stop offset="45%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#146FA8"/>
     </radialGradient>
     <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
       <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000000" flood-opacity="0.16"/>
+    </filter>
+    <filter id="glowBlue" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4"/>
     </filter>
   </defs>
 
@@ -76,31 +79,34 @@
 
   <!-- face trim + face plate -->
   <rect x="80" y="88" width="240" height="188" rx="44" fill="url(#gradDark)"/>
-  <rect x="92" y="100" width="216" height="164" rx="38" fill="url(#gradFace)" stroke="#E0AE82" stroke-width="3"/>
+  <rect x="92" y="100" width="216" height="164" rx="38" fill="url(#gradFace)" stroke="#6E90AC" stroke-width="3"/>
 
-  <!-- eyes -->
+  <!-- eyes — glowing lens sockets, not human eyes: dark socket ring,
+       a bright blue lens, a deep-blue core instead of a black pupil,
+       and no eyebrows. This is where "a little blue" lives. -->
   <g>
-    <circle cx="163" cy="168" r="38" fill="#FFFFFF" stroke="#201526" stroke-width="4"/>
-    <circle cx="163" cy="172" r="24" fill="url(#gradIris)"/>
-    <circle cx="163" cy="172" r="11" fill="#14181D"/>
-    <circle cx="154" cy="161" r="6" fill="#FFFFFF"/>
-    <path d="M 128,148 Q 155,130 190,146" fill="none" stroke="#201526" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="163" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+    <circle cx="163" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+    <circle cx="163" cy="168" r="11" fill="#0F3A5C"/>
+    <circle cx="154" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
   </g>
   <g>
-    <circle cx="237" cy="168" r="38" fill="#FFFFFF" stroke="#201526" stroke-width="4"/>
-    <circle cx="237" cy="172" r="24" fill="url(#gradIris)"/>
-    <circle cx="237" cy="172" r="11" fill="#14181D"/>
-    <circle cx="228" cy="161" r="6" fill="#FFFFFF"/>
-    <path d="M 210,146 Q 245,130 272,148" fill="none" stroke="#201526" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="237" cy="168" r="40" fill="url(#gradDark)" stroke="#3E5A78" stroke-width="4"/>
+    <circle cx="237" cy="168" r="29" fill="url(#gradIris)" stroke="#8FDCFF" stroke-width="2"/>
+    <circle cx="237" cy="168" r="11" fill="#0F3A5C"/>
+    <circle cx="228" cy="158" r="6" fill="#FFFFFF" opacity="0.9"/>
   </g>
 
-  <!-- nose + mouth -->
-  <circle cx="200" cy="205" r="5" fill="#FFFFFF" opacity="0.85"/>
-  <path d="M 172,224 Q 200,246 228,224" fill="none" stroke="#201526" stroke-width="6" stroke-linecap="round"/>
+  <!-- mouth — a glowing LED-style smile (soft blurred underlay +
+       crisp line on top) instead of a drawn human mouth; no nose. -->
+  <path d="M 172,224 Q 200,246 228,224" fill="none" stroke="#4FC3F7" stroke-width="11" stroke-linecap="round" opacity="0.55" filter="url(#glowBlue)"/>
+  <path d="M 172,224 Q 200,246 228,224" fill="none" stroke="#CDF3FF" stroke-width="5" stroke-linecap="round"/>
 
-  <!-- cheeks -->
-  <ellipse cx="122" cy="212" rx="20" ry="14" fill="url(#gradRed)" opacity="0.7"/>
-  <ellipse cx="278" cy="212" rx="20" ry="14" fill="url(#gradRed)" opacity="0.7"/>
+  <!-- vent slits — mechanical detail where the cheeks were. -->
+  <rect x="106" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+  <rect x="106" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+  <rect x="266" y="203" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
+  <rect x="266" y="216" width="28" height="7" rx="3.5" fill="#3A5570" opacity="0.85"/>
 
   <!-- ===================== front limbs ===================== -->
   <g id="armFront" transform="translate(54,0)">
