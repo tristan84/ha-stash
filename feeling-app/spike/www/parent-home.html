@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Grown-Up Area</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="parent-home.css" />
+</head>
+<body class="screen-body">
+<!-- Deliberately minimal past the gate. PLAN.md §5 / Open Decision #14
+     default is "process metrics, never feelings-surveillance, private
+     to the child unless you decide otherwise" — so this shows COUNTS
+     only (entries logged, breaths practiced, rounds played), never
+     which feelings were logged or when. This isn't an unfinished
+     corner: it's the honest amount of parent-side UI that's actually
+     been decided so far. A full parent dashboard is real future work,
+     not something to fake here. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">Grown-Up Area</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+  <div class="screen-content">
+    <p class="parent-note">This is a placeholder. The real parent side (PLAN.md §5) is still being designed — what you see below is only what's already decided: process counts, never feeling-by-feeling detail, and nothing about your child's diary content.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <p class="stat-num" id="stat-diary">0</p>
+        <p class="stat-label">feelings noticed<br />in the diary</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-num" id="stat-breaths">0</p>
+        <p class="stat-label">breaths practiced<br />in Breathing Buddy</p>
+      </div>
+      <div class="stat-card">
+        <p class="stat-num" id="stat-match">0</p>
+        <p class="stat-label">rounds played<br />in Feelings Match</p>
+      </div>
+    </div>
+
+    <p class="parent-privacy">Everything above is stored only on this device. Nothing is sent anywhere.</p>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="parent-home.js"></script>
+</body>
+</html>

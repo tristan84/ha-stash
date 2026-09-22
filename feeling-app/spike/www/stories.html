@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Story Time</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+</head>
+<body class="screen-body">
+<!-- Book shelf: the "Story time" home-screen button lands here first,
+     then into whichever book (PLAN.md §4.5). Three books now exist,
+     each a different feeling with its own body/mind signature and its
+     own tool — see SPIKE_NOTES.md. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">Story Time</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+  <div class="screen-content">
+    <p class="screen-intro">Pick a book to read with Sprocket.</p>
+    <div class="shelf-grid">
+
+      <a class="shelf-card" href="story.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <rect width="200" height="150" fill="#fff2d9" />
+          <path d="M0,110 Q100,95 200,108 V150 H0 Z" fill="#dcea97" />
+          <circle cx="100" cy="70" r="34" fill="#ffb15e" />
+          <rect x="82" y="58" width="36" height="18" rx="9" fill="#4a2e1c" />
+          <circle cx="90" cy="67" r="4" fill="#ffedc9" /><circle cx="110" cy="67" r="4" fill="#ffedc9" />
+        </svg>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Sprocket's Fluttery Day</p>
+          <p class="shelf-card-sub">worried</p>
+        </div>
+      </a>
+
+      <a class="shelf-card" href="story-frustrated.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <rect width="200" height="150" fill="#fff2d9" />
+          <path d="M0,110 Q100,95 200,108 V150 H0 Z" fill="#dcea97" />
+          <rect x="70" y="86" width="26" height="16" rx="3" fill="#ff9b5e" transform="rotate(-8 83 94)" />
+          <rect x="100" y="94" width="24" height="14" rx="3" fill="#ffd35e" transform="rotate(10 112 101)" />
+          <circle cx="100" cy="66" r="32" fill="#ffb15e" />
+          <rect x="83" y="55" width="34" height="16" rx="8" fill="#4a2e1c" />
+          <circle cx="91" cy="63" r="4" fill="#ffedc9" /><circle cx="109" cy="63" r="4" fill="#ffedc9" />
+        </svg>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Sprocket's Wobbly Tower</p>
+          <p class="shelf-card-sub">frustrated</p>
+        </div>
+      </a>
+
+      <a class="shelf-card" href="story-excited.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <rect width="200" height="150" fill="#fff2d9" />
+          <path d="M0,110 Q100,95 200,108 V150 H0 Z" fill="#dcea97" />
+          <path d="M100,20 L104,32 L117,35 L104,38 L100,50 L96,38 L83,35 L96,32 Z" fill="#ffd35e" />
+          <circle cx="100" cy="78" r="32" fill="#ffb15e" />
+          <rect x="83" y="67" width="34" height="16" rx="8" fill="#4a2e1c" />
+          <circle cx="91" cy="75" r="4" fill="#ffedc9" /><circle cx="109" cy="75" r="4" fill="#ffedc9" />
+        </svg>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Sprocket's Bouncy Morning</p>
+          <p class="shelf-card-sub">excited</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Help Me</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="game-breathe.css" />
+<link rel="stylesheet" href="help.css" />
+</head>
+<body class="screen-body">
+<!-- Help Me (PLAN.md §4.3): the one-tap, low-friction entry point for
+     hard moments. Deliberately opens straight into the tool — no menu,
+     no choices to make while dysregulated — and reuses the exact same
+     Breathing Buddy component from game-breathe.html/.css/.js rather
+     than a separate implementation, because §4.3's rule is that Help
+     Me only surfaces tools already practiced in calm moments. The
+     greeting line is shown as on-screen text immediately (not
+     autoplayed — autoplaying speech right after a page navigation is
+     unreliable across browsers) with an explicit tap-to-hear button. -->
+<main class="screen-main help-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">Help Me</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+
+  <div class="help-greeting">
+    <div class="bb-sprocket help-sprocket">
+      <div class="bb-antenna"><span class="bb-antenna-tip"></span></div>
+      <div class="bb-head"><div class="bb-eye left"></div><div class="bb-eye right"></div></div>
+    </div>
+    <div class="help-bubble">
+      <p id="greeting-text">It's okay. I'm here. Let's breathe together.</p>
+      <button id="hear-btn" class="hear-btn" aria-label="Hear Sprocket say this">🔊</button>
+    </div>
+  </div>
+
+  <div class="breathe-stage help-breathe-stage">
+    <button id="bubble" class="bubble" aria-label="Hold to breathe in, let go to breathe out">
+      <span id="bubble-label">Hold me</span>
+    </button>
+    <p id="prompt" class="bb-prompt">Press and hold the bubble to breathe in.</p>
+    <p class="bb-count">Breaths taken: <span id="breath-count">0</span></p>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="help.js"></script>
+<script src="game-breathe.js"></script>
+</body>
+</html>

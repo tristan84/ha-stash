@@ -53,14 +53,10 @@ function spawnBubbles(n) {
   log(`spawned ${n} bubbles (stage now has ${stage.childElementCount} animating nodes)`);
 }
 
-// "Play" stands in for entering a calm-moment game (PLAN.md §4.2) —
-// the actual game content/design is a Phase 2 task, not this spike.
-// Reuses the bubble-spawn stress test as the placeholder interaction
-// since it's already exercising the real animation-performance
-// question this spike exists to answer.
-document.getElementById('btn-play').addEventListener('click', () => spawnBubbles(10));
-
-// Dev-only utility, not a real app function — resets the stress test.
+// The bubble-spawn stress test moved to the dev panel — it was never
+// a real function, just the animation-performance probe research
+// note 05 asked for. "Play a game" now goes to the real games shelf.
+document.getElementById('btn-spawn-dev').addEventListener('click', () => spawnBubbles(10));
 document.getElementById('btn-clear').addEventListener('click', () => {
   document.getElementById('bubbles').innerHTML = '';
   log('cleared bubbles');
@@ -93,38 +89,12 @@ sprocketEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); greet(); }
 });
 
-// "Help me" (PLAN.md §4.3): the one-tap, low-friction entry point for
-// hard moments — deliberately the visually primary button, not an
-// equal third option. This spike only validates that the button
-// exists, is prominent, and can trigger TTS; the actual Help Me
-// flow (breathing/grounding tools already practiced in calm moments)
-// is explicitly Phase 2 content design, not built here.
-document.getElementById('btn-help').addEventListener('click', () => {
-  log('Help me tapped — placeholder only; real flow is Phase 2 content design');
-  sprocketSpeak("It's okay. Let's take a slow breath together.");
-});
-
-// Parent gate (PLAN.md §5): tucked away, not a main button, since
-// kids shouldn't be one tap from parent settings. No real gate logic
-// yet — that's a Phase 2/3 task — this just marks where it lives.
-document.getElementById('parent-gate').addEventListener('click', () => {
-  log('parent gate tapped — placeholder only; no gate/settings built yet');
-});
-
-// Story time (PLAN.md §4.5): opens the first prototype story,
-// "Sprocket's Fluttery Day" (about Worried) — see story.html/story.js.
-document.getElementById('btn-story').addEventListener('click', () => {
-  window.location.href = 'story.html';
-});
-
-// Feeling diary (PLAN.md §4.6): the child's private, on-device record
-// of noticing/naming feelings over time. No real diary UI or storage
-// exists yet (Phase 2/3) — and per §4.6, whether it's ever
-// parent-visible is still an open decision (PLAN.md §9 #14), not
-// something to assume while building this placeholder.
-document.getElementById('btn-diary').addEventListener('click', () => {
-  log('My diary tapped — placeholder only; no diary storage/UI built yet');
-});
+// Every home-screen button now leads to a real, working screen.
+document.getElementById('btn-help').addEventListener('click', () => { window.location.href = 'help.html'; });
+document.getElementById('btn-play').addEventListener('click', () => { window.location.href = 'games.html'; });
+document.getElementById('btn-story').addEventListener('click', () => { window.location.href = 'stories.html'; });
+document.getElementById('btn-diary').addEventListener('click', () => { window.location.href = 'diary.html'; });
+document.getElementById('parent-gate').addEventListener('click', () => { window.location.href = 'parent-gate.html'; });
 
 // --- Offline behavior test ------------------------------------------
 function updateNetStatus() {
@@ -135,10 +105,10 @@ window.addEventListener('online', () => { updateNetStatus(); log('network: onlin
 window.addEventListener('offline', () => { updateNetStatus(); log('network: offline'); });
 updateNetStatus();
 
+// Registration itself happens in sw-register.js (shared by every
+// page); this just reports status into the dev log.
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then((reg) => log(`service worker registered (scope ${reg.scope})`))
-    .catch((err) => log(`service worker registration failed: ${err}`));
+  navigator.serviceWorker.ready.then((reg) => log(`service worker active (scope ${reg.scope})`));
 } else {
   log('service worker API unavailable in this context');
 }
@@ -151,4 +121,4 @@ document.getElementById('dev-toggle').addEventListener('click', () => {
   devPanel.hidden = !devPanel.hidden;
 });
 
-log('spike loaded — tap Sprocket to hear it speak, or "Play a game" to stress-test animation');
+log('spike loaded — every home button now leads to a real screen');

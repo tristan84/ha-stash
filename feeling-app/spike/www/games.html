@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Play a Game</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+</head>
+<body class="screen-body">
+<!-- Game shelf: the home screen's "Play a game" button (PLAN.md §4.2)
+     lands here. Two real games now exist — see SPIKE_NOTES.md. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">Play a Game</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+  <div class="screen-content">
+    <p class="screen-intro">Pick something to play with Sprocket.</p>
+    <div class="shelf-grid">
+
+      <a class="shelf-card" href="game-breathe.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <rect width="200" height="150" fill="#fff2d9" />
+          <circle cx="100" cy="75" r="42" fill="#ffedc9" opacity="0.6" />
+          <circle cx="100" cy="75" r="28" fill="#ffd35e" />
+        </svg>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Breathing Buddy</p>
+          <p class="shelf-card-sub">practice a calming breath</p>
+        </div>
+      </a>
+
+      <a class="shelf-card" href="game-match.html">
+        <svg class="shelf-card-art" viewBox="0 0 200 150">
+          <rect width="200" height="150" fill="#fff2d9" />
+          <circle cx="60" cy="100" r="22" fill="#ffb15e" opacity="0.95" />
+          <circle cx="105" cy="60" r="26" fill="#ff9b7a" opacity="0.95" />
+          <circle cx="150" cy="105" r="19" fill="#ffd35e" opacity="0.95" />
+          <circle cx="60" cy="100" r="8" fill="#fff4e2" opacity="0.7" />
+          <circle cx="105" cy="60" r="9" fill="#fff4e2" opacity="0.7" />
+        </svg>
+        <div class="shelf-card-body">
+          <p class="shelf-card-title">Bubble Pop</p>
+          <p class="shelf-card-sub">catch the right feeling</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+</body>
+</html>

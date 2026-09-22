@@ -1,0 +1,35 @@
+.help-main { display: flex; flex-direction: column; }
+
+.help-greeting {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 4px 16px 0;
+}
+.help-sprocket { margin-top: 4px; flex-shrink: 0; }
+
+.help-bubble {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fffaf2;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 6px 14px rgba(190,110,40,0.15);
+}
+.help-bubble p { margin: 0; font-size: 14.5px; font-weight: 600; color: var(--ink); flex: 1; }
+
+.hear-btn {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: var(--button-help);
+  color: #fffaf3;
+  font-size: 14px;
+}
+.hear-btn:active { transform: scale(0.94); }
+
+.help-breathe-stage { flex: 1; }

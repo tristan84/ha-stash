@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sprocket's Bouncy Morning</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="story.css" />
+</head>
+<body class="story-body">
+<!-- Third story prototype for PLAN.md §4.5. Picked Excited on purpose:
+     it shares Worried's body signature (fast heart, can't sit still) but
+     feels different, which is the point (page 5) — and its "tool" is
+     channeling energy (a wiggle dance) rather than calming down,
+     reinforcing Principle 2: tools are for any big feeling, not just
+     uncomfortable ones, and no feeling needs to be gotten rid of. -->
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+    </linearGradient>
+    <radialGradient id="coreGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+    </radialGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+    </linearGradient>
+    <radialGradient id="glowSoft" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
+    </radialGradient>
+
+    <symbol id="bookBg" viewBox="0 0 400 260">
+      <rect width="400" height="260" fill="url(#skyGrad)" />
+      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dcea97" />
+      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c6db76" />
+    </symbol>
+
+    <symbol id="cloud" viewBox="0 0 70 26">
+      <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+    </symbol>
+
+    <symbol id="starSpark" viewBox="0 0 40 40">
+      <path d="M20,2 L25,16 L38,20 L25,24 L20,38 L15,24 L2,20 L15,16 Z" fill="#ffd35e" />
+    </symbol>
+
+    <symbol id="confetti" viewBox="0 0 16 16">
+      <rect width="16" height="16" rx="3" fill="#ff8a72" />
+    </symbol>
+
+    <symbol id="clockFace" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="27" fill="#fff4e2" stroke="#f0873a" stroke-width="4" />
+      <line x1="30" y1="30" x2="30" y2="14" stroke="#5a3822" stroke-width="3" stroke-linecap="round" />
+      <line x1="30" y1="30" x2="42" y2="30" stroke="#5a3822" stroke-width="3" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="sprocketMini" viewBox="0 0 120 150">
+      <ellipse class="mini-ear" cx="18" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <ellipse class="mini-ear" cx="102" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
+      <circle class="mini-antenna-tip" cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" />
+      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+      <circle class="mini-eye" cx="45" cy="49" r="7" fill="#ffedc9" />
+      <circle class="mini-eye" cx="75" cy="49" r="7" fill="#ffedc9" />
+      <path class="mini-mouth" d="M46,55 Q60,68 74,55" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" />
+      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
+      <circle class="mini-core" cx="60" cy="122" r="13" fill="url(#coreGrad)" />
+      <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+    </symbol>
+
+    <symbol id="friendMini" viewBox="0 0 120 150">
+      <circle cx="18" cy="52" r="11" fill="url(#bodyGrad)" style="filter:hue-rotate(-30deg)" />
+      <circle cx="102" cy="52" r="11" fill="url(#bodyGrad)" style="filter:hue-rotate(-30deg)" />
+      <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" style="filter:hue-rotate(-30deg)" />
+      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+      <circle cx="45" cy="49" r="7" fill="#ffedc9" /><circle cx="75" cy="49" r="7" fill="#ffedc9" />
+      <path d="M46,55 Q60,68 74,55" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" style="filter:hue-rotate(-30deg)" />
+      <circle cx="60" cy="122" r="16" fill="#fff4e2" />
+    </symbol>
+  </defs>
+</svg>
+
+<main class="story-main">
+  <header class="story-header">
+    <a href="stories.html" class="story-back" aria-label="Back to books">←</a>
+    <span class="story-title-chip">Sprocket's Bouncy Morning</span>
+    <button id="read-toggle" class="story-read-btn" aria-pressed="false">🔊 <span id="read-label">Read to me</span></button>
+  </header>
+
+  <div class="book-stage" id="book-stage">
+
+    <section class="page" data-page="0">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="cloud-drift" href="#cloud" x="24" y="16" width="60" height="22" />
+        <circle cx="340" cy="50" r="30" fill="url(#glowSoft)" class="soft-pulse" />
+        <use class="rise-fade" href="#starSpark" x="90" y="60" width="18" height="18" />
+        <use class="rise-fade" href="#starSpark" x="300" y="130" width="14" height="14" style="animation-delay:0.5s" />
+        <use class="ball-bounce" href="#sprocketMini" x="150" y="110" width="100" height="125" />
+      </svg>
+      <div class="cover-text">
+        <h1>Sprocket's Bouncy Morning</h1>
+        <p class="cover-sub">a story about the excited feeling</p>
+      </div>
+      <p class="page-text page-text--cover">Tap the arrow to begin →</p>
+    </section>
+
+    <section class="page" data-page="1">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="gentle-bob" href="#clockFace" x="290" y="40" width="70" height="70" />
+        <use class="gentle-bob" href="#sprocketMini" x="120" y="110" width="100" height="125" />
+      </svg>
+      <p class="page-text">Today, Sprocket's best friend was coming to visit! Sprocket had thought about it all week.</p>
+    </section>
+
+    <section class="page" data-page="2">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="ball-bounce" href="#sprocketMini" x="150" y="105" width="100" height="125" />
+        <g class="spin-pulse" style="animation-delay:0.2s">
+          <path d="M300,90 c6,-10 22,-10 22,4 c0,10 -22,22 -22,22 c0,0 -22,-12 -22,-22 c0,-14 16,-14 22,-4 Z" fill="#ff8a72" transform="translate(-4,0) scale(0.6)" />
+        </g>
+        <text x="300" y="82" font-size="26" fill="#ff8a72">♥</text>
+      </svg>
+      <p class="page-text">Sprocket's legs started bouncing all on their own — boing, boing, boing! And Sprocket's heart went pitter-patter-pitter-patter fast.</p>
+    </section>
+
+    <section class="page" data-page="3">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="ball-bounce" href="#sprocketMini" x="150" y="100" width="100" height="125" />
+        <g class="rise-fade" style="animation-delay:0s">
+          <circle cx="300" cy="50" r="20" fill="#fff4e2" stroke="#ffd35e" stroke-width="2" />
+          <rect x="290" y="42" width="20" height="14" rx="2" fill="#5a3822" /><circle cx="296" cy="49" r="2" fill="#ffd35e" /><circle cx="304" cy="49" r="2" fill="#ffd35e" />
+        </g>
+        <g class="rise-fade" style="animation-delay:0.5s">
+          <circle cx="90" cy="60" r="18" fill="#fff4e2" stroke="#ffd35e" stroke-width="2" />
+          <rect x="80" y="52" width="20" height="16" rx="3" fill="#f0873a" /><rect x="78" y="64" width="24" height="4" rx="2" fill="#e8722c" />
+        </g>
+        <g class="rise-fade" style="animation-delay:1s">
+          <circle cx="70" cy="100" r="13" fill="#fff4e2" stroke="#ffd35e" stroke-width="2" />
+          <circle cx="70" cy="100" r="6" fill="#ff8a72" />
+        </g>
+      </svg>
+      <p class="page-text">Sprocket's thoughts bounced too — what games will we play, what will we build, will there be snacks? Thoughts everywhere, all at once!</p>
+    </section>
+
+    <section class="page" data-page="4">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <circle cx="200" cy="120" r="90" fill="url(#glowSoft)" class="soft-pulse" />
+        <use class="gentle-bob" href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g class="pop-in" style="transform-origin:315px 83px">
+          <rect x="255" y="60" width="120" height="46" rx="20" fill="#fff4e2" stroke="#ffd35e" stroke-width="3" />
+          <text x="315" y="90" text-anchor="middle" font-size="21" font-weight="700" fill="#5a3822" font-family="inherit">EXCITED</text>
+        </g>
+      </svg>
+      <p class="page-text">Sprocket stopped bouncing just long enough to notice: <em>my legs are bouncy, my heart is fast, my thoughts are racing.</em> This feeling has a name — it's called <strong>EXCITED</strong>.</p>
+    </section>
+
+    <section class="page" data-page="5">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <g class="pop-in" style="animation-delay:0s;transform-origin:110px 60px">
+          <rect x="60" y="40" width="100" height="40" rx="18" fill="#fff4e2" stroke="#ff8a65" stroke-width="3" />
+          <text x="110" y="65" text-anchor="middle" font-size="16" font-weight="700" fill="#5a3822" font-family="inherit">WORRIED</text>
+        </g>
+        <g class="pop-in" style="animation-delay:0.3s;transform-origin:290px 60px">
+          <rect x="240" y="40" width="100" height="40" rx="18" fill="#fff4e2" stroke="#ffd35e" stroke-width="3" />
+          <text x="290" y="65" text-anchor="middle" font-size="16" font-weight="700" fill="#5a3822" font-family="inherit">EXCITED</text>
+        </g>
+        <text x="200" y="70" text-anchor="middle" font-size="22" fill="#5a3822" font-weight="700">=</text>
+        <use class="ball-bounce" href="#sprocketMini" x="150" y="128" width="94" height="118" />
+      </svg>
+      <p class="page-text">Excited can feel a lot like worried in the body — fast heart, wiggly legs. But it comes with a happy feeling too. Both are big feelings. Both are okay.</p>
+    </section>
+
+    <section class="page" data-page="6">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="jitter" href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g stroke="#ffd35e" stroke-width="3" fill="none" stroke-linecap="round">
+          <path class="rise-fade" d="M90,110 q-14,4 -18,-8" style="animation-delay:0s" />
+          <path class="rise-fade" d="M310,110 q14,4 18,-8" style="animation-delay:0.3s" />
+          <path class="rise-fade" d="M100,180 q-12,8 -20,0" style="animation-delay:0.6s" />
+          <path class="rise-fade" d="M300,180 q12,8 20,0" style="animation-delay:0.9s" />
+        </g>
+      </svg>
+      <p class="page-text">So Sprocket tried something fun: a big wiggle dance, to let the bounces out. Shake, shake, wiggle, wiggle!</p>
+    </section>
+
+    <section class="page" data-page="7">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="spin-pulse" href="#starSpark" x="300" y="60" width="22" height="22" />
+        <use class="bob-b" href="#friendMini" x="260" y="128" width="72" height="90" />
+        <use class="gentle-bob" href="#sprocketMini" x="130" y="105" width="100" height="125" />
+      </svg>
+      <p class="page-text">After wiggling it out, Sprocket felt ready — still excited, just <em>settled</em> excited. And proud, for noticing the big feeling and giving it somewhere to go.</p>
+    </section>
+
+    <section class="page" data-page="8">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="wave-hi" href="#sprocketMini" x="150" y="118" width="100" height="125" />
+        <g class="pop-in" style="animation-delay:0s;transform-origin:70px 60px">
+          <circle cx="70" cy="60" r="26" fill="#fff4e2" stroke="#f0873a" stroke-width="3" />
+          <circle cx="65" cy="55" r="9" fill="none" stroke="#5a3822" stroke-width="3" />
+          <line x1="72" y1="62" x2="82" y2="72" stroke="#5a3822" stroke-width="3" stroke-linecap="round" />
+        </g>
+        <g class="pop-in" style="animation-delay:0.25s;transform-origin:200px 50px">
+          <rect x="150" y="30" width="100" height="40" rx="18" fill="#fff4e2" stroke="#ffd35e" stroke-width="3" />
+          <text x="200" y="56" text-anchor="middle" font-size="18" font-weight="700" fill="#5a3822" font-family="inherit">EXCITED</text>
+        </g>
+        <g class="pop-in" style="animation-delay:0.5s;transform-origin:330px 60px">
+          <circle cx="330" cy="60" r="26" fill="#fff4e2" stroke="#ffd35e" stroke-width="3" />
+          <text x="330" y="66" text-anchor="middle" font-size="20">💃</text>
+        </g>
+      </svg>
+      <p class="page-text">So next time your legs feel bouncy or your thoughts race with excitement, try what Sprocket tried. <strong>Notice</strong> it. <strong>Name</strong> it. <strong>Try a tool</strong> — even a wiggle dance counts.</p>
+    </section>
+
+  </div>
+
+  <nav class="story-nav">
+    <button id="btn-prev" class="nav-btn" aria-label="Previous page">‹</button>
+    <div id="dots" class="dots"></div>
+    <button id="btn-next" class="nav-btn" aria-label="Next page">›</button>
+  </nav>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="story.js"></script>
+</body>
+</html>

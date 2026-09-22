@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>For Grown-Ups</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="parent-gate.css" />
+</head>
+<body class="screen-body">
+<!-- Parent gate (PLAN.md §5): a real, working gate — a simple math
+     check, the standard lightweight pattern for keeping young kids
+     out without needing a real login system. Not meant as security
+     against a determined adult-literate older child, just friction
+     against a curious toddler/preschooler tapping around. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">For Grown-Ups</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+  <div class="gate-content">
+    <p class="gate-instruction">Grown-ups: solve this to continue.</p>
+    <p id="gate-sum" class="gate-sum"></p>
+    <input id="gate-input" class="gate-input" type="number" inputmode="numeric" placeholder="?" aria-label="Your answer" />
+    <button id="gate-submit" class="pill-btn help">Continue</button>
+    <p id="gate-feedback" class="gate-feedback" aria-live="polite"></p>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="parent-gate.js"></script>
+</body>
+</html>

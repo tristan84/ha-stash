@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sprocket's Wobbly Tower</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="story.css" />
+</head>
+<body class="story-body">
+<!-- Second story prototype for PLAN.md §4.5. Picked Frustrated: a
+     different body signature (hot face, tight hands) and mind signature
+     (loud "I can't do this" thoughts) from Worried, and a different
+     tool (shake it out + count to five, or ask for help) — shows the
+     app teaches distinct tools per feeling, not one generic fix. Same
+     notice -> name -> normalize -> tool -> process-reward structure. -->
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb15e" /><stop offset="100%" stop-color="#f0873a" />
+    </linearGradient>
+    <radialGradient id="coreGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff8e8" /><stop offset="100%" stop-color="#ffd35e" />
+    </radialGradient>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff2d9" /><stop offset="100%" stop-color="#ffdcb3" />
+    </linearGradient>
+    <radialGradient id="glowSoft" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffedc9" stop-opacity="0.9" /><stop offset="100%" stop-color="#ffedc9" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="glowHot" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff8a72" stop-opacity="0.8" /><stop offset="100%" stop-color="#ff8a72" stop-opacity="0" />
+    </radialGradient>
+
+    <symbol id="bookBg" viewBox="0 0 400 260">
+      <rect width="400" height="260" fill="url(#skyGrad)" />
+      <path d="M0,190 Q100,165 200,185 T400,180 V260 H0 Z" fill="#dcea97" />
+      <path d="M0,205 Q100,185 200,203 T400,198 V260 H0 Z" fill="#c6db76" />
+    </symbol>
+
+    <symbol id="cloud" viewBox="0 0 70 26">
+      <ellipse cx="16" cy="16" rx="16" ry="10" fill="#fffaf2" /><ellipse cx="34" cy="9" rx="15" ry="12" fill="#fffaf2" /><ellipse cx="52" cy="15" rx="12" ry="9" fill="#fffaf2" />
+    </symbol>
+
+    <symbol id="blockTower" viewBox="0 0 60 90">
+      <rect x="8" y="66" width="44" height="20" rx="4" fill="#ff9b5e" />
+      <rect x="12" y="44" width="36" height="20" rx="4" fill="#ffd35e" />
+      <rect x="16" y="22" width="28" height="20" rx="4" fill="#b6d98a" />
+      <rect x="20" y="2" width="20" height="18" rx="4" fill="#ff8a72" />
+    </symbol>
+
+    <symbol id="blockScatter" viewBox="0 0 120 40">
+      <rect x="4" y="18" width="24" height="16" rx="3" fill="#ff9b5e" transform="rotate(-8 16 26)" />
+      <rect x="40" y="8" width="22" height="16" rx="3" fill="#ffd35e" transform="rotate(12 51 16)" />
+      <rect x="78" y="16" width="20" height="16" rx="3" fill="#b6d98a" transform="rotate(-14 88 24)" />
+      <rect x="98" y="2" width="18" height="14" rx="3" fill="#ff8a72" transform="rotate(20 107 9)" />
+    </symbol>
+
+    <symbol id="starSpark" viewBox="0 0 40 40">
+      <path d="M20,2 L25,16 L38,20 L25,24 L20,38 L15,24 L2,20 L15,16 Z" fill="#ffd35e" />
+    </symbol>
+
+    <symbol id="sprocketMini" viewBox="0 0 120 150">
+      <ellipse class="mini-ear" cx="18" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <ellipse class="mini-ear" cx="102" cy="52" rx="10" ry="12" fill="url(#bodyGrad)" />
+      <rect x="4" y="0" width="3" height="18" fill="#f0873a" />
+      <circle class="mini-antenna-tip" cx="5.5" cy="0" r="6" fill="#ffd35e" />
+      <circle cx="60" cy="46" r="44" fill="url(#bodyGrad)" />
+      <rect x="30" y="34" width="60" height="30" rx="15" fill="#4a2e1c" />
+      <circle class="mini-eye" cx="45" cy="49" r="7" fill="#ffedc9" />
+      <circle class="mini-eye" cx="75" cy="49" r="7" fill="#ffedc9" />
+      <path class="mini-mouth" d="M48,56 Q60,64 72,56" stroke="#ffedc9" stroke-width="3" fill="none" stroke-linecap="round" />
+      <ellipse cx="24" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <ellipse cx="96" cy="66" rx="7" ry="4.5" fill="#ff8a72" opacity="0.8" />
+      <rect x="45" y="88" width="30" height="12" rx="6" fill="#f0873a" />
+      <rect x="20" y="98" width="80" height="52" rx="26" fill="url(#bodyGrad)" />
+      <circle cx="60" cy="122" r="18" fill="#fff4e2" />
+      <circle class="mini-core" cx="60" cy="122" r="13" fill="url(#coreGrad)" />
+      <rect x="4" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="100" y="108" width="16" height="34" rx="8" fill="url(#bodyGrad)" />
+      <rect x="34" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+      <rect x="66" y="146" width="20" height="4" rx="2" fill="#e8722c" />
+    </symbol>
+  </defs>
+</svg>
+
+<main class="story-main">
+  <header class="story-header">
+    <a href="stories.html" class="story-back" aria-label="Back to books">←</a>
+    <span class="story-title-chip">Sprocket's Wobbly Tower</span>
+    <button id="read-toggle" class="story-read-btn" aria-pressed="false">🔊 <span id="read-label">Read to me</span></button>
+  </header>
+
+  <div class="book-stage" id="book-stage">
+
+    <section class="page" data-page="0">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="cloud-drift" href="#cloud" x="30" y="16" width="60" height="22" />
+        <use class="rise-fade" href="#blockScatter" x="230" y="150" width="120" height="40" />
+        <use class="gentle-bob" href="#sprocketMini" x="150" y="120" width="100" height="125" />
+      </svg>
+      <div class="cover-text">
+        <h1>Sprocket's Wobbly Tower</h1>
+        <p class="cover-sub">a story about the frustrated feeling</p>
+      </div>
+      <p class="page-text page-text--cover">Tap the arrow to begin →</p>
+    </section>
+
+    <section class="page" data-page="1">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="cloud-drift" href="#cloud" x="260" y="16" width="56" height="20" />
+        <use class="gentle-bob" href="#blockTower" x="230" y="120" width="90" height="130" />
+        <use class="walk-bounce" href="#sprocketMini" x="90" y="120" width="100" height="125" />
+      </svg>
+      <p class="page-text">Sprocket was building the tallest tower ever — five blocks, six blocks, seven!</p>
+    </section>
+
+    <section class="page" data-page="2">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <circle cx="200" cy="120" r="90" fill="url(#glowHot)" class="soft-pulse" />
+        <use class="rise-fade" href="#blockScatter" x="60" y="180" width="110" height="36" />
+        <use class="rise-fade" href="#blockScatter" x="230" y="186" width="100" height="34" style="animation-delay:0.4s" />
+        <use class="jitter" href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g class="rise-fade" stroke="#ff8a72" stroke-width="3" fill="none" stroke-linecap="round" style="animation-delay:0.2s">
+          <path d="M120,80 q-6,-10 0,-20" /><path d="M112,92 q-8,-6 -6,-18" />
+        </g>
+        <g class="rise-fade" stroke="#ff8a72" stroke-width="3" fill="none" stroke-linecap="round" style="animation-delay:0.6s">
+          <path d="M280,80 q6,-10 0,-20" /><path d="M288,92 q8,-6 6,-18" />
+        </g>
+      </svg>
+      <p class="page-text">Then — <strong>CRASH</strong> — the tower tumbled down. Sprocket's cheeks went hot, and both hands squeezed into tight little fists.</p>
+    </section>
+
+    <section class="page" data-page="3">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="jitter" href="#sprocketMini" x="150" y="100" width="100" height="125" />
+        <g class="rise-fade" style="animation-delay:0s">
+          <path d="M280,30 l40,0 l-8,14 l8,14 l-40,0 l8,-14 Z" fill="#fff4e2" stroke="#ff8a65" stroke-width="2.5" />
+          <text x="300" y="49" text-anchor="middle" font-size="18" font-weight="700" fill="#5a3822" font-family="inherit">!</text>
+        </g>
+        <g class="rise-fade" style="animation-delay:0.5s">
+          <path d="M70,44 l38,0 l-7,13 l7,13 l-38,0 l7,-13 Z" fill="#fff4e2" stroke="#ff8a65" stroke-width="2.5" />
+          <text x="89" y="61" text-anchor="middle" font-size="16" font-weight="700" fill="#5a3822" font-family="inherit">!</text>
+        </g>
+        <g class="rise-fade" style="animation-delay:1s">
+          <path d="M300,90 l30,0 l-6,11 l6,11 l-30,0 l6,-11 Z" fill="#fff4e2" stroke="#ff8a65" stroke-width="2.5" />
+        </g>
+      </svg>
+      <p class="page-text">Sprocket's thoughts got loud: <em>This is impossible. I can't do this. I want to give up!</em></p>
+    </section>
+
+    <section class="page" data-page="4">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <circle cx="200" cy="120" r="90" fill="url(#glowSoft)" class="soft-pulse" />
+        <use class="gentle-bob" href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g class="pop-in" style="transform-origin:315px 83px">
+          <rect x="255" y="58" width="130" height="46" rx="20" fill="#fff4e2" stroke="#ff8a65" stroke-width="3" />
+          <text x="320" y="88" text-anchor="middle" font-size="20" font-weight="700" fill="#5a3822" font-family="inherit">FRUSTRATED</text>
+        </g>
+      </svg>
+      <p class="page-text">Sprocket stopped and noticed: <em>my face feels hot, my hands feel tight.</em> This feeling has a name — it's called <strong>FRUSTRATED</strong>.</p>
+    </section>
+
+    <section class="page" data-page="5">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="bob-b" href="#blockTower" x="24" y="176" width="52" height="76" style="filter:hue-rotate(30deg)" />
+        <use class="bob-c" href="#blockTower" x="320" y="172" width="56" height="80" style="filter:hue-rotate(-25deg)" />
+        <use class="bob-a" href="#sprocketMini" x="150" y="128" width="94" height="118" />
+      </svg>
+      <p class="page-text">Frustrated visits everyone when something is hard, or doesn't go the way we planned. It doesn't mean you're bad at it.</p>
+    </section>
+
+    <section class="page" data-page="6">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="walk-bounce" href="#sprocketMini" x="150" y="95" width="100" height="125" />
+        <g font-family="inherit" font-weight="700" font-size="20" fill="#5a3822">
+          <text class="rise-fade" x="90" y="70" style="animation-delay:0s">1</text>
+          <text class="rise-fade" x="130" y="60" style="animation-delay:0.3s">2</text>
+          <text class="rise-fade" x="200" y="52" style="animation-delay:0.6s">3</text>
+          <text class="rise-fade" x="270" y="60" style="animation-delay:0.9s">4</text>
+          <text class="rise-fade" x="310" y="70" style="animation-delay:1.2s">5</text>
+        </g>
+      </svg>
+      <p class="page-text">So Sprocket tried something new: shake out your hands, and count to five. One… two… three… four… five.</p>
+    </section>
+
+    <section class="page" data-page="7">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="spin-pulse" href="#starSpark" x="288" y="70" width="26" height="26" />
+        <use class="gentle-bob" href="#blockTower" x="230" y="130" width="80" height="120" />
+        <use class="walk-bounce" href="#sprocketMini" x="100" y="105" width="100" height="125" />
+      </svg>
+      <p class="page-text">The tower was still a little wobbly. The frustrated feeling was still a little there. But Sprocket picked up a block and tried again — and felt proud. Not for a perfect tower. For trying again.</p>
+    </section>
+
+    <section class="page" data-page="8">
+      <svg class="page-art" viewBox="0 0 400 260"><use href="#bookBg" />
+        <use class="wave-hi" href="#sprocketMini" x="150" y="118" width="100" height="125" />
+        <g class="pop-in" style="animation-delay:0s;transform-origin:70px 60px">
+          <circle cx="70" cy="60" r="26" fill="#fff4e2" stroke="#ff8a72" stroke-width="3" />
+          <path d="M60,54 q10,-8 20,0" stroke="#5a3822" stroke-width="3" fill="none" stroke-linecap="round" />
+        </g>
+        <g class="pop-in" style="animation-delay:0.25s;transform-origin:200px 50px">
+          <rect x="145" y="30" width="110" height="40" rx="18" fill="#fff4e2" stroke="#ff8a65" stroke-width="3" />
+          <text x="200" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#5a3822" font-family="inherit">FRUSTRATED</text>
+        </g>
+        <g class="pop-in" font-family="inherit" font-weight="700" font-size="16" fill="#5a3822" style="animation-delay:0.5s;transform-origin:330px 60px">
+          <circle cx="330" cy="60" r="26" fill="#fff4e2" stroke="#ff8a72" stroke-width="3" />
+          <text x="330" y="66" text-anchor="middle">5</text>
+        </g>
+      </svg>
+      <p class="page-text">So next time your face feels hot or your hands feel tight, try what Sprocket tried. <strong>Notice</strong> it. <strong>Name</strong> it. <strong>Try a tool</strong> — even asking for help counts.</p>
+    </section>
+
+  </div>
+
+  <nav class="story-nav">
+    <button id="btn-prev" class="nav-btn" aria-label="Previous page">‹</button>
+    <div id="dots" class="dots"></div>
+    <button id="btn-next" class="nav-btn" aria-label="Next page">›</button>
+  </nav>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="story.js"></script>
+</body>
+</html>

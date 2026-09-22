@@ -1,0 +1,148 @@
+/* Shared "sub-screen" chrome — header with back button + title, and a
+   couple of generic layout helpers — reused by every screen that isn't
+   the home screen or the book reader (which has its own story.css).
+   Keeps games/diary/help/parent-gate visually consistent without
+   duplicating the same header markup styling five times. */
+
+.screen-body {
+  background: var(--sky-top);
+}
+
+.screen-main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(10px + env(safe-area-inset-top)) 12px 8px;
+}
+
+.screen-back {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.screen-title-chip {
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.screen-header-spacer {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.screen-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 6px 16px calc(16px + env(safe-area-inset-bottom));
+}
+
+/* --- Shelf grid (stories.html / games.html) ------------------------- */
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.shelf-card {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  background: #fffaf2;
+  box-shadow: 0 8px 18px rgba(190, 110, 40, 0.18);
+  overflow: hidden;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: inherit;
+}
+.shelf-card:active { transform: translateY(2px); }
+
+.shelf-card-art {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+}
+
+.shelf-card-body {
+  padding: 10px 12px 12px;
+}
+.shelf-card-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 14.5px;
+}
+.shelf-card-sub {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--button-help-dark);
+  font-weight: 600;
+}
+
+.screen-intro {
+  margin: 4px 0 2px;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+/* --- Generic rounded action button, used across diary/help/parent --- */
+.pill-btn {
+  display: inline-block;
+  border: none;
+  border-radius: 18px;
+  padding: 12px 16px;
+  background: var(--button-primary);
+  color: #fffaf3;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 0 var(--button-primary-shadow);
+}
+.pill-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--button-primary-shadow); }
+.pill-btn.quiet {
+  background: var(--button-quiet);
+  color: var(--button-quiet-ink);
+  box-shadow: 0 4px 0 var(--button-quiet-shadow);
+}
+.pill-btn.quiet:active { box-shadow: 0 1px 0 var(--button-quiet-shadow); }
+.pill-btn.help {
+  background: var(--button-help);
+  box-shadow: 0 4px 0 var(--button-help-shadow);
+}
+.pill-btn.help:active { box-shadow: 0 1px 0 var(--button-help-shadow); }
+.pill-btn:disabled { opacity: 0.4; }
+
+.empty-note {
+  text-align: center;
+  color: var(--ink);
+  opacity: 0.6;
+  font-size: 14px;
+  padding: 24px 12px;
+}

@@ -193,6 +193,116 @@
   50% { transform: scale(1.15); opacity: 0.8; }
 }
 
+/* --- In-illustration motion -----------------------------------------
+   Every page gets at least one animated element beyond the page-turn
+   itself. All transform/opacity only, same technique validated at
+   60fps with 100 concurrent nodes elsewhere in this spike — these
+   illustrations add roughly 4-8 animated nodes per page, well under
+   that budget even with all 9 pages' animations running at once
+   (inactive pages stay in the DOM at opacity:0, not display:none). */
+
+.cloud-drift, .cloud-drift-b, .soft-pulse, .rise-fade, .gentle-bob,
+.walk-bounce, .jitter, .bob-a, .bob-b, .bob-c, .spin-pulse, .shimmer,
+.breath-dot, .breath-dot-b, .breath-dot-c, .wave-hi, .ball-bounce,
+.pop-in {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.cloud-drift { animation: cloudDrift 7s ease-in-out infinite alternate; }
+.cloud-drift-b { animation: cloudDrift 9s ease-in-out infinite alternate-reverse; }
+@keyframes cloudDrift {
+  from { transform: translateX(0); }
+  to { transform: translateX(18px); }
+}
+
+.soft-pulse { animation: softPulse 2.6s ease-in-out infinite; }
+@keyframes softPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.92); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+
+.rise-fade { animation: riseFade 2.4s ease-in infinite; }
+@keyframes riseFade {
+  0% { transform: translateY(6px); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-22px); opacity: 0; }
+}
+
+.gentle-bob { animation: gentleBob 2.4s ease-in-out infinite; }
+.bob-a { animation: gentleBob 2.4s ease-in-out infinite; }
+.bob-b { animation: gentleBob 2.4s ease-in-out infinite 0.3s; }
+.bob-c { animation: gentleBob 2.4s ease-in-out infinite 0.6s; }
+@keyframes gentleBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.walk-bounce { animation: walkBounce 0.9s ease-in-out infinite; }
+@keyframes walkBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(1.5deg); }
+}
+
+/* Slightly nervous full-figure jitter — kept subtle and slow-ish
+   (short amplitude, not fast/strobing) so it reads as "fluttery",
+   never as something distressing to look at. */
+.jitter { animation: jitter 0.4s ease-in-out infinite; }
+@keyframes jitter {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-1.5px) rotate(-0.6deg); }
+  75% { transform: translateX(1.5px) rotate(0.6deg); }
+}
+
+.spin-pulse { animation: spinPulse 2s ease-in-out infinite; }
+@keyframes spinPulse {
+  0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.85; }
+  50% { transform: rotate(16deg) scale(1.15); opacity: 1; }
+}
+
+.shimmer { animation: shimmer 2.2s ease-in-out infinite; }
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+
+.pop-in { animation: popIn 0.55s cubic-bezier(.3,1.4,.5,1) both; }
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.breathe-ring-mid { animation-delay: 0.4s; }
+
+.breath-dot, .breath-dot-b, .breath-dot-c { animation: breathDot 3.6s ease-in infinite; }
+.breath-dot-b { animation-delay: 1.2s; }
+.breath-dot-c { animation-delay: 2.4s; }
+@keyframes breathDot {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  30% { opacity: 0.8; }
+  100% { transform: translateY(-46px) scale(1.2); opacity: 0; }
+}
+
+.wave-hi { animation: waveHi 1.1s ease-in-out infinite; }
+@keyframes waveHi {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(4deg) translateY(-2px); }
+}
+
+.ball-bounce { animation: ballBounce 1.3s ease-in-out infinite; }
+@keyframes ballBounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  45% { transform: translateY(-30px) scale(1.05, 0.95); }
+  55% { transform: translateY(-30px) scale(1.05, 0.95); }
+}
+
+.step-motion { animation: stepMotion 0.9s ease-in-out infinite; }
+@keyframes stepMotion {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.6; }
+}
+
 /* --- Nav ------------------------------------------------------------ */
 .story-nav {
   display: flex;

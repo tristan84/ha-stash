@@ -153,6 +153,83 @@ This is a content-format and tone prototype for Open Decision #4/§4.5,
 not locked story content or final art direction — see PLAN.md §4.5 for
 how the story's structure maps to research note 01's five-stage model.
 
+**2026-09-22 update 8**: asked to "make more books, make some games,
+make everything work, make it all work" — every home-screen button
+(Help me, Play a game, Story time, My diary, the parent gate) led
+somewhere placeholder or nowhere real. Built out all five as actual
+working, tested screens rather than one at a time:
+
+- **Two more story books** at `story-frustrated.html` ("Sprocket's
+  Wobbly Tower," about Frustrated) and `story-excited.html` ("Sprocket's
+  Bouncy Morning," about Excited), plus a `stories.html` shelf. Each
+  picked deliberately for a different body/mind signature and a
+  different tool — see PLAN.md §4.5. Home's "Story time" now goes to the
+  shelf, not straight into one book.
+- **Two real games** at `games.html` — Breathing Buddy
+  (`game-breathe.html`, a real hold-to-grow/release-to-shrink breathing
+  tool, also reused inside Help Me) and Bubble Pop (`game-match.html`).
+  Bubble Pop went through **three** versions in one sitting: a
+  multiple-choice quiz ("that looks like a test game"), then a static
+  memory-card grid ("i want a real game" / "text game"), then real-time
+  gameplay — bubbles continuously float up a play field and the child
+  taps the ones matching a called-out target feeling before they drift
+  past, target rotating every 3 catches. That's the one that actually
+  has moving parts and timing instead of tap-and-read content.
+- **A real feeling diary** at `diary.html` — tap a feeling to log it
+  (localStorage only), see past entries and a process-based tally. See
+  PLAN.md §4.6 for the deliberate no-typed-note-field scope choice.
+- **A real Help Me flow** at `help.html` — opens straight into the
+  Breathing Buddy component (shared code with the game, not a copy),
+  with an on-screen greeting and an explicit tap-to-hear button rather
+  than autoplaying speech on navigation.
+- **A real parent gate** at `parent-gate.html` → `parent-home.html` — a
+  randomized math check, then a deliberately minimal grown-up area
+  showing process counts only (never which feelings, never when).
+
+Also extracted TTS registration and service-worker registration into two
+tiny shared files (`tts.js` already existed; added `sw-register.js`) so
+all twelve HTML pages register offline support and share one TTS
+implementation instead of each page needing its own copy — this was
+already the plan for TTS, and the same fix from the earlier "story.html
+opened directly had no offline support" bug is now applied everywhere,
+not just the book reader.
+
+**Two real bugs found via screenshot review, not "looks right at a
+glance," both fixed:**
+1. In Breathing Buddy, the bubble's grow animation scales up
+   symmetrically in every direction, including upward — with too little
+   clearance, it visually swallowed the small Sprocket character
+   positioned right above it at full grow. Fixed by widening the gap.
+2. In the (now-retired) memory-card version of the match game, `.done-view`
+   and `#round-view` both set `display: flex` directly on the element —
+   a class/ID selector doing that beats the browser's own very-low-specificity
+   `[hidden] { display: none }` default, so toggling the `hidden`
+   attribute via JS silently did nothing and **both screens stayed
+   visible on top of each other the whole time**. `#dev-panel` already
+   had the correct `[hidden]` override pattern elsewhere in this spike;
+   this was the same footgun recurring in a new file. Fixed there, and
+   the final Bubble Pop version sidesteps the whole footgun by toggling
+   `element.style.display` directly (inline styles always win) instead
+   of relying on the `hidden` attribute at all.
+
+Re-verified everything across all twelve pages after these changes:
+flat 60fps on every screen including active Bubble Pop gameplay (~4
+concurrently animating bubbles, well under the 100-node budget already
+validated), all twelve pages load correctly both online and offline
+(service worker cache version bumped to v5), zero unexpected console
+errors (only the same harmless missing-favicon request seen throughout
+this whole spike — Capacitor apps use platform app icons, not
+favicon.ico, so this was never worth fixing), and every interactive flow
+exercised end-to-end: breathing-hold counts a breath, Bubble Pop
+correctly detects matches and rotates targets, the diary persists
+entries across a reload, the parent gate blocks a wrong answer and
+admits a correct one, and the parent-home stats correctly reflect real
+localStorage counts.
+
+None of this is locked content, final IA, or final visual design — it's
+a much fuller *prototype* than existed before this pass, covering every
+function named in PLAN.md §4, built and tested rather than described.
+
 ## What was built
 
 `feeling-app/spike/` — a throwaway Capacitor project (not product code):
@@ -261,7 +338,24 @@ Android hardware or an Android Studio emulator — flagging it back to you
 rather than guessing at a result I can't actually produce here.
 
 ## Files
-- `www/index.html`, `www/style.css`, `www/app.js` — the test screen
-- `www/sw.js`, `www/manifest.webmanifest` — offline support
+- `www/index.html`, `www/style.css`, `www/app.js` — the home screen
+- `www/common.css` — shared header/shelf/button chrome for every
+  non-home, non-book screen
+- `www/tts.js` — shared TTS wrapper (native plugin + browser fallback)
+- `www/sw.js`, `www/sw-register.js`, `www/manifest.webmanifest` — offline
+  support, registered from every page
+- `www/stories.html` — book shelf
+- `www/story.html`, `www/story-frustrated.html`, `www/story-excited.html`
+  — the three books (Worried, Frustrated, Excited)
+- `www/story.css`, `www/story.js` — shared book-reader machinery (page
+  flip, dots, read-aloud) used by all three books
+- `www/games.html` — game shelf
+- `www/game-breathe.html/.css/.js` — Breathing Buddy (also embedded in
+  `help.html`)
+- `www/game-match.html/.css/.js` — Bubble Pop
+- `www/diary.html/.css/.js` — feeling diary
+- `www/help.html/.css/.js` — Help Me (embeds Breathing Buddy)
+- `www/parent-gate.html/.css/.js` — the math gate
+- `www/parent-home.html/.css/.js` — the minimal post-gate area
 - `android/` — generated native project (build artifacts gitignored)
 - `capacitor.config.json`, `package.json` — project config

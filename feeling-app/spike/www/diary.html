@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>My Diary</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="diary.css" />
+</head>
+<body class="screen-body">
+<!-- Feeling diary (PLAN.md §4.6): a real, working, on-device diary.
+     Tap a feeling to log noticing it — that's the whole entry action,
+     no typed note field. That's a deliberate scope choice for this
+     prototype, not a missing feature: it keeps entries fast/low-friction
+     to log, sidesteps needing a text-input UI, and avoids a child
+     typing anything identifying. Entries live in localStorage only
+     (Principle 1 / Open Decision #14's default: private to the child,
+     nothing sent anywhere, no parent view of this data exists). -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="index.html" class="screen-back" aria-label="Back home">←</a>
+    <span class="screen-title-chip">My Diary</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+
+  <div class="screen-content">
+    <p id="diary-tally" class="diary-tally"></p>
+
+    <p class="screen-intro">What are you noticing right now?</p>
+    <div id="feeling-picker" class="feeling-picker"></div>
+    <p id="add-feedback" class="add-feedback" aria-live="polite"></p>
+
+    <h2 class="diary-list-heading">Your notebook</h2>
+    <div id="entry-list" class="entry-list"></div>
+    <p id="empty-note" class="empty-note" hidden>No entries yet — tap a feeling above whenever you notice one.</p>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="diary.js"></script>
+</body>
+</html>

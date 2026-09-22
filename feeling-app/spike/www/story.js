@@ -2,14 +2,8 @@
 // story.css) and the read-aloud toggle. Not final content/IA — see
 // SPIKE_NOTES.md for what this prototype is and isn't validating.
 
-// Registers the same service worker app.js does. In the real Capacitor
-// app this is redundant (webDir root is always index.html, so it
-// registers there first) but registering here too means story.html
-// works offline even if it's opened directly (e.g. spot-testing a
-// deep link), and re-registering an identical worker is a no-op.
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch((err) => console.error('sw register failed', err));
-}
+// Service worker registration now lives in sw-register.js (shared by
+// every page) — see that file for why every page registers it.
 
 const pages = Array.from(document.querySelectorAll('.page'));
 const dotsEl = document.getElementById('dots');

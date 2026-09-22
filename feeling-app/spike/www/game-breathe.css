@@ -1,0 +1,115 @@
+.breathe-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 24px calc(24px + env(safe-area-inset-bottom));
+  position: relative;
+}
+
+/* Small idle Sprocket watching over the exercise, built directly
+   (not via the story-book SVG symbol) since this is plain HTML/CSS
+   like the home screen's character, just simplified. Extra margin
+   below it: the bubble's grow animation scales up symmetrically in
+   every direction (including upward), so it needs enough clearance
+   above it or it visually swallows Sprocket's head at full grow. */
+.bb-sprocket {
+  width: 70px;
+  height: 70px;
+  position: relative;
+  margin-bottom: 48px;
+  animation: bbBob 2.4s ease-in-out infinite;
+}
+@keyframes bbBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.bb-antenna {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 3px;
+  height: 14px;
+  margin-left: -1.5px;
+  background: var(--sprocket-body-dark);
+  border-radius: 3px;
+}
+.bb-antenna-tip {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  background: var(--antenna-glow);
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px rgba(255,211,94,0.7);
+}
+.bb-head {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--sprocket-body), var(--sprocket-body-dark));
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(190,100,40,0.25);
+}
+.bb-eye {
+  position: absolute;
+  top: 30px;
+  width: 12px;
+  height: 12px;
+  background: #fffaf3;
+  border-radius: 50%;
+}
+.bb-eye.left { left: 18px; }
+.bb-eye.right { right: 18px; }
+.bb-eye::after {
+  content: "";
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 6px; height: 6px;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.bubble {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(circle at 35% 30%, #fff8e8, var(--antenna-glow) 75%);
+  box-shadow: 0 0 0 10px rgba(255, 211, 94, 0.18), 0 10px 24px rgba(190, 110, 40, 0.25);
+  color: #5a3822;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  transform: scale(1);
+  transition: transform 4s ease-in-out, box-shadow 4s ease-in-out;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.bubble.growing {
+  transform: scale(1.55);
+  box-shadow: 0 0 0 16px rgba(255, 211, 94, 0.28), 0 14px 30px rgba(190, 110, 40, 0.3);
+}
+.bubble.shrinking {
+  transform: scale(1);
+  box-shadow: 0 0 0 10px rgba(255, 211, 94, 0.18), 0 10px 24px rgba(190, 110, 40, 0.25);
+}
+
+.bb-prompt {
+  min-height: 22px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+}
+
+.bb-count {
+  margin: 0;
+  font-size: 13px;
+  color: var(--button-help-dark);
+  opacity: 0.85;
+}

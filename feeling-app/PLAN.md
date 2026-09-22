@@ -7,12 +7,20 @@ outstanding. This document is the source of truth for the project.
 Anything marked **[verify]** is unchecked background knowledge and should
 not be treated as settled until research backs it up or removes it.
 
-Last updated: 2026-09-21. Working name **Sprocket** placeholder-set this date
+Last updated: 2026-09-22. Working name **Sprocket** placeholder-set 2026-09-21
 (app + companion character); not final, needs a proper trademark/domain
 check. All ten original Phase 0 research agenda items (§8), plus both
 follow-up research gaps (TTS vendor comparison, Social Stories™
 licensing), are now researched; several open decisions (§9) carry
 research-backed recommendations but remain unlocked pending sign-off.
+
+**2026-09-22**: every home-screen button now leads to a real, working,
+tested prototype screen instead of a placeholder — three story books
+(§4.5), two real games (§4.2), a working Help Me flow (§4.3), a working
+on-device feeling diary (§4.6), and a real (lightweight) parent gate
+(§5). See each section below and `spike/SPIKE_NOTES.md` for what's
+actually been validated vs. what's still content/IA to design properly
+in Phase 2 — this is a much fuller prototype than a locked design.
 
 ---
 
@@ -70,12 +78,40 @@ vocabulary and recognition skill before it's needed in a hard moment
 see research note 01). Game content is organized by feeling and by
 body/mind effect.
 
+**Two working prototypes exist** at `spike/www/games.html` (the shelf) —
+neither locked as final content/mechanic, both real, playable, and tested:
+- **Breathing Buddy** (`game-breathe.html`) — hold a bubble to grow it
+  (breathe in), release to let it shrink on a guided pace (breathe out);
+  counts breaths taken. This is the actual tool referenced in the story
+  books' "tool" pages and reused directly inside Help Me (§4.3) — practiced
+  here, then available there, per this section's own rule that Help Me only
+  surfaces already-practiced tools. (Caught via screenshot review, not
+  just "looks right at a glance": the bubble's grow animation initially
+  scaled up symmetrically in every direction, including upward, and
+  visually swallowed the small Sprocket character positioned right above
+  it — fixed by giving it enough clearance instead of a tight overlap.)
+- **Bubble Pop** (`game-match.html`) — real-time gameplay, not a quiz: a
+  target feeling is called out, and labeled bubbles continuously float up
+  a play field; tap the ones matching the target before they drift past
+  (target rotates every 3 catches). Went through two earlier versions
+  (a multiple-choice list, then a static memory-card grid) that both read
+  as content review rather than a game — this one has actual moving
+  parts and timing. No score or fail state either way (Principle 2): a
+  miss just pops the bubble too, an untapped bubble costs nothing.
+
 ### 4.3 "Help me" mode
 One-tap entry point for hard moments. Deliberately minimal-friction (one
 tap, no menus to navigate while dysregulated). Offers short, practiced
 tools (breathing, grounding, movement) rather than new learning — teaching
 new things during dysregulation doesn't work, so Help Me only surfaces
 tools the child has already practiced in calm-moment games.
+
+**A working prototype exists** at `spike/www/help.html`: tapping Help Me
+on the home screen opens straight into the Breathing Buddy tool (§4.2) —
+no menu, no choice to make. Sprocket's greeting line is shown as on-screen
+text immediately, with an explicit tap-to-hear button, rather than
+autoplaying speech right after the navigation (unreliable across browsers
+and not something to spring on a child already in a hard moment).
 
 ### 4.4 Rewards
 Process-based only, per Principle 2 above. Exact reward mechanic (points,
@@ -103,20 +139,34 @@ license is deliberately pursued later. Whether story content is fully
 original vs. drawing on other (non-trademarked) published
 children's-bibliotherapy patterns is an **open decision** (see §9).
 
-**A first prototype story exists**: `spike/www/story.html` — "Sprocket's
-Fluttery Day," about **Worried** (picked as the starting feeling: highly
-relatable, and has clear body effects — fluttery tummy, fast heart — and
-mind effects — racing thoughts — per research note 01). The story is
-structured as nine pages walking notice (body) → notice (mind) → name →
-normalize ("every robot and every kid gets this sometimes") → try a tool
-(breathing) → process-reward close ("proud — not for feeling calm, for
-trying"), i.e. it's a narrative instantiation of the five-stage model
-research note 01 already recommended for the taxonomy (Open Decision #4).
-Illustrated with inline SVG in the same warm palette/character design as
-the rest of the app, with page-turn animation and a read-aloud toggle
-(reusing the shared TTS module). This is a content-format and
-tone prototype, not a locked story — see `spike/SPIKE_NOTES.md` for what
-it does and doesn't validate.
+**Three prototype stories exist**, on a shelf at `spike/www/stories.html`,
+each a different feeling with its own body/mind signature and its own
+tool — deliberately not the same fix reused three times:
+- **"Sprocket's Fluttery Day"** (`story.html`) — **Worried**: fluttery
+  tummy, fast heart, racing "what if" thoughts; tool is three slow
+  breaths.
+- **"Sprocket's Wobbly Tower"** (`story-frustrated.html`) — **Frustrated**:
+  hot cheeks, tight fists, "I can't do this" thoughts; tool is shaking out
+  your hands and counting to five (and the closing line explicitly names
+  asking for help as counting too).
+- **"Sprocket's Bouncy Morning"** (`story-excited.html`) — **Excited**:
+  picked on purpose — it shares Worried's body signature (fast heart,
+  can't sit still) but feels different, which the story says outright on
+  its normalize page; its tool is channeling the energy (a wiggle dance)
+  rather than calming down, reinforcing Principle 2 that tools are for
+  any big feeling, not just uncomfortable ones.
+
+All three share the same nine-page structure — notice (body) → notice
+(mind) → name → normalize → try a tool → process-reward close ("proud —
+not for feeling calm/quiet/settled, for trying") — a narrative
+instantiation of the five-stage model research note 01 already
+recommended for the taxonomy (Open Decision #4). Illustrated with inline
+SVG (each page a distinct composition, not a reused background with a
+different caption) in the same warm palette/character design as the rest
+of the app, with in-scene animation on every page (not just the page-turn),
+a page-turn animation, and a read-aloud toggle (reusing the shared TTS
+module). Content-format and tone prototypes, not locked stories — see
+`spike/SPIKE_NOTES.md` for what they do and don't validate.
 
 ### 4.6 Feeling diary
 A child-owned, private place to record "I noticed ___ today" / "I felt
@@ -138,6 +188,17 @@ feelings surveillance" rule for the parent side. Whether the diary is
 decision** (see §9) that needs your explicit call, not an assumption
 either way.
 
+**A working prototype exists** at `spike/www/diary.html`: tap a feeling
+chip (six options — the three story-book feelings plus Happy, Calm, Sad)
+to log it, stored in `localStorage` only, nothing sent anywhere. A
+deliberate scope choice for this prototype, not a missing feature: there's
+no typed note field — logging is a single tap, which keeps entries fast
+and low-friction, sidesteps needing a text-input UI, and avoids a child
+typing anything identifying. The list below the picker shows past entries
+(feeling + relative time), and the tally at the top counts entries, never
+which feelings were logged — process language throughout ("You've noticed
+N feelings so far. Nice noticing!").
+
 ## 5. Parent Side
 
 A separate parent-facing surface. Scope for v1 is an **open decision**, but
@@ -149,6 +210,18 @@ principles constrain it:
   support Help Me mode at home).
 - Data stays local/on-device by default per Principle 1; any optional sync
   is opt-in and is itself an open decision (see §9).
+
+**A working prototype gate (not a dashboard) exists** at
+`spike/www/parent-gate.html` → `parent-home.html`: a simple randomized
+math question (the standard lightweight pattern for keeping a curious
+young child out, not security against a determined older child or adult)
+gates entry to a deliberately minimal grown-up area. That area shows
+**counts only** — feelings logged in the diary, breaths practiced,
+Bubble Pop rounds played — never which feelings were logged or when,
+matching this section's own "process metrics, not surveillance" rule.
+This isn't an unfinished corner of the prototype: it's the honest amount
+of parent-side UI actually decided so far, said so explicitly on-screen
+rather than faked further.
 
 ## 6. Platform & Technical Approach
 

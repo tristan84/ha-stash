@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Breathing Buddy</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="common.css" />
+<link rel="stylesheet" href="game-breathe.css" />
+</head>
+<body class="screen-body">
+<!-- Calm-moment game #1 (PLAN.md §4.2): a real, playable breathing
+     tool, not a placeholder. Deliberately the same tool referenced in
+     the story books' "tool" pages, and reused inside Help Me — practice
+     it here when calm, so it's a familiar, already-practiced tool when
+     Help Me needs it (per §4.3's "only surfaces tools already
+     practiced" rule). Hold-and-release is a real interaction, not just
+     a looping animation the child watches. -->
+<main class="screen-main">
+  <header class="screen-header">
+    <a href="games.html" class="screen-back" aria-label="Back to games">←</a>
+    <span class="screen-title-chip">Breathing Buddy</span>
+    <span class="screen-header-spacer"></span>
+  </header>
+
+  <div class="breathe-stage">
+    <div id="sprocket-mini" class="bb-sprocket">
+      <div class="bb-antenna"><span class="bb-antenna-tip"></span></div>
+      <div class="bb-head">
+        <div class="bb-eye left"></div>
+        <div class="bb-eye right"></div>
+      </div>
+    </div>
+
+    <button id="bubble" class="bubble" aria-label="Hold to breathe in, let go to breathe out">
+      <span id="bubble-label">Hold me</span>
+    </button>
+
+    <p id="prompt" class="bb-prompt">Press and hold the bubble to breathe in.</p>
+    <p class="bb-count">Breaths taken: <span id="breath-count">0</span></p>
+  </div>
+</main>
+<script src="sw-register.js"></script>
+<script src="tts.js"></script>
+<script src="game-breathe.js"></script>
+</body>
+</html>
